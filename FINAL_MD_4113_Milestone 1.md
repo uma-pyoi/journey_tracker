@@ -25,11 +25,7 @@ CityRide Lite is a simulation of a public transport journey tracker that will be
 
 Such features allow the user to keep track of the journeys and view statistics to help the user get insights into their travelling patterns and the amount of money spent and saved with the consideration of discounts and daily caps.
 
-
-
 ---
-
-
 
 ### Core Program Functionality
 
@@ -47,8 +43,6 @@ Such features allow the user to keep track of the journeys and view statistics t
 
 6. Exit (or alternatively could be number 0.)
 
-
-
 ###### 1. Adding journey:
 
 take input from the user:
@@ -60,8 +54,6 @@ take input from the user:
 - passenger type (validate that user chose a type that exists)
 
 - time band (peak/off peak)
-
-
 
 journey is then stored in memory with the following fields:
 
@@ -79,8 +71,6 @@ journey is then stored in memory with the following fields:
 
 - charged fare after applying daily cap to the running total for that passenger type (calculate if applicable)
 
-
-
 ###### 2. Remove journey:
 
 take input from the user:
@@ -95,13 +85,9 @@ the program then:
 
 - recalculates totals for the affected passenger type
 
-
-
 ###### 3. List all journeys:
 
-the program outputs the journeys in the order they were initially entered by the user, with all of the fields that were stored in the process of adding the journey (journey ID, date, start zone & destination zone, time band, passenger type, zones crossed, base fare, discount applied, charged fare after the applying daily cap)
-
-
+the program outputs the journeys in the order they were initially entered by the user, with all of the fields that were stored in the process of adding the journey (journey ID, date, start zone & destination zone, time band, passenger type, zones crossed, base fare, discount applied, charged fare after the applying daily cap). the user can choose to apply filters or list journeys without the filters.
 
 the journeys can be filtered by:
 
@@ -112,8 +98,6 @@ the journeys can be filtered by:
 - zone (from or to)
 
 - date
-
-
 
 ###### 4. View daily summaries:
 
@@ -143,8 +127,6 @@ the user can view summaries for:
   
   - count per zone pair or per each zone involved
 
-
-
 ###### 5. Reset day:
 
 the program:
@@ -155,11 +137,7 @@ the program:
 
 - clears all running daily totals for each passenger type
 
-
-
 ---
-
-
 
 ### System Constraints
 
@@ -183,8 +161,6 @@ the program:
 
 - Journey ID's uniqueness is not guaranteed due to the absence of file saving
 
-
-
 ------------------------------------------------------------------------------------------------------------------------------
 
 ### Input Process Output Table
@@ -197,7 +173,7 @@ the program:
 | Display main menu (FR1/FR2)                                    | User menu choice (0-5)                                                            | Validate input is an integer in range; activate corresponding function                                                                             | Next screen shown depending on selection / looping of main menu when input invalid                                                          |
 | Adding journey (FR4)                                           | Date, starting & destination zone, passenger type, time band                      | Validate date (if entered by user), validate the zone integer is in range, validate passenger type exists, validate time band                      | None (activates 'Saving journey')                                                                                                           |
 | Saving journey (FR6, FR7, FR12, FR13,  FR14, FR17, FR18, FR19) | None (passed from 'Adding journey')                                               | Generate unique ID; assign date/time; calculate and save zones crossed; calculate base fare, discounted fare, charged fare (with daily cap)        | Confirmation of journey addition / error "entered <invalid field> is invalid due to <reason>"                                               |
-| Listing journeys (FR8)                                         | None                                                                              | Get journeys in the order entered by the user                                                                                                      | Prints journey ID, date, start & destination zones, time band, passenger type, zones crossed, base fare, discount fare, charged fare        |
+| Listing journeys (FR8)                                         | User menu choice 3, user chose to apply no filters                                | Get journeys in the order entered by the user                                                                                                      | Prints journey ID, date, start & destination zones, time band, passenger type, zones crossed, base fare, discount fare, charged fare        |
 | Filter journeys (FR9)                                          | Optional filters that include: passenger type, time band, zone (from or to), date | Get journeys that apply to the specific filter(s)                                                                                                  | Prints journey ID, date, start & destination zones, time band, passenger type, zones crossed, base fare, discount fare, charged fare        |
 | Remove journey (FR10, FR25)                                    | Journey ID, confirmation                                                          | Validates that journey ID exists; once confirmed, removes journey from memory and recalculates totals                                              | Asks user for confirmation / Message of successfull removal / Message of invalid journey ID                                                 |
 | Reset day (FR11)                                               | Confirmation                                                                      | Clears all journeys, clears all totals                                                                                                             | Asks user for confirmation / Message of successfull clearance                                                                               |
@@ -207,17 +183,13 @@ the program:
 
 FR3, FR5, FR15, FR16, FR23, FR24, FR26 are implied in all of the features/tasks
 
-
-
 ------------------------------------------------------------------------------------------------------------------------------
 
 ### Gantt Chart
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-![milestone1Gantt4113.png](/Users/assemyeleussiz/Downloads/milestone1Gantt4113.png)
-
-
+Gantt Chart should be here
 
 ------------------------------------------------------------------------------------------------------------------------------
 
