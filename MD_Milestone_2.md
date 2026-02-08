@@ -73,8 +73,6 @@ Reset day
 
 --- 
 
-
-
 ##### Class Diagram
 
 ![](/Users/assemyeleussiz/Downloads/CLASS_DIAGRAM_wnotes_milestone2.jpg)
@@ -89,7 +87,7 @@ Reset day
 
 Name of program: Phonebook Application
 
-Reference (link): [GitHub - ChogirmaliYigit/phone_data_collector: a simple command-line phonebook application implemented in Python. It allows users to manage a list of contacts, including adding, editing, and searching for contacts. (Based-on https://docs.google.com/document/d/1dIH7lY05hNLSluZgOYsRyTrvLmyz4CnNEtJFFXBbS-c/edit)](https://github.com/ChogirmaliYigit/phone_data_collector.git)
+Reference (link): Github. (2024). *Phonebook Application.* Retrieved from: https://github.com/ChogirmaliYigit/phone_data_collector.git [Accessed 1 February 2026].
 
 What it does well (2-3 features that work effectively):
 
@@ -123,15 +121,13 @@ pagination UI:
 
 ![](/Users/assemyeleussiz/Library/Application%20Support/marktext/images/2026-01-31-18-27-23-image.png)
 
-
-
 ---
 
 ##### Habit Progress Tracker
 
 Name of program: Habit Progress Tracker
 
-Reference (link): [GitHub - smartIU/habit-tracker: A simple console application to define your personal habits and track their completion status.](https://github.com/smartIU/habit-tracker#)
+Reference (link): Github. (2024). *Habit Progress Tracker.* Retrieved from: https://github.com/smartIU/habit-tracker# [Accessed 1 February 2026].
 
 What it does well (2-3 features that work effectively):
 
@@ -191,15 +187,11 @@ I was also able to solve the problem of colouring of the Gantt chart progress bl
 
 Finding similar programs seemed challenging at first — I searched for “journey tracker” programs most of which were too advanced and thus analysing the code and finding design patterns I could reuse for this project was nearly impossible. Discouraged, I tried looking up “simple console based” projects, which led to me finding 2 applications perfect for my researching purposes. Both of them are written in Python, run in terminal and keep track of records that the user can modify and search through. I cloned both of the repositories and ran the projects in VScode, taking screenshots of the features I mentioned in my research. I read through some of the code and talked about some of the functions I found useful with the hopes of recreating them in my own project.
 
-
-
 ### 29/01/2026 - Diary Entry 5 - Developing the Overall Design of the Program
 
 Today I started developing the overall design of my program. For this task I had to produce flow chart diagrams and class diagrams. I decided to think of the class diagram first, since knowing what entities exist before thinking of the flow of the program seemed more logical to me. As such, I referred to the ‘Core Program Functionality’ section of my milestone 1 report and tried breaking down the program into classes. I ended up creating 4 classes — Journey, PassengerType, Zone and JourneyTracker. the first 3 are self-descriptive and do not carry out any special functions, whereas the JourneyTracker class is the class responsible for the operation of the entire program, having all the core methods such as functions for ‘add journey’, ‘list journeys’, etc. as well as functions for calculations built into it. I was unsure if there is a need for the Zone class, as I still have not seen the Java class provided by the assignment, but I decided to leave the Zone class for now since it is easier to remove something than add it in the future.
 
 For the flow chart, I had a conceptual understanding of it in my mind that was based on the procedural programming paradigm I was taught during term 1. Since I am still very new to Object Oriented Programming, I will create the flow chart based on my current understanding of the program flow.
-
-
 
 ### 30/01/2026 - Diary Entry 6 - Diagram Creation
 
