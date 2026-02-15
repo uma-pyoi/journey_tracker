@@ -1,21 +1,21 @@
 public class Zone {
     // states
-    private int zoneID;
+    private int zoneId;
     private String zoneName;
 
     // constructors
     public Zone() {
-        this.zoneID = 0;
+        this.zoneId = 0;
         this.zoneName = "Unknown";
     }
-    public Zone(int zoneID, String zoneName) {
-        this.zoneID = zoneID;
+    public Zone(int zoneId, String zoneName) {
+        this.zoneId = zoneId;
         this.zoneName = zoneName;
     }
 
     // getters
-    public int getZoneID() {
-        return this.zoneID;
+    public int getZoneId() {
+        return this.zoneId;
     }
     public String getZoneName() {
         return this.zoneName;
@@ -29,6 +29,6 @@ public class Zone {
 
     // other methods
     public void printZoneDetails() {
-        System.out.println(this.zoneID + ". " + this.zoneName);
+        System.out.println(this.zoneId + ". " + this.zoneName);
     }
 }

@@ -1,59 +1,69 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JourneyTracker {
+    // states
+    private int journeyIdCounter = 1;
+    Formatter formatter = new Formatter();
     // lists
     private List<Journey> journeysList = new ArrayList<>();
-    // passenger type & zones are hard coded zones since java class needed
-    // for the assignment has not been provided yet
-    private PassengerType[] passengerTypesArr = {new PassengerType(1, "Adult", 0, 8.0), new PassengerType(2, "Student", 25, 6.0), new PassengerType(3, "Child", 50, 4.0), new PassengerType(4, "Senior Citizen", 30, 7.0)};
-    private Zone[] zonesArr = {new Zone(1, "Nottingham"), new Zone(2, "London"), new Zone(3, "Birmingham"), new Zone(4, "Frankfurt"), new Zone(5, "Edinburgh")};
+    // arrays
+    private Zone[] zonesArr = {new Zone(1, "Central"),
+            new Zone(2, "Inner"),
+            new Zone(3, "Suburban"),
+            new Zone(4, "Outer"),
+            new Zone(5,"Rural")};
 
     // daily running total for each Passenger Type
-    private double adultTotalBaseFare = 0.0;
-    private double studentTotalBaseFare = 0.0;
-    private double childTotalBaseFare = 0.0;
-    private double seniorCitizenTotalBaseFare = 0.0;
-
-    private double adultTotalDiscountedFare = 0.0;
-    private double studentTotalDiscountedFare = 0.0;
-    private double childTotalDiscountedFare = 0.0;
-    private double seniorCitizenTotalDiscountedFare = 0.0;
-
-    private double adultTotalChargedFare = 0.0;
-    private double studentTotalChargedFare = 0.0;
-    private double childTotalChargedFare = 0.0;
-    private double seniorCitizenTotalChargedFare = 0.0;
-
-    private int adultTotalJourneyNum = 0;
-    private int studentTotalJourneyNum = 0;
-    private int childTotalJourneyNum = 0;
-    private int seniorCitizenTotalJourneyNum = 0;
-
+    SummaryForPassengerType adultSummary = new SummaryForPassengerType();
+    SummaryForPassengerType studentSummary = new SummaryForPassengerType();
+    SummaryForPassengerType childSummary = new SummaryForPassengerType();
+    SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
 
     // methods
-    // find by ID
-    public Journey findJourneyByID(int journeyID) {
-        for (Journey j : journeysList) {
-            if (j.getJourneyID() == journeyID) {
-                return j;
-            }
+    // getters
+    public int getJourneyIdCounter() {
+        return journeyIdCounter;
+    }
+    public SummaryForPassengerType getSummaryObjForPassengerType(CityRideDataset.PassengerType passengerType) {
+        SummaryForPassengerType foundSummary;
+        if (passengerType == CityRideDataset.PassengerType.ADULT) {
+            foundSummary = adultSummary;
         }
-        return null;
+        else if (passengerType == CityRideDataset.PassengerType.STUDENT) {
+            foundSummary = studentSummary;
+        }
+        else if (passengerType == CityRideDataset.PassengerType.CHILD) {
+            foundSummary = childSummary;
+        }
+        else if (passengerType == CityRideDataset.PassengerType.SENIOR_CITIZEN) {
+            foundSummary = seniorCitizenSummary;
+        }
+        else {
+            foundSummary = null;
+        }
+        return foundSummary;
     }
 
-    public PassengerType findPassengerTypeByID(int passengerTypeID) { // needs testing
-        for (PassengerType pt : passengerTypesArr) {
-            if (pt.getPassengerTypeID() == passengerTypeID) {
-                return pt;
-            }
-        }
-        return null;
+    // setters
+    public void setJourneyIdCounter(int journeyIdCounter) {
+        this.journeyIdCounter = journeyIdCounter;
     }
 
-    public Zone findZoneByID(int zoneID) { // needs testing
+    // adding Journey
+    public void addJourney(Journey journey) {
+        journeysList.add(journey);
+        System.out.println("Journey with Journey ID of " + journey.getJourneyId() + " has been added.");
+
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(journey.getPassengerType());
+        summary.addJourneyToSum(journey);
+    }
+
+    public Zone findZoneById(int zoneId) {
         for (Zone z : zonesArr) {
-            if (z.getZoneID() == zoneID) {
+            if (z.getZoneId() == zoneId) {
                 return z;
             }
         }
@@ -61,9 +71,32 @@ public class JourneyTracker {
     }
 
     // listing
+    public void listAllZones() {
+        if (zonesArr.length == 0) {
+            System.out.println("No zones available!");
+        }
+        else {
+            System.out.println("------   Zones   ------");
+            for (Zone z : zonesArr) {
+                System.out.println(z.getZoneId() + ". " + z.getZoneName());
+            }
+            System.out.println("-----------------------");
+        }
+    }
+
+    public void listAllPassengerTypes() {
+        System.out.println("------   Passenger Types   ------");
+        for (int i = 0; i < CityRideDataset.PassengerType.values().length; i++) {
+            String passengerTypeName = formatter.getNameOfPassengerType(CityRideDataset.PassengerType.values()[i]);
+            System.out.println((i + 1) + ". " + passengerTypeName);
+        }
+        System.out.println("---------------------------------");
+    }
+
+    // listing journeys
     public void listAllJourneys() {
         if (journeysList.isEmpty()) {
-            System.out.println("No journeys has been added yet.");
+            System.out.println("No journeys have been added yet.");
         }
         else {
             System.out.println("------   Journeys   ------");
@@ -74,91 +107,240 @@ public class JourneyTracker {
         }
     }
 
-    public void listAllZones() {
-        if (zonesArr.length == 0) {
-            System.out.println("No zones are available.");
+    public void listJourneysByPassengerType(CityRideDataset.PassengerType passengerType) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
         }
         else {
-            System.out.println("------   Zones   ------");
-            for (Zone z : zonesArr) {
-                z.printZoneDetails();
+            List<Journey> passengerTypeJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getPassengerType() == passengerType) {
+                    passengerTypeJourneysList.add(j);
+                }
             }
-            System.out.println("------------------------");
+            if (passengerTypeJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this passenger type yet.");
+            }
+            else {
+                System.out.println("------ " + formatter.getNameOfPassengerType(passengerType) + " Journeys ------");
 
+                for (Journey j : passengerTypeJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
         }
     }
 
-    public void listAllPassengerTypes() {
-        if (passengerTypesArr.length == 0) {
-            System.out.println("No passenger types are available.");
+    public void listJourneysByTimeBand(CityRideDataset.TimeBand timeBand) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
         }
         else {
-            System.out.println("------   Passenger Types   ------");
-            for (PassengerType pt : passengerTypesArr) {
-                pt.printPassengerTypeDetails();
+            List<Journey> timeBandJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getTimeBand() == timeBand) {
+                    timeBandJourneysList.add(j);
+                }
             }
-            System.out.println("---------------------------------");
+            if (timeBandJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this timeband yet.");
+            }
+            else {
+                System.out.println("------ " + formatter.getNameOfTimeBand(timeBand) + " Journeys ------");
 
+                for (Journey j : timeBandJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
         }
     }
 
-    // methods for adding Journey
-    // maybe create a function to further optimise this
-    public void addToPassengerTypeDailyTotal(Journey journey) {
-        if (journey.getPassengerType().getPassengerTypeID() == 1) {
-            this.adultTotalBaseFare += journey.getBaseFare();
-            this.adultTotalDiscountedFare += journey.getDiscountedFare();
-            this.adultTotalChargedFare += journey.getChargedFare();
-            this.adultTotalJourneyNum++;
+    public void listJourneysByZone(Zone zone, boolean isStartZone) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
         }
-        else if (journey.getPassengerType().getPassengerTypeID() == 2) {
-            this.studentTotalBaseFare += journey.getBaseFare();
-            this.studentTotalDiscountedFare += journey.getDiscountedFare();
-            this.studentTotalChargedFare += journey.getChargedFare();
-            this.studentTotalJourneyNum++;
-        }
-        else if (journey.getPassengerType().getPassengerTypeID() == 3) {
-            this.childTotalBaseFare += journey.getBaseFare();
-            this.childTotalDiscountedFare += journey.getDiscountedFare();
-            this.childTotalChargedFare += journey.getChargedFare();
-            this.childTotalJourneyNum++;
-        }
-        else if (journey.getPassengerType().getPassengerTypeID() == 4) {
-            this.seniorCitizenTotalBaseFare += journey.getBaseFare();
-            this.seniorCitizenTotalDiscountedFare += journey.getDiscountedFare();
-            this.seniorCitizenTotalChargedFare += journey.getChargedFare();
-            this.seniorCitizenTotalJourneyNum++;
+        else {
+            List<Journey> zonesJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                Zone zoneToCompare;
+                if (isStartZone) {
+                    zoneToCompare = j.getStartZone();
+                }
+                else {
+                    zoneToCompare = j.getEndZone();
+                }
+                if (zoneToCompare == zone) {
+                    zonesJourneysList.add(j);
+                }
+            }
+            String zoneDescription = isStartZone ? "Start" : "End";
+            if (zonesJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this " + zoneDescription + " zone yet.");
+            }
+            else {
+                System.out.println("------ " + zoneDescription + " zone Journeys ------");
+
+                for (Journey j : zonesJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
         }
     }
 
-    public void addJourney(Journey journey) {
-        journeysList.add(journey);
-        System.out.println("Journey with Journey ID of " + journey.getJourneyID() + " has been added.");
+    public void listJourneysByHours(int startHour, int endHour) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            List<Journey> hoursJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getDatetime().getHour() >= startHour && j.getDatetime().getHour() <= endHour) {
+                    hoursJourneysList.add(j);
+                }
+            }
+            if (hoursJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for the " + startHour + "-" + endHour + " hours yet.");
+            }
+            else {
+                System.out.println("------ " + startHour + "-" + endHour + " hours Journeys ------");
 
-        addToPassengerTypeDailyTotal(journey);
+                for (Journey j : hoursJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
+        }
     }
 
-    private void printSummaryForPassengerType(double baseFare, double discountedFare, double chargedFare, int journeysNum) {
-        System.out.println("Total base fare: " + baseFare);
-        System.out.println("Total discounted fare: " + discountedFare);
-        System.out.println("Total charged fare: " + chargedFare);
-        System.out.println("Total number of journeys: " + journeysNum);
+    // Summary: daily summaries
+    public int getTotalJourneysNum() {
+        return adultSummary.getTotalJourneyNum() + studentSummary.getTotalJourneyNum() + childSummary.getTotalJourneyNum() + seniorCitizenSummary.getTotalJourneyNum();
     }
 
-    public void printSummaryForPassengerTypeByID(int passengerTypeID) {
-        PassengerType passengerType = this.findPassengerTypeByID(passengerTypeID);
-        System.out.println("---- Daily Summary for " + passengerType.getPassengerTypeName() + " journeys ----");
-        if (passengerTypeID == 1) {
-            printSummaryForPassengerType(adultTotalBaseFare, adultTotalDiscountedFare, adultTotalChargedFare, adultTotalJourneyNum);
+    public BigDecimal getTotalCostsCharged() {
+        BigDecimal totalCostsCharged = adultSummary.getTotalChargedFare().add(studentSummary.getTotalChargedFare()).add(childSummary.getTotalChargedFare()).add(seniorCitizenSummary.getTotalChargedFare());
+        return formatter.formatBigDecimal2dp(totalCostsCharged);
+    }
+
+    public BigDecimal getAverageCostPerJourney() {
+        BigDecimal totalChargedFare = getTotalCostsCharged();
+        BigDecimal averageCost;
+        if (getTotalJourneysNum() == 0) {
+            averageCost = new BigDecimal("0.00");
         }
-        else if (passengerTypeID == 2) {
-            printSummaryForPassengerType(studentTotalBaseFare, studentTotalDiscountedFare, studentTotalChargedFare, studentTotalJourneyNum);
+        else {
+            BigDecimal totalJourneysNum = new BigDecimal(getTotalJourneysNum());
+            averageCost = totalChargedFare.divide(totalJourneysNum, RoundingMode.HALF_UP);
         }
-        else if (passengerTypeID == 3) {
-            printSummaryForPassengerType(childTotalBaseFare, childTotalDiscountedFare, childTotalChargedFare, childTotalJourneyNum);
+        return formatter.formatBigDecimal2dp(averageCost);
+    }
+
+    public Journey getMostExpensiveJourney() {
+        BigDecimal mostExpensiveCharge = new BigDecimal("0.00");
+        int mostExpensiveJourneyIndex = -1;
+        Journey mostExpensiveJourney;
+
+        for (Journey j : journeysList) {
+            if (j.getChargedFare().compareTo(mostExpensiveCharge) > 0) {
+                mostExpensiveJourneyIndex = journeysList.indexOf(j);
+                mostExpensiveCharge = j.getChargedFare();
+            }
         }
-        else if (passengerTypeID == 4) {
-            printSummaryForPassengerType(seniorCitizenTotalBaseFare, seniorCitizenTotalDiscountedFare, seniorCitizenTotalChargedFare, seniorCitizenTotalJourneyNum);
+        if (mostExpensiveJourneyIndex != -1) {
+            mostExpensiveJourney = journeysList.get(mostExpensiveJourneyIndex);
         }
+        else {
+            mostExpensiveJourney = null;
+        }
+        return mostExpensiveJourney;
+    }
+
+    // Summary: category counts
+//    public int[] getPeakVsOffPeakCount() {
+//        int peakCounter;
+//        int offPeakCounter;
+////        for (Journey j : journeysList) {
+////
+////        }
+//    }
+
+
+    // fare calculations
+    public BigDecimal calculateDiscountFare(int startZoneId, int endZoneId, CityRideDataset.TimeBand timeBand, CityRideDataset.PassengerType passengerType) {
+        BigDecimal baseFare = CityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
+        BigDecimal discount = CityRideDataset.DISCOUNT_RATE.get(passengerType);
+        BigDecimal discountOfBaseFare = baseFare.multiply(discount);
+        BigDecimal result = baseFare.subtract(discountOfBaseFare);
+        return result;
+    }
+
+    public BigDecimal calculateChargedFare(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
+        BigDecimal chargedFare;
+
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        BigDecimal totalDiscountedFare = summary.getTotalDiscountedFare();
+        BigDecimal newDiscountedTotal = discountedFare.add(summary.getTotalDiscountedFare());
+        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+
+        boolean dailyCapReached = summary.getDailyCapReached();
+
+        if (!dailyCapReached) {
+            if (newDiscountedTotal.compareTo(dailyCap) > 0) {
+                chargedFare = dailyCap.subtract(totalDiscountedFare);
+            } else {
+                chargedFare = discountedFare;
+            }
+        }
+        else {
+            chargedFare = new BigDecimal("0.00");
+        }
+        return chargedFare;
+    }
+
+    public boolean calculateDailyCapReached(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        BigDecimal newDailyTotal = discountedFare.add(summary.getTotalChargedFare());
+        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+
+        return newDailyTotal.compareTo(dailyCap) >= 0; // > or >= ?
+    }
+
+    // removing journey
+    public Journey findJourneyById(int journeyId) {
+        for(Journey journey : journeysList) {
+            if(journey.getJourneyId() == journeyId) {
+                return journey;
+            }
+        }
+        return null;
+    }
+
+    public Journey removeJourneyById(int journeyId) {
+        Journey removedJourney = null;
+        for(int i = 0; i < journeysList.size(); i++) {
+            if(journeysList.get(i).getJourneyId() == journeyId) {
+                removedJourney = journeysList.remove(i);
+                break;
+            }
+        }
+        return removedJourney;
+    }
+
+    public void recalculateSummariesForRemovedJourney(Journey removedJourney) {
+        CityRideDataset.PassengerType passengerType = removedJourney.getPassengerType();
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        summary.subtractJourneyFromSum(removedJourney);
+    }
+
+    // resetting the day
+    public void resetDay() {
+        journeysList.clear();
+        adultSummary.clearAllTotals();
+        studentSummary.clearAllTotals();
+        childSummary.clearAllTotals();
+        seniorCitizenSummary.clearAllTotals();
     }
 }

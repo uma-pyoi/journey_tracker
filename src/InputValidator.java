@@ -1,8 +1,9 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class InputValidator {
     Scanner scanner = new Scanner(System.in);
-    JourneyTracker journeyTracker = new JourneyTracker();
 
     // Kvasnovsky (2025)
     int readIntInRange(int min, int max) {
@@ -45,13 +46,5 @@ public class InputValidator {
         }
 
         return userChoice;
-    }
-
-    public PassengerType askForPassengerTypeID() {
-        System.out.println("What is the passenger type?");
-        journeyTracker.listAllPassengerTypes();
-        int passengerTypeID = this.readIntInRange(1, 4); // hard coded, will change
-
-        return journeyTracker.findPassengerTypeByID(passengerTypeID);
     }
 }
