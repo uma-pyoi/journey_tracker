@@ -1,6 +1,7 @@
 // make this into utility/static/final class
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class MainMenu {
     Formatter formatter = new Formatter();
@@ -144,7 +145,7 @@ public class MainMenu {
             totalsByPassengerType(journeyTracker, inputValidator);
         }
         else if (choice == 3) {
-            //
+            categoryCounts(journeyTracker);
         }
     }
 
@@ -175,8 +176,28 @@ public class MainMenu {
         summary.printSummary();
     }
 
-    private void categoryCounts() {
+    private void printZonesCount(JourneyTracker journeyTracker) {
+        Map<Integer, Integer> zonesCountMap = journeyTracker.getZoneCounts();
+        // REFERENCE!!
+        // https://www.geeksforgeeks.org/java/iterate-map-java/
+        // GeekForGeeks (2025)
+        System.out.println("------ Zone counts ------");
+        for (Map.Entry<Integer, Integer> zone : zonesCountMap.entrySet())
+            System.out.println("Zone " + zone.getKey() +
+                    ": " + zone.getValue() + " counts.");
+        System.out.println("-------------------------");
+    }
 
+    private void printPeakVsOffPeakCounts(JourneyTracker journeyTracker) {
+        int[] peakVsOffPeakArray = journeyTracker.getPeakVsOffPeakCount();
+        System.out.println("Peak counts: " + peakVsOffPeakArray[0]);
+        System.out.println("Off-peak counts: " + peakVsOffPeakArray[1]);
+    }
+
+    private void categoryCounts(JourneyTracker journeyTracker) {
+        System.out.println("----- Category counts -----");
+        printPeakVsOffPeakCounts(journeyTracker);
+        printZonesCount(journeyTracker);
     }
 
     // private method to break down logic of actionRemoveJourney

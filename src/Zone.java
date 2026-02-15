@@ -2,32 +2,46 @@ public class Zone {
     // states
     private int zoneId;
     private String zoneName;
+    private int count;
 
     // constructors
     public Zone() {
         this.zoneId = 0;
         this.zoneName = "Unknown";
+        this.count = 0;
     }
     public Zone(int zoneId, String zoneName) {
         this.zoneId = zoneId;
         this.zoneName = zoneName;
+        this.count = 0;
     }
 
     // getters
     public int getZoneId() {
-        return this.zoneId;
+        return zoneId;
     }
     public String getZoneName() {
-        return this.zoneName;
+        return zoneName;
+    }
+    public int getCount() {
+        return count;
     }
 
     // setters
-    // no setter for zoneID since it will not change as per the assignment sheet
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
+    public void setCount(int count) {
+        this.count = count;
     }
+//    public void setZoneName(String zoneName) {
+//        this.zoneName = zoneName;
+//    }
 
     // other methods
+    public void incrementCount() {
+        this.count++;
+    }
+    public void decrementCount() {
+        this.count--;
+    }
     public void printZoneDetails() {
         System.out.println(this.zoneId + ". " + this.zoneName);
     }

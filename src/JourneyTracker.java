@@ -1,7 +1,9 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JourneyTracker {
     // states
@@ -59,6 +61,8 @@ public class JourneyTracker {
 
         SummaryForPassengerType summary = getSummaryObjForPassengerType(journey.getPassengerType());
         summary.addJourneyToSum(journey);
+        journey.getStartZone().incrementCount();
+        journey.getEndZone().incrementCount();
     }
 
     public Zone findZoneById(int zoneId) {
@@ -259,13 +263,27 @@ public class JourneyTracker {
     }
 
     // Summary: category counts
-//    public int[] getPeakVsOffPeakCount() {
-//        int peakCounter;
-//        int offPeakCounter;
-////        for (Journey j : journeysList) {
-////
-////        }
-//    }
+    public int[] getPeakVsOffPeakCount() {
+        int peakCounter = 0;
+        int offPeakCounter = 0;
+        for (Journey j : journeysList) {
+            if (j.getTimeBand() == CityRideDataset.TimeBand.PEAK) {
+                peakCounter++;
+            }
+            else {
+                offPeakCounter++;
+            }
+        }
+        return new int[]{peakCounter, offPeakCounter};
+    }
+
+    public Map<Integer, Integer> getZoneCounts() {
+        Map<Integer, Integer> zoneCountsMap = new HashMap<>();
+        for (int i = 0; i < zonesArr.length; i++) {
+            zoneCountsMap.put(zonesArr[i].getZoneId(), zonesArr[i].getCount());
+        }
+        return zoneCountsMap;
+    }
 
 
     // fare calculations
@@ -273,8 +291,7 @@ public class JourneyTracker {
         BigDecimal baseFare = CityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
         BigDecimal discount = CityRideDataset.DISCOUNT_RATE.get(passengerType);
         BigDecimal discountOfBaseFare = baseFare.multiply(discount);
-        BigDecimal result = baseFare.subtract(discountOfBaseFare);
-        return result;
+        return baseFare.subtract(discountOfBaseFare);
     }
 
     public BigDecimal calculateChargedFare(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
@@ -333,14 +350,22 @@ public class JourneyTracker {
         CityRideDataset.PassengerType passengerType = removedJourney.getPassengerType();
         SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
         summary.subtractJourneyFromSum(removedJourney);
+        removedJourney.getStartZone().decrementCount();
+        removedJourney.getEndZone().decrementCount();
     }
 
     // resetting the day
+    private void resetZoneCounts() {
+        for (Zone z : zonesArr) {
+            z.setCount(0);
+        }
+    }
     public void resetDay() {
         journeysList.clear();
         adultSummary.clearAllTotals();
         studentSummary.clearAllTotals();
         childSummary.clearAllTotals();
         seniorCitizenSummary.clearAllTotals();
+        resetZoneCounts();
     }
 }
