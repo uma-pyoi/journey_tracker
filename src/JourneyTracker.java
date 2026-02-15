@@ -279,12 +279,11 @@ public class JourneyTracker {
 
     public Map<Integer, Integer> getZoneCounts() {
         Map<Integer, Integer> zoneCountsMap = new HashMap<>();
-        for (int i = 0; i < zonesArr.length; i++) {
-            zoneCountsMap.put(zonesArr[i].getZoneId(), zonesArr[i].getCount());
+        for (Zone zone : zonesArr) {
+            zoneCountsMap.put(zone.getZoneId(), zone.getCount());
         }
         return zoneCountsMap;
     }
-
 
     // fare calculations
     public BigDecimal calculateDiscountFare(int startZoneId, int endZoneId, CityRideDataset.TimeBand timeBand, CityRideDataset.PassengerType passengerType) {
@@ -322,7 +321,7 @@ public class JourneyTracker {
         BigDecimal newDailyTotal = discountedFare.add(summary.getTotalChargedFare());
         BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
 
-        return newDailyTotal.compareTo(dailyCap) >= 0; // > or >= ?
+        return newDailyTotal.compareTo(dailyCap) >= 0;
     }
 
     // removing journey

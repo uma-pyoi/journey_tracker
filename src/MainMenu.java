@@ -1,5 +1,3 @@
-// make this into utility/static/final class
-
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -149,7 +147,6 @@ public class MainMenu {
         }
     }
 
-
     // private functions to view certain summaries
     private void dailySummaries(JourneyTracker journeyTracker) {
         System.out.println("\n------- Daily Summary ------");
@@ -178,10 +175,8 @@ public class MainMenu {
 
     private void printZonesCount(JourneyTracker journeyTracker) {
         Map<Integer, Integer> zonesCountMap = journeyTracker.getZoneCounts();
-        // REFERENCE!!
-        // https://www.geeksforgeeks.org/java/iterate-map-java/
-        // GeekForGeeks (2025)
         System.out.println("------ Zone counts ------");
+        // GeekForGeeks (2025)
         for (Map.Entry<Integer, Integer> zone : zonesCountMap.entrySet())
             System.out.println("Zone " + zone.getKey() +
                     ": " + zone.getValue() + " counts.");
@@ -200,8 +195,7 @@ public class MainMenu {
         printZonesCount(journeyTracker);
     }
 
-    // private method to break down logic of actionRemoveJourney
-    // gets called after the journey is confirmed to be removed
+    // remove journey
     private void actionRemoveJourneyConfirmed(Journey foundJourney, InputValidator inputValidator, JourneyTracker journeyTracker) {
         System.out.println("Found journey:");
         foundJourney.printJourneyDetails();
@@ -232,6 +226,7 @@ public class MainMenu {
         }
     }
 
+    // reset day
     public void actionResetDay(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("Are you sure you want to reset the day?");
         boolean isConfirmed = inputValidator.readYesNo();

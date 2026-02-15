@@ -31,9 +31,6 @@ public class Zone {
     public void setCount(int count) {
         this.count = count;
     }
-//    public void setZoneName(String zoneName) {
-//        this.zoneName = zoneName;
-//    }
 
     // other methods
     public void incrementCount() {

@@ -82,7 +82,6 @@ public class Journey {
     public void printJourneyDetails() {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
-//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         String formattedDatetime = this.datetime.format(formatter.dateTimeFormatter);
         System.out.println("Datetime: " + formattedDatetime);
         System.out.print("Timeband: ");
