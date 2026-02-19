@@ -242,24 +242,21 @@ public class JourneyTracker {
         return formatter.formatBigDecimal2dp(averageCost);
     }
 
-    public Journey getMostExpensiveJourney() {
+    public List<Journey> getMostExpensiveJourneysList() {
         BigDecimal mostExpensiveCharge = new BigDecimal("0.00");
-        int mostExpensiveJourneyIndex = -1;
-        Journey mostExpensiveJourney;
+        List<Journey> expensiveJourneysList = new ArrayList<>();
 
         for (Journey j : journeysList) {
             if (j.getChargedFare().compareTo(mostExpensiveCharge) > 0) {
-                mostExpensiveJourneyIndex = journeysList.indexOf(j);
+                expensiveJourneysList.clear();
+                expensiveJourneysList.add(j);
                 mostExpensiveCharge = j.getChargedFare();
             }
+            else if (j.getChargedFare().compareTo(mostExpensiveCharge) == 0) {
+                expensiveJourneysList.add(j);
+            }
         }
-        if (mostExpensiveJourneyIndex != -1) {
-            mostExpensiveJourney = journeysList.get(mostExpensiveJourneyIndex);
-        }
-        else {
-            mostExpensiveJourney = null;
-        }
-        return mostExpensiveJourney;
+        return expensiveJourneysList;
     }
 
     // Summary: category counts

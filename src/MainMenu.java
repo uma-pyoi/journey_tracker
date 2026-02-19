@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 public class MainMenu {
@@ -154,13 +155,15 @@ public class MainMenu {
         System.out.println("Total costs charged: £" + journeyTracker.getTotalCostsCharged());
         System.out.println("Average cost per journey: £" + journeyTracker.getAverageCostPerJourney());
 
-        System.out.println("Most expensive journey: ");
-        Journey mostExpensiveJourney = journeyTracker.getMostExpensiveJourney();
-        if (mostExpensiveJourney == null) {
+        System.out.println("Most expensive journey(s): ");
+        List<Journey> mostExpensiveJourneysList = journeyTracker.getMostExpensiveJourneysList();
+        if (mostExpensiveJourneysList.isEmpty()) {
             System.out.println("Most expensive journey not found.");
         }
         else {
-            mostExpensiveJourney.printJourneyDetails();
+            for (Journey j : mostExpensiveJourneysList) {
+                j.printJourneyDetails();
+            }
         }
         System.out.println("------------------------------");
     }
