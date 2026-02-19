@@ -26,7 +26,7 @@ public class MainMenu {
     public CityRideDataset.PassengerType askForPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("What is the passenger type?");
         journeyTracker.listAllPassengerTypes();
-        int passengerTypeId = inputValidator.readIntInRange(1, 4);
+        int passengerTypeId = inputValidator.readIntInRange(1, 4, true);
 
         return CityRideDataset.PassengerType.values()[passengerTypeId - 1];
     }
@@ -34,7 +34,7 @@ public class MainMenu {
     public Zone askForZone(String zoneDescription, JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("What is the ID of the " + zoneDescription + " zone?");
         journeyTracker.listAllZones();
-        int zoneId = inputValidator.readIntInRange(CityRideDataset.MIN_ZONE, CityRideDataset.MAX_ZONE);
+        int zoneId = inputValidator.readIntInRange(CityRideDataset.MIN_ZONE, CityRideDataset.MAX_ZONE, true);
         return journeyTracker.findZoneById(zoneId);
     }
 
@@ -92,9 +92,9 @@ public class MainMenu {
     private void askForFilterByTime(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("-- Sorting by the time period of when the journey was created --");
         System.out.println("What is the start hour?");
-        int startHour = inputValidator.readIntInRange(1, 24);
+        int startHour = inputValidator.readIntInRange(1, 24, true);
         System.out.println("What is the end hour?");
-        int endHour = inputValidator.readIntInRange(1, 24);
+        int endHour = inputValidator.readIntInRange(1, 24, true);
         journeyTracker.listJourneysByHours(startHour, endHour);
     }
 
@@ -103,7 +103,7 @@ public class MainMenu {
         boolean applyFilters = inputValidator.readYesNo();
         if (applyFilters) {
             printListingFilters();
-            int choice = inputValidator.readIntInRange(1, 5);
+            int choice = inputValidator.readIntInRange(1, 5, true);
             if (choice == 1) {
                 CityRideDataset.PassengerType passengerType = askForPassengerType(journeyTracker, inputValidator);
                 journeyTracker.listJourneysByPassengerType(passengerType);
@@ -135,7 +135,7 @@ public class MainMenu {
         System.out.println("2. Totals by passenger type");
         System.out.println("3. Category counts");
 
-        int choice = inputValidator.readIntInRange(1, 3);
+        int choice = inputValidator.readIntInRange(1, 3, true);
         if (choice == 1) {
             dailySummaries(journeyTracker);
         }
@@ -217,7 +217,7 @@ public class MainMenu {
 
     public void actionRemoveJourney(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("What is the Journey's ID you want to remove?");
-        int journeyId = inputValidator.readIntInRange(1, 99999); // arbitrary max value since journey ID has no limit
+        int journeyId = inputValidator.readIntInRange(1, 99999, false); // arbitrary max value since journey ID has no limit
         Journey foundJourney = journeyTracker.findJourneyById(journeyId);
         if (foundJourney == null) {
             System.out.println("Not found! The journey with ID " + journeyId + " does not exist!");

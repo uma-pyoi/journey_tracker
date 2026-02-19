@@ -4,10 +4,12 @@ public class InputValidator {
     Scanner scanner = new Scanner(System.in);
 
     // Kvasnovsky (2025)
-    int readIntInRange(int min, int max) {
+    int readIntInRange(int min, int max, boolean isPrintingRange) {
         int userInput = min - 1;
         while (userInput < min || userInput > max) {
-            System.out.print("Enter a whole number (" + min + "-" + max + "): ");
+            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
+            String prompt = "Enter a whole number" + rangeString + ": ";
+            System.out.print(prompt);
 
             while (!scanner.hasNextInt()) {
                 System.out.print("That's not a whole number! Try again: ");
@@ -16,7 +18,7 @@ public class InputValidator {
 
             userInput = scanner.nextInt();
             if (userInput < min || userInput > max) {
-                System.out.print("Invalid! Enter a number between " + min + " and " + max + ": ");
+                System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
             }
         }
         scanner.nextLine();

@@ -14,7 +14,7 @@ public class JourneyTrackerApp {
 
         do {
             mainMenu.printMainMenu();
-            userInput = inputValidator.readIntInRange(0, 5);
+            userInput = inputValidator.readIntInRange(0, 5, true);
 
             if (userInput == 1) {
                 mainMenu.actionAddJourney(inputValidator, journeyTracker);
