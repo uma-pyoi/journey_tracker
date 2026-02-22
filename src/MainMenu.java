@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainMenu {
-    Formatter formatter = new Formatter();
+    private Formatter formatter = new Formatter();
 
     // methods
     public void printWelcome() {

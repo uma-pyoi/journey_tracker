@@ -15,7 +15,7 @@ public class Journey {
     private BigDecimal chargedFare;
     private boolean dailyCapReached;
     // money formatter
-    Formatter formatter = new Formatter();
+    private Formatter formatter = new Formatter();
 
     // constructors
     public Journey() {

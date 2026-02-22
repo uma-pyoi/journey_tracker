@@ -7,7 +7,7 @@ public class SummaryForPassengerType {
     private BigDecimal totalChargedFare;
     private int totalJourneyNum;
     private boolean dailyCapReached;
-    Formatter formatter = new Formatter();
+    private Formatter formatter = new Formatter();
 
     // constructor
     public SummaryForPassengerType() {

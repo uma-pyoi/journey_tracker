@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class InputValidator {
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     // Kvasnovsky (2025)
-    int readIntInRange(int min, int max, boolean isPrintingRange) {
+    public int readIntInRange(int min, int max, boolean isPrintingRange) {
         int userInput = min - 1;
         while (userInput < min || userInput > max) {
             String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
@@ -25,7 +25,7 @@ public class InputValidator {
         return userInput;
     }
 
-    boolean readYesNo() {
+    public boolean readYesNo() {
         boolean isValid = false;
         boolean userChoice = false;
 

@@ -8,7 +8,7 @@ import java.util.Map;
 public class JourneyTracker {
     // states
     private int journeyIdCounter = 1;
-    Formatter formatter = new Formatter();
+    private Formatter formatter = new Formatter();
     // lists
     private List<Journey> journeysList = new ArrayList<>();
     // arrays
@@ -19,10 +19,10 @@ public class JourneyTracker {
             new Zone(5,"Rural")};
 
     // daily running total for each Passenger Type
-    SummaryForPassengerType adultSummary = new SummaryForPassengerType();
-    SummaryForPassengerType studentSummary = new SummaryForPassengerType();
-    SummaryForPassengerType childSummary = new SummaryForPassengerType();
-    SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType adultSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType studentSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType childSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
 
     // methods
     // getters
