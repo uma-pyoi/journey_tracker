@@ -18,111 +18,1515 @@
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-### Testing
+### Table of Contents
 
-###### Functional Requirements: 1, 2, 3, 4(a), 5, 8, 9(a, b, c, d), 10, 11, 23(a, b, c, d, e), 24, 25
+1 Introduction
 
-| Test Number | Test                                                   | Test Description                                 | Test Data              | Expected Outcome                                                 | Actual Outcome                                            | Comments    |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------ | ---------------------- | ---------------------------------------------------------------- | --------------------------------------------------------- | ----------- |
-| 1           | action choice                                          | Valid test                                       | 1 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number | Test passes |
-| 2           | action choice                                          | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 3           | action choice                                          | Extreme valid test                               | 5 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number | Test passes |
-| 4           | action choice                                          | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 5           | action choice                                          | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 6           | action choice                                          | Valid test                                       | 0 (integer)            | Program should exit                                              | Program exits                                             | Test passes |
-| 7           | add journey: time band input                           | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 8           | add journey: time band input                           | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 9           | add journey: time band input                           | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 10          | add journey: time band input                           | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 11          | add journey: time band input                           | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 12          | add journey: start zone                                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 13          | add journey: start zone                                | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 14          | add journey: start zone                                | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 15          | add journey: start zone                                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 16          | add journey: start zone                                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 17          | add journey: end zone                                  | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 18          | add journey: end zone                                  | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 19          | add journey: end zone                                  | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 20          | add journey: end zone                                  | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 21          | add journey: end zone                                  | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 22          | add journey: passenger type                            | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 23          | add journey: passenger type                            | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 24          | add journey: passenger type                            | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 25          | add journey: passenger type                            | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 26          | add journey: passenger type                            | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 27          | list journeys: apply listing filters                   | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 28          | list journeys: apply listing filters                   | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 29          | list journeys: apply listing filters                   | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 30          | list journeys: apply listing filters                   | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 31          | list journeys: apply listing filters                   | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 32          | list journeys: choose filter                           | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 33          | list journeys: choose filter                           | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 34          | list journeys: choose filter                           | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 35          | list journeys: choose filter                           | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 36          | list journeys: choose filter                           | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 37          | list journeys: filter by passenger type                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 38          | list journeys: filter by passenger type                | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 39          | list journeys: filter by passenger type                | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 40          | list journeys: filter by passenger type                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 41          | list journeys: filter by passenger type                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 42          | list journeys: filter by time band                     | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 43          | list journeys: filter by time band                     | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 44          | list journeys: filter by time band                     | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 45          | list journeys: filter by time band                     | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 46          | list journeys: filter by time band                     | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 47          | list journeys: filter by start zone                    | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 48          | list journeys: filter by start zone                    | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 49          | list journeys: filter by start zone                    | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 50          | list journeys: filter by start zone                    | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 51          | list journeys: filter by start zone                    | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 52          | list journeys: filter by end zone                      | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 53          | list journeys: filter by end zone                      | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 54          | list journeys: filter by end zone                      | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 55          | list journeys: filter by end zone                      | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 56          | list journeys: filter by end zone                      | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 57          | list journeys: filter by time: start hour              | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 58          | list journeys: filter by time: start hour              | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 59          | list journeys: filter by time: start hour              | Extreme valid test                               | 24 (integer)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 60          | list journeys: filter by time: start hour              | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 61          | list journeys: filter by time: start hour              | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 62          | list journeys: filter by time: end hour                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 63          | list journeys: filter by time: end hour                | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 64          | list journeys: filter by time: end hour                | Extreme valid test                               | 24 (integer)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 65          | list journeys: filter by time: end hour                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 66          | list journeys: filter by time: end hour                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 67          | view summary: summary type choice                      | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 68          | view summary: summary type choice                      | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 69          | view summary: summary type choice                      | Extreme valid test                               | 3 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 70          | view summary: summary type choice                      | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 71          | view summary: summary type choice                      | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 72          | view summary: totals by passenger type: passenger type | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 73          | view summary: totals by passenger type: passenger type | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 74          | view summary: totals by passenger type: passenger type | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 75          | view summary: totals by passenger type: passenger type | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 76          | view summary: totals by passenger type: passenger type | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 77          | remove journey: journey id to remove                   | Valid test                                       | 1 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number | Test passes |
-| 78          | remove journey: journey id to remove                   | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 79          | remove journey: journey id to remove                   | Extreme valid test                               | 99999 (integer)        | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number | Test passes |
-| 80          | remove journey: journey id to remove                   | Extreme invalid test                             | 1000000 (integer)      | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 81          | remove journey: journey id to remove                   | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user    | Test passes |
-| 82          | remove journey: journey id to remove                   | Error test (journey with this id does not exist) | 2 (integer)            | Program should show an error message - id not found              | Program shows an error message - id not found             | Test passes |
-| 83          | remove journey: confirmation                           | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 84          | remove journey: confirmation                           | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 85          | remove journey: confirmation                           | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 86          | remove journey: confirmation                           | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 87          | remove journey: confirmation                           | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 88          | reset day: confirmation                                | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 89          | reset day: confirmation                                | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 90          | reset day: confirmation                                | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                             | Test passes |
-| 91          | reset day: confirmation                                | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
-| 92          | reset day: confirmation                                | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user    | Test passes |
+2 Analysis
+
+    2.1 Core Program Functionality
+
+        2.1.1 Menu actions
+
+        2.1.2 Adding journey
+
+        2.1.3 Remove journey
+
+        2.1.4 List journeys
+
+        2.1.5 View daily summaries
+
+        2.1.6 Reset day
+
+    2.2 System Constraints
+
+    2.3 Input Process Output Table
+
+3 Algorithm designs
+
+    3.1 Class Diagram
+
+    3.2 Flowcharts
+
+4 Testing
+
+5 Evaluation
+
+6 Code listing
+
+7 References
+
+8 Appendices
 
 ---
 
-### Code References
+### Introduction
+
+The focus of this report is to plan, design and implement a console-based program “CityRide Lite” that helps the user track their public transport journeys. First, the report will analyse the given program requirements and base the core program functionality list on it. Then, research of similar programs will be conducted, and the design of the program’s flow will be represented with a flowchart and a class diagram. This will be followed by the creation of the program code and appropriate third-party code referencing. Finally, the program will be tested, and an evaluation of the project will be performed.
+
+---
+
+### Analysis
+
+#### Core Program Functionality
+
+###### Menu actions:
+
+1. Add journey
+
+2. Remove journey
+
+3. List journeys
+
+4. View daily summaries
+
+5. Reset day
+
+6. Exit (or alternatively could be number 0.)
+
+###### 1. Adding journey:
+
+take input from the user:
+
+- date (validate the date, or the system could assign it automatically)
+
+- starting & destination zone (validate that each zone is a number that corresponds to the existing zones, from 1 to 5)
+
+- passenger type (validate that user chose a type that exists)
+
+- time band (peak/off peak)
+
+journey is then stored in memory with the following fields:
+
+- journey ID (a unique ID generated by the system automatically when the journey is created)
+
+- date/time (entered or system assigned)
+
+- is peak (flag to indicate the timeband)
+
+- zones crossed (alternatively could store the start & destination zone, and then calculate zones crossed when outputted, or store both values without calculating)
+
+- passenger type (Adult, Student, Child, Senior Citizen)
+
+- base fare (always calculate)
+
+- discounted fare (calculate if applicable, depends on the passenger type)
+
+- charged fare after applying daily cap to the running total for that passenger type (calculate if applicable)
+
+- daily cap reached (a flag to show if daily cap was reached)
+
+###### 2. Remove journey:
+
+take input from the user:
+
+- journey ID (validate that the ID exists, an error message otherwise)
+
+the program then:
+
+- asks for confirmation from the user
+
+- removes journey from the memory
+
+- recalculates totals for the affected passenger type
+
+###### 3. List journeys:
+
+the program outputs the journeys in the order they were initially entered by the user, with all of the fields that were stored in the process of adding the journey (journey ID, date, start zone & destination zone, time band, passenger type, zones crossed, base fare, discount applied, charged fare after the applying daily cap). the user can choose to apply filters or list journeys without the filters.
+
+the journeys can be filtered by:
+
+- passenger type
+
+- time band
+
+- zone (from or to)
+
+- date
+
+###### 4. View daily summaries:
+
+the user can view summaries for:
+
+- total number of journeys (all types)
+
+- total costs charged (sum across all types)
+
+- average cost per journey 
+
+- most expensive journey with its ID
+
+- totals by passenger type:
+  
+  - journey count
+  
+  - pre-discount count
+  
+  - discounted sum
+  
+  - charged sum after daily cap & if cap was reached
+
+- category count:
+  
+  - count of peak vs off peak
+  
+  - count per zone pair or per each zone involved
+
+###### 5. Reset day:
+
+the program:
+
+- asks user for confirmation
+
+- clears all journey
+
+- clears all running daily totals for each passenger type
+
+---
+
+#### System Constraints
+
+- No data saving outside of a single run of the program because the program only saves records in the main memory, that disappears once the program is terminated (no file/database saving)
+
+- Console based UI - the user interacts with the system via input/output to the console.
+
+- Predetermined set of zones 1-5 (Central, Inner, Suburban, Outer, Rural) that the user can choose from
+
+- Predetermined set of passenger types (Adult, Student, Child, Senior Citizen)
+
+- Fare calculation rules: passenger type discount & daily cap:
+  
+  - adult: 0% | £8.00
+  
+  - student: 25% | £6.00
+  
+  - child: 50% | £4.00
+  
+  - senior citizen: 30% | £7.00
+
+- Journey ID's uniqueness is not guaranteed due to the absence of file saving
+
+------------------------------------------------------------------------------------------------------------------------------
+
+#### Input Process Output Table
+
+| Feature/Task                                                   | Inputs                                                                            | Processing                                                                                                                                         | Outputs                                                                                                                                     |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Start program                                                  | None (program launch)                                                             | Create CityRideLite object                                                                                                                         | Main menu displayed                                                                                                                         |
+| Display main menu (FR1/FR2)                                    | User menu choice (0-5)                                                            | Validate input is an integer in range; activate corresponding function                                                                             | Next screen shown depending on selection / looping of main menu when input invalid                                                          |
+| Adding journey (FR4)                                           | Date, starting & destination zone, passenger type, time band                      | Validate date (if entered by user), validate the zone integer is in range, validate passenger type exists, validate time band                      | None (activates 'Saving journey')                                                                                                           |
+| Saving journey (FR6, FR7, FR12, FR13,  FR14, FR17, FR18, FR19) | None (passed from 'Adding journey')                                               | Generate unique ID; assign date/time; calculate and save zones crossed; calculate base fare, discounted fare, charged fare (with daily cap)        | Confirmation of journey addition / error "entered <invalid field> is invalid due to <reason>"                                               |
+| Listing journeys (FR8)                                         | User menu choice 3, user chose to apply no filters                                | Get journeys in the order entered by the user                                                                                                      | Prints journey ID, date, start & destination zones, time band, passenger type, zones crossed, base fare, discount fare, charged fare        |
+| Filter journeys (FR9)                                          | Optional filters that include: passenger type, time band, zone (from or to), date | Get journeys that apply to the specific filter(s)                                                                                                  | Prints journey ID, date, start & destination zones, time band, passenger type, zones crossed, base fare, discount fare, charged fare        |
+| Remove journey (FR10, FR25)                                    | Journey ID, confirmation                                                          | Validates that journey ID exists; once confirmed, removes journey from memory and recalculates totals                                              | Asks user for confirmation / Message of successfull removal / Message of invalid journey ID                                                 |
+| Reset day (FR11)                                               | Confirmation                                                                      | Clears all journeys, clears all totals                                                                                                             | Asks user for confirmation / Message of successfull clearance                                                                               |
+| View daily summaries (FR20)                                    | Type of summary                                                                   | Calculates total number of journeys (all types) / calculates total sum / calculates average across types / finds most expensive journey and its ID | total number of journeys / total costs charged / average cost per journey / most expensive journey with its ID / ask again if input invalid |
+| View totals by passenger type (FR21)                           | Type of total, type of passenger                                                  | Find appropriate totals                                                                                                                            | journey count / pre-discount count / discounted sum / charged sum after daily cap & if cap was reached                                      |
+| View category counts (FR22)                                    | Type of category                                                                  | Find appropriate counts                                                                                                                            | count of peak vs off peak / count per zone pair or per each zone involved                                                                   |
+
+FR3, FR5, FR15, FR16, FR23, FR24, FR26 are implied in all of the features/tasks
+
+---
+
+### Algorithm designs
+
+#### Class Diagram
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/final_submission/class_diagram/class_diagram.jpg)
+
+#### Flowcharts
+
+Main program
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/MAIN_program_logic_flowchart.jpg)
+
+Print menu
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Print_menu_flowchart.jpg)
+
+Activate menu action
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Activate_menu_action_flowchart.jpg)
+
+Add journey
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Add_journey_flowchart.jpg)
+
+Remove journey
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Remove_journey_flowchart.jpg)
+
+List journeys
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/List_journeys_flowchart.jpg)
+
+Activate list filter action
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/List_filter_flowchart.jpg)
+
+View Daily Summaries
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/View_daily_sum_flowchart.jpg)
+
+All types summary
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/All_types_sum_flowchart.jpg)
+
+Totals by passenger type summary
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Passenger_type_sum_flowchart.jpg)
+
+Category count summary
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Category_sum_flowchart.jpg)
+
+Reset day
+
+![](/Users/assemyeleussiz/IdeaProjects/T0479574_IY4113_java/milestone2_images/milestone2_flowchart/Reset_day_flowchart.jpg)
+
+---
+
+### Testing
+
+**Functional Requirements: 1, 2, 3, 4(a), 5, 8, 9(a, b, c, d), 10, 11, 23(a, b, c, d, e), 24, 25**
+
+| Test Number | Test                                                   | Test Description                                 | Test Data              | Expected Outcome                                                 | Actual Outcome                                                          | Comments                                                                        |
+| ----------- | ------------------------------------------------------ | ------------------------------------------------ | ---------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 1           | action choice                                          | Valid test                                       | 1 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number               | Test passes                                                                     |
+| 2           | action choice                                          | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 3           | action choice                                          | Extreme valid test                               | 5 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number               | Test passes                                                                     |
+| 4           | action choice                                          | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 5           | action choice                                          | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 6           | action choice                                          | Valid test                                       | 0 (integer)            | Program should exit                                              | Program exits                                                           | Test passes                                                                     |
+| 7           | add journey: time band input                           | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 8           | add journey: time band input                           | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 9           | add journey: time band input                           | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 10          | add journey: time band input                           | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 11          | add journey: time band input                           | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 12          | add journey: start zone                                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 13          | add journey: start zone                                | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 14          | add journey: start zone                                | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 15          | add journey: start zone                                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 16          | add journey: start zone                                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 17          | add journey: end zone                                  | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 18          | add journey: end zone                                  | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 19          | add journey: end zone                                  | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 20          | add journey: end zone                                  | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 21          | add journey: end zone                                  | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 22          | add journey: passenger type                            | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 23          | add journey: passenger type                            | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 24          | add journey: passenger type                            | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 25          | add journey: passenger type                            | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 26          | add journey: passenger type                            | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 27          | list journeys: apply listing filters                   | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 28          | list journeys: apply listing filters                   | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 29          | list journeys: apply listing filters                   | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 30          | list journeys: apply listing filters                   | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 31          | list journeys: apply listing filters                   | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 32          | list journeys: choose filter                           | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 33          | list journeys: choose filter                           | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 34          | list journeys: choose filter                           | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 35          | list journeys: choose filter                           | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 36          | list journeys: choose filter                           | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 37          | list journeys: filter by passenger type                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 38          | list journeys: filter by passenger type                | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 39          | list journeys: filter by passenger type                | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 40          | list journeys: filter by passenger type                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 41          | list journeys: filter by passenger type                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 42          | list journeys: filter by time band                     | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 43          | list journeys: filter by time band                     | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 44          | list journeys: filter by time band                     | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 45          | list journeys: filter by time band                     | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 46          | list journeys: filter by time band                     | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 47          | list journeys: filter by start zone                    | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 48          | list journeys: filter by start zone                    | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 49          | list journeys: filter by start zone                    | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 50          | list journeys: filter by start zone                    | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 51          | list journeys: filter by start zone                    | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 52          | list journeys: filter by end zone                      | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 53          | list journeys: filter by end zone                      | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 54          | list journeys: filter by end zone                      | Extreme valid test                               | 5 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 55          | list journeys: filter by end zone                      | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 56          | list journeys: filter by end zone                      | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 57          | list journeys: filter by time: start hour              | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 58          | list journeys: filter by time: start hour              | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 59          | list journeys: filter by time: start hour              | Extreme valid test                               | 24 (integer)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 60          | list journeys: filter by time: start hour              | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 61          | list journeys: filter by time: start hour              | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 62          | list journeys: filter by time: end hour                | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 63          | list journeys: filter by time: end hour                | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 64          | list journeys: filter by time: end hour                | Extreme valid test                               | 24 (integer)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 65          | list journeys: filter by time: end hour                | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 66          | list journeys: filter by time: end hour                | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 67          | view summary: summary type choice                      | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 68          | view summary: summary type choice                      | Invalid test                                     | -2 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 69          | view summary: summary type choice                      | Extreme valid test                               | 3 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 70          | view summary: summary type choice                      | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 71          | view summary: summary type choice                      | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 72          | view summary: totals by passenger type: passenger type | Valid test                                       | 1 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 73          | view summary: totals by passenger type: passenger type | Invalid test                                     | 20 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 74          | view summary: totals by passenger type: passenger type | Extreme valid test                               | 4 (integer)            | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 75          | view summary: totals by passenger type: passenger type | Extreme invalid test                             | 100000 (integer)       | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 76          | view summary: totals by passenger type: passenger type | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 77          | remove journey: journey id to remove                   | Valid test                                       | 1 (integer)            | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number               | Test passes                                                                     |
+| 78          | remove journey: journey id to remove                   | Invalid test                                     | -3 (integer)           | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 79          | remove journey: journey id to remove                   | Extreme valid test                               | 99999 (integer)        | Program should perform the action relative to the choice number  | Program performs the action relative to the choice number               | Test passes                                                                     |
+| 80          | remove journey: journey id to remove                   | Extreme invalid test                             | 1000000 (integer)      | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 81          | remove journey: journey id to remove                   | Error test                                       | "Hat" (string)         | Program should show an error message and re-prompt the user      | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 82          | remove journey: journey id to remove                   | Error test (journey with this id does not exist) | 2 (integer)            | Program should show an error message - id not found              | Program shows an error message - id not found                           | Test passes                                                                     |
+| 83          | remove journey: confirmation                           | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 84          | remove journey: confirmation                           | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 85          | remove journey: confirmation                           | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 86          | remove journey: confirmation                           | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 87          | remove journey: confirmation                           | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 88          | reset day: confirmation                                | Valid test                                       | "y" (string)           | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 89          | reset day: confirmation                                | Invalid test                                     | "Hat" (string)         | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 90          | reset day: confirmation                                | Extreme valid test                               | "YES" (string)         | Program should continue as expected                              | Program continues as expected                                           | Test passes                                                                     |
+| 91          | reset day: confirmation                                | Extreme invalid test                             | "Perhaps yes" (string) | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 92          | reset day: confirmation                                | Error test                                       | 2 (integer)            | Program should respond with error message and re-prompt the user | Program shows an error message and re-prompts the user                  | Test passes                                                                     |
+| 93          | reset day: confirmation                                | Error test                                       | carriage return        | Program should respond with error message and re-prompt the user | Program does not show an error message and does not re-promppt the user | Test failed - need to add a validation check for carriage return or blank input |
+
+---
+
+### Evaluation
+
+The program meets the majority of the functional requirements with minor exceptions. The created journey tracker system successfully performs all the core features as presented in its main menu - adding, listing, filtering, removing journeys, viewing daily summaries and resetting the day. A single run of the program accounts for a single day session for one user.  
+
+The program’s strengths include correct journey creation and storage. When adding a journey, all the required fields, including a unique journey ID and a date time, are stored in memory and are cleared when the program terminates. A good decision was to have a special class for reading user input that has methods to read different types of input. Those methods would then, in turn, be called each time the program needs to read the user choice. Having the logic contained in one place allowed for easy validation checks, thus, the current program cannot be crushed by invalid user input and exceptions are handled with informative error messages. Another one of the program’s strengths would be robust fare calculation, as the system utilises the provided dataset to calculate the fares. Discounts and daily caps are considered and the charged fare follows all the rules stated in the functional requirements list. The daly summaries also account for the journey removals and the day reset action, showing the up-to-date values.  
+
+The listing of journeys allows for filtering by passenger type, time band, start/end zones and time. Even though the assignment brief required filtering by date, it was a weighted decision to filter by hours instead, as the program can only account for a single day session. A weakness present in the current program is that the system does not store or compute the number of zones crossed as stated in functional requirement number 12, instead, the program stores the IDs of the start and end zones each time a journey is created. When viewing the summary for the zones count, the system calculates a zone based on how many times it was listed as the start or end zone, completely missing the zones that could be in between the start and end zones. The flawed calculation should have been handled by calculating what zones the passenger passed in-between and increasing the respective zones’ counters so that it is reflected in the summary. Even though the validation does not allow for the program to break, it does not account for the cases when the user enters a carriage return or blank spaces. Instead of showing an error message and re-prompting the user, it does nothing, thus, validation checks for carriage return or blank spaces need to be added. Another design omission is storing discounted fare for adult passengers. Adult passengers do not have a discount, so the discounted fare will always be equal to the base fare. The assignment brief states that discounted fare needs to be stored only if it is applicable, which for adults it is not. To fix that, the class for passenger type running totals could have a built in option to stop the discounted fare from being stored upon detecting that it is being instantiated for the adult passenger type. 
+
+Another key weakness of the program is observable on the class diagram - some of the classes are big and contain a large amount of methods that could be separated into their own classes. For example, fare calculation methods in the “JourneyTracker” class could be separated into a “Calculator” class that would be only responsible for calculations. The method for calculating zones crossed could also be added there.
+
+---
+
+### Code listing
+
+CityRideDataset
+
+```java
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
+
+final class CityRideDataset {
+
+    private CityRideDataset() {}
+
+    public static final int MIN_ZONE = 1;
+    public static final int MAX_ZONE = 5;
+
+    public enum TimeBand {
+        PEAK,
+        OFF_PEAK
+    }
+
+    public enum PassengerType {
+        ADULT,
+        STUDENT,
+        CHILD,
+        SENIOR_CITIZEN
+    }
+
+    public static final Map<PassengerType, BigDecimal> DISCOUNT_RATE = Map.of(
+            PassengerType.ADULT, new BigDecimal("0.00"),
+            PassengerType.STUDENT, new BigDecimal("0.25"),
+            PassengerType.CHILD, new BigDecimal("0.50"),
+            PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30")
+    );
+
+    public static final Map<PassengerType, BigDecimal> DAILY_CAP = Map.of(
+            PassengerType.ADULT, new BigDecimal("8.00"),
+            PassengerType.STUDENT, new BigDecimal("6.00"),
+            PassengerType.CHILD, new BigDecimal("4.00"),
+            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00")
+    );
+
+    public static final Map<String, BigDecimal> BASE_FARE = buildBaseFare();
+
+    public static BigDecimal getBaseFare(int fromZone, int toZone, TimeBand timeBand) {
+        return BASE_FARE.get(key(fromZone, toZone, timeBand));
+    }
+
+    public static String key(int fromZone, int toZone, TimeBand timeBand) {
+        return fromZone + "-" + toZone + "-" + timeBand.name();
+    }
+
+    private static BigDecimal money(String amount) {
+        return new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private static Map<String, BigDecimal> buildBaseFare() {
+        Map<String, BigDecimal> m = new HashMap<>();
+
+        // Peak fares
+        put(m,1,1,TimeBand.PEAK,"2.50"); put(m,1,2,TimeBand.PEAK,"3.20");
+        put(m,1,3,TimeBand.PEAK,"3.80"); put(m,1,4,TimeBand.PEAK,"4.40");
+        put(m,1,5,TimeBand.PEAK,"5.00");
+
+        put(m,2,1,TimeBand.PEAK,"3.20"); put(m,2,2,TimeBand.PEAK,"2.30");
+        put(m,2,3,TimeBand.PEAK,"3.10"); put(m,2,4,TimeBand.PEAK,"3.80");
+        put(m,2,5,TimeBand.PEAK,"4.50");
+
+        put(m,3,1,TimeBand.PEAK,"3.80"); put(m,3,2,TimeBand.PEAK,"3.10");
+        put(m,3,3,TimeBand.PEAK,"2.10"); put(m,3,4,TimeBand.PEAK,"3.00");
+        put(m,3,5,TimeBand.PEAK,"3.70");
+
+        put(m,4,1,TimeBand.PEAK,"4.40"); put(m,4,2,TimeBand.PEAK,"3.80");
+        put(m,4,3,TimeBand.PEAK,"3.00"); put(m,4,4,TimeBand.PEAK,"2.00");
+        put(m,4,5,TimeBand.PEAK,"2.90");
+
+        put(m,5,1,TimeBand.PEAK,"5.00"); put(m,5,2,TimeBand.PEAK,"4.50");
+        put(m,5,3,TimeBand.PEAK,"3.70"); put(m,5,4,TimeBand.PEAK,"2.90");
+        put(m,5,5,TimeBand.PEAK,"1.90");
+
+        // Off-peak fares
+        put(m,1,1,TimeBand.OFF_PEAK,"2.00"); put(m,1,2,TimeBand.OFF_PEAK,"2.70");
+        put(m,1,3,TimeBand.OFF_PEAK,"3.20"); put(m,1,4,TimeBand.OFF_PEAK,"3.70");
+        put(m,1,5,TimeBand.OFF_PEAK,"4.20");
+
+        put(m,2,1,TimeBand.OFF_PEAK,"2.70"); put(m,2,2,TimeBand.OFF_PEAK,"1.90");
+        put(m,2,3,TimeBand.OFF_PEAK,"2.60"); put(m,2,4,TimeBand.OFF_PEAK,"3.20");
+        put(m,2,5,TimeBand.OFF_PEAK,"3.80");
+
+        put(m,3,1,TimeBand.OFF_PEAK,"3.20"); put(m,3,2,TimeBand.OFF_PEAK,"2.60");
+        put(m,3,3,TimeBand.OFF_PEAK,"1.70"); put(m,3,4,TimeBand.OFF_PEAK,"2.50");
+        put(m,3,5,TimeBand.OFF_PEAK,"3.10");
+
+        put(m,4,1,TimeBand.OFF_PEAK,"3.70"); put(m,4,2,TimeBand.OFF_PEAK,"3.20");
+        put(m,4,3,TimeBand.OFF_PEAK,"2.50"); put(m,4,4,TimeBand.OFF_PEAK,"1.60");
+        put(m,4,5,TimeBand.OFF_PEAK,"2.40");
+
+        put(m,5,1,TimeBand.OFF_PEAK,"4.20"); put(m,5,2,TimeBand.OFF_PEAK,"3.80");
+        put(m,5,3,TimeBand.OFF_PEAK,"3.10"); put(m,5,4,TimeBand.OFF_PEAK,"2.40");
+        put(m,5,5,TimeBand.OFF_PEAK,"1.50");
+
+        return Map.copyOf(m);
+    }
+
+    private static void put(Map<String, BigDecimal> m, int from, int to, TimeBand band, String amount) {
+        m.put(key(from, to, band), money(amount));
+    }
+}
+```
+
+Formatter
+
+```java
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.format.DateTimeFormatter;
+
+public class Formatter {
+    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+
+    public BigDecimal formatBigDecimal2dp(BigDecimal bigDecimal) {
+        return bigDecimal.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    // getting names of enums
+    public String getNameOfTimeBand(CityRideDataset.TimeBand timeBand) {
+        String timeBandName = "Unknown";
+        if (timeBand == CityRideDataset.TimeBand.PEAK) {
+            timeBandName = "Peak";
+        }
+        else if (timeBand == CityRideDataset.TimeBand.OFF_PEAK) {
+            timeBandName = "Off-peak";
+        }
+        return timeBandName;
+    }
+
+    public String getNameOfPassengerType(CityRideDataset.PassengerType passengerType) {
+        String passengerTypeName = "Unknown";
+        if (passengerType == CityRideDataset.PassengerType.ADULT) {
+            passengerTypeName = "Adult";
+        }
+        else if (passengerType == CityRideDataset.PassengerType.STUDENT) {
+            passengerTypeName = "Student";
+        }
+        else if (passengerType == CityRideDataset.PassengerType.CHILD) {
+            passengerTypeName = "Child";
+        }
+        else if (passengerType == CityRideDataset.PassengerType.SENIOR_CITIZEN) {
+            passengerTypeName = "Senior Citizen";
+        }
+        return passengerTypeName;
+    }
+}
+
+```
+
+InputValidator
+
+```java
+import java.util.Scanner;
+
+public class InputValidator {
+    private Scanner scanner = new Scanner(System.in);
+
+    // Kvasnovsky (2025)
+    public int readIntInRange(int min, int max, boolean isPrintingRange) {
+        int userInput = min - 1;
+        while (userInput < min || userInput > max) {
+            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
+            String prompt = "Enter a whole number" + rangeString + ": ";
+            System.out.print(prompt);
+
+            while (!scanner.hasNextInt()) {
+                System.out.print("That's not a whole number! Try again: ");
+                scanner.next();
+            }
+
+            userInput = scanner.nextInt();
+            if (userInput < min || userInput > max) {
+                System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
+            }
+        }
+        scanner.nextLine();
+        return userInput;
+    }
+
+    public boolean readYesNo() {
+        boolean isValid = false;
+        boolean userChoice = false;
+
+        while (!isValid) {
+            System.out.print("Enter Y/N: ");
+            String userInput = scanner.nextLine();
+            userInput = userInput.toLowerCase().strip();
+            if (userInput.equals("y") || userInput.equals("yes")) {
+                userChoice = true;
+                isValid = true;
+            }
+            else if (userInput.equals("n") || userInput.equals("no")) {
+                isValid = true;
+            }
+            else {
+                System.out.println("Invalid! Enter Yes or No!");
+            }
+        }
+
+        return userChoice;
+    }
+}
+
+```
+
+Journey
+
+```java
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class Journey {
+    // states
+    private int journeyId;
+    // Bro Code (2024)
+    private LocalDateTime datetime;
+    private CityRideDataset.TimeBand timeBand;
+    private Zone startZone;
+    private Zone endZone;
+    private CityRideDataset.PassengerType passengerType;
+    private BigDecimal baseFare;
+    private BigDecimal discountedFare;
+    private BigDecimal chargedFare;
+    private boolean dailyCapReached;
+    // money formatter
+    private Formatter formatter = new Formatter();
+
+    // constructors
+    public Journey() {
+        this.journeyId = 0;
+        this.datetime = LocalDateTime.now();
+        this.timeBand = null;
+        this.startZone = null;
+        this.endZone = null;
+        this.passengerType = null;
+        this.baseFare = new BigDecimal("0.0");
+        this.discountedFare = new BigDecimal("0.0");
+        this.chargedFare = new BigDecimal("0.0");
+        this.dailyCapReached = false;
+    }
+    public Journey(int journeyID, CityRideDataset.TimeBand timeBand, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+        this.journeyId = journeyID;
+        this.datetime = LocalDateTime.now();
+        this.timeBand = timeBand;
+        this.startZone = startZone;
+        this.endZone = endZone;
+        this.passengerType = passengerType;
+        this.baseFare = baseFare;
+        this.discountedFare = discountedFare;
+        this.chargedFare = chargedFare;
+        this.dailyCapReached = dailyCapReached;
+    }
+
+
+    // getters
+    public int getJourneyId() {
+        return journeyId;
+    }
+    public CityRideDataset.PassengerType getPassengerType() {
+        return passengerType;
+    }
+    public BigDecimal getBaseFare() {
+        return baseFare;
+    }
+    public BigDecimal getDiscountedFare() {
+        return discountedFare;
+    }
+    public BigDecimal getChargedFare() {
+        return chargedFare;
+    }
+    public Zone getStartZone() {
+        return startZone;
+    }
+    public Zone getEndZone() {
+        return endZone;
+    }
+    public CityRideDataset.TimeBand getTimeBand() {
+        return timeBand;
+    }
+    public boolean getDailyCapReached() {
+        return dailyCapReached;
+    }
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
+
+    // other methods
+    public void printJourneyDetails() {
+        System.out.println("--------------------------");
+        System.out.println("Journey ID: " + this.journeyId);
+        String formattedDatetime = this.datetime.format(formatter.dateTimeFormatter);
+        System.out.println("Datetime: " + formattedDatetime);
+        System.out.print("Timeband: ");
+        System.out.println(formatter.getNameOfTimeBand(this.timeBand));
+        System.out.println("Start zone: " + this.startZone.getZoneId() + ". " + this.startZone.getZoneName());
+        System.out.println("End zone: " + this.endZone.getZoneId() + ". " + this.endZone.getZoneName());
+        System.out.println("Passenger type: " + formatter.getNameOfPassengerType(passengerType));
+
+        System.out.println("Base fare: £" + formatter.formatBigDecimal2dp(this.baseFare));
+        System.out.println("Discounted fare: £" + formatter.formatBigDecimal2dp(this.discountedFare));
+        System.out.println("Charged fare: £" + formatter.formatBigDecimal2dp(this.chargedFare));
+
+        System.out.println("Daily cap reached: " + this.dailyCapReached);
+    }
+}
+
+```
+
+JourneyTracker
+
+```java
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class JourneyTracker {
+    // states
+    private int journeyIdCounter = 1;
+    private Formatter formatter = new Formatter();
+    // lists
+    private List<Journey> journeysList = new ArrayList<>();
+    // arrays
+    private Zone[] zonesArr = {new Zone(1, "Central"),
+            new Zone(2, "Inner"),
+            new Zone(3, "Suburban"),
+            new Zone(4, "Outer"),
+            new Zone(5,"Rural")};
+
+    // daily running total for each Passenger Type
+    private SummaryForPassengerType adultSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType studentSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType childSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
+
+    // methods
+    // getters
+    public int getJourneyIdCounter() {
+        return journeyIdCounter;
+    }
+    public SummaryForPassengerType getSummaryObjForPassengerType(CityRideDataset.PassengerType passengerType) {
+        SummaryForPassengerType foundSummary;
+        if (passengerType == CityRideDataset.PassengerType.ADULT) {
+            foundSummary = adultSummary;
+        }
+        else if (passengerType == CityRideDataset.PassengerType.STUDENT) {
+            foundSummary = studentSummary;
+        }
+        else if (passengerType == CityRideDataset.PassengerType.CHILD) {
+            foundSummary = childSummary;
+        }
+        else if (passengerType == CityRideDataset.PassengerType.SENIOR_CITIZEN) {
+            foundSummary = seniorCitizenSummary;
+        }
+        else {
+            foundSummary = null;
+        }
+        return foundSummary;
+    }
+
+    // setters
+    public void setJourneyIdCounter(int journeyIdCounter) {
+        this.journeyIdCounter = journeyIdCounter;
+    }
+
+    // adding Journey
+    public void addJourney(Journey journey) {
+        journeysList.add(journey);
+        System.out.println("Journey with Journey ID of " + journey.getJourneyId() + " has been added.");
+
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(journey.getPassengerType());
+        summary.addJourneyToSum(journey);
+        journey.getStartZone().incrementCount();
+        journey.getEndZone().incrementCount();
+    }
+
+    public Zone findZoneById(int zoneId) {
+        for (Zone z : zonesArr) {
+            if (z.getZoneId() == zoneId) {
+                return z;
+            }
+        }
+        return null;
+    }
+
+    // listing
+    public void listAllZones() {
+        if (zonesArr.length == 0) {
+            System.out.println("No zones available!");
+        }
+        else {
+            System.out.println("------   Zones   ------");
+            for (Zone z : zonesArr) {
+                System.out.println(z.getZoneId() + ". " + z.getZoneName());
+            }
+            System.out.println("-----------------------");
+        }
+    }
+
+    public void listAllPassengerTypes() {
+        System.out.println("------   Passenger Types   ------");
+        for (int i = 0; i < CityRideDataset.PassengerType.values().length; i++) {
+            String passengerTypeName = formatter.getNameOfPassengerType(CityRideDataset.PassengerType.values()[i]);
+            System.out.println((i + 1) + ". " + passengerTypeName);
+        }
+        System.out.println("---------------------------------");
+    }
+
+    // listing journeys
+    public void listAllJourneys() {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            System.out.println("------   Journeys   ------");
+            for (Journey j : journeysList) {
+                j.printJourneyDetails();
+            }
+            System.out.println("--------------------------");
+        }
+    }
+
+    public void listJourneysByPassengerType(CityRideDataset.PassengerType passengerType) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            List<Journey> passengerTypeJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getPassengerType() == passengerType) {
+                    passengerTypeJourneysList.add(j);
+                }
+            }
+            if (passengerTypeJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this passenger type yet.");
+            }
+            else {
+                System.out.println("------ " + formatter.getNameOfPassengerType(passengerType) + " Journeys ------");
+
+                for (Journey j : passengerTypeJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
+        }
+    }
+
+    public void listJourneysByTimeBand(CityRideDataset.TimeBand timeBand) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            List<Journey> timeBandJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getTimeBand() == timeBand) {
+                    timeBandJourneysList.add(j);
+                }
+            }
+            if (timeBandJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this timeband yet.");
+            }
+            else {
+                System.out.println("------ " + formatter.getNameOfTimeBand(timeBand) + " Journeys ------");
+
+                for (Journey j : timeBandJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
+        }
+    }
+
+    public void listJourneysByZone(Zone zone, boolean isStartZone) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            List<Journey> zonesJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                Zone zoneToCompare;
+                if (isStartZone) {
+                    zoneToCompare = j.getStartZone();
+                }
+                else {
+                    zoneToCompare = j.getEndZone();
+                }
+                if (zoneToCompare == zone) {
+                    zonesJourneysList.add(j);
+                }
+            }
+            String zoneDescription = isStartZone ? "Start" : "End";
+            if (zonesJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for this " + zoneDescription + " zone yet.");
+            }
+            else {
+                System.out.println("------ " + zoneDescription + " zone Journeys ------");
+
+                for (Journey j : zonesJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
+        }
+    }
+
+    public void listJourneysByHours(int startHour, int endHour) {
+        if (journeysList.isEmpty()) {
+            System.out.println("No journeys have been added yet.");
+        }
+        else {
+            List<Journey> hoursJourneysList = new ArrayList<>();
+            for (Journey j : journeysList) {
+                if (j.getDatetime().getHour() >= startHour && j.getDatetime().getHour() <= endHour) {
+                    hoursJourneysList.add(j);
+                }
+            }
+            if (hoursJourneysList.isEmpty()) {
+                System.out.println("There are no journeys for the " + startHour + "-" + endHour + " hours yet.");
+            }
+            else {
+                System.out.println("------ " + startHour + "-" + endHour + " hours Journeys ------");
+
+                for (Journey j : hoursJourneysList) {
+                    j.printJourneyDetails();
+                }
+                System.out.println("--------------------------");
+            }
+        }
+    }
+
+    // Summary: daily summaries
+    public int getTotalJourneysNum() {
+        return adultSummary.getTotalJourneyNum() + studentSummary.getTotalJourneyNum() + childSummary.getTotalJourneyNum() + seniorCitizenSummary.getTotalJourneyNum();
+    }
+
+    public BigDecimal getTotalCostsCharged() {
+        BigDecimal totalCostsCharged = adultSummary.getTotalChargedFare().add(studentSummary.getTotalChargedFare()).add(childSummary.getTotalChargedFare()).add(seniorCitizenSummary.getTotalChargedFare());
+        return formatter.formatBigDecimal2dp(totalCostsCharged);
+    }
+
+    public BigDecimal getAverageCostPerJourney() {
+        BigDecimal totalChargedFare = getTotalCostsCharged();
+        BigDecimal averageCost;
+        if (getTotalJourneysNum() == 0) {
+            averageCost = new BigDecimal("0.00");
+        }
+        else {
+            BigDecimal totalJourneysNum = new BigDecimal(getTotalJourneysNum());
+            averageCost = totalChargedFare.divide(totalJourneysNum, RoundingMode.HALF_UP);
+        }
+        return formatter.formatBigDecimal2dp(averageCost);
+    }
+
+    public List<Journey> getMostExpensiveJourneysList() {
+        BigDecimal mostExpensiveCharge = new BigDecimal("0.00");
+        List<Journey> expensiveJourneysList = new ArrayList<>();
+
+        for (Journey j : journeysList) {
+            if (j.getChargedFare().compareTo(mostExpensiveCharge) > 0) {
+                expensiveJourneysList.clear();
+                expensiveJourneysList.add(j);
+                mostExpensiveCharge = j.getChargedFare();
+            }
+            else if (j.getChargedFare().compareTo(mostExpensiveCharge) == 0) {
+                expensiveJourneysList.add(j);
+            }
+        }
+        return expensiveJourneysList;
+    }
+
+    // Summary: category counts
+    public int[] getPeakVsOffPeakCount() {
+        int peakCounter = 0;
+        int offPeakCounter = 0;
+        for (Journey j : journeysList) {
+            if (j.getTimeBand() == CityRideDataset.TimeBand.PEAK) {
+                peakCounter++;
+            }
+            else {
+                offPeakCounter++;
+            }
+        }
+        return new int[]{peakCounter, offPeakCounter};
+    }
+
+    public Map<Integer, Integer> getZoneCounts() {
+        Map<Integer, Integer> zoneCountsMap = new HashMap<>();
+        for (Zone zone : zonesArr) {
+            zoneCountsMap.put(zone.getZoneId(), zone.getCount());
+        }
+        return zoneCountsMap;
+    }
+
+    // fare calculations
+    public BigDecimal calculateDiscountFare(int startZoneId, int endZoneId, CityRideDataset.TimeBand timeBand, CityRideDataset.PassengerType passengerType) {
+        BigDecimal baseFare = CityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
+        BigDecimal discount = CityRideDataset.DISCOUNT_RATE.get(passengerType);
+        BigDecimal discountOfBaseFare = baseFare.multiply(discount);
+        return baseFare.subtract(discountOfBaseFare);
+    }
+
+    public BigDecimal calculateChargedFare(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
+        BigDecimal chargedFare;
+
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        BigDecimal totalDiscountedFare = summary.getTotalDiscountedFare();
+        BigDecimal newDiscountedTotal = discountedFare.add(summary.getTotalDiscountedFare());
+        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+
+        boolean dailyCapReached = summary.getDailyCapReached();
+
+        if (!dailyCapReached) {
+            if (newDiscountedTotal.compareTo(dailyCap) > 0) {
+                chargedFare = dailyCap.subtract(totalDiscountedFare);
+            } else {
+                chargedFare = discountedFare;
+            }
+        }
+        else {
+            chargedFare = new BigDecimal("0.00");
+        }
+        return chargedFare;
+    }
+
+    public boolean calculateDailyCapReached(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        BigDecimal newDailyTotal = discountedFare.add(summary.getTotalChargedFare());
+        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+
+        return newDailyTotal.compareTo(dailyCap) >= 0;
+    }
+
+    // removing journey
+    public Journey findJourneyById(int journeyId) {
+        for(Journey journey : journeysList) {
+            if(journey.getJourneyId() == journeyId) {
+                return journey;
+            }
+        }
+        return null;
+    }
+
+    public Journey removeJourneyById(int journeyId) {
+        Journey removedJourney = null;
+        for(int i = 0; i < journeysList.size(); i++) {
+            if(journeysList.get(i).getJourneyId() == journeyId) {
+                removedJourney = journeysList.remove(i);
+                break;
+            }
+        }
+        return removedJourney;
+    }
+
+    public void recalculateSummariesForRemovedJourney(Journey removedJourney) {
+        CityRideDataset.PassengerType passengerType = removedJourney.getPassengerType();
+        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
+        summary.subtractJourneyFromSum(removedJourney);
+        removedJourney.getStartZone().decrementCount();
+        removedJourney.getEndZone().decrementCount();
+    }
+
+    // resetting the day
+    private void resetZoneCounts() {
+        for (Zone z : zonesArr) {
+            z.setCount(0);
+        }
+    }
+    public void resetDay() {
+        journeysList.clear();
+        adultSummary.clearAllTotals();
+        studentSummary.clearAllTotals();
+        childSummary.clearAllTotals();
+        seniorCitizenSummary.clearAllTotals();
+        resetZoneCounts();
+    }
+}
+```
+
+JourneyTrackerApp
+
+```java
+import java.util.Scanner;
+
+public class JourneyTrackerApp {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        JourneyTracker journeyTracker = new JourneyTracker();
+        MainMenu mainMenu = new MainMenu();
+        InputValidator inputValidator = new InputValidator();
+
+        int userInput;
+
+        mainMenu.printWelcome();
+
+        do {
+            mainMenu.printMainMenu();
+            userInput = inputValidator.readIntInRange(0, 5, true);
+
+            if (userInput == 1) {
+                mainMenu.actionAddJourney(inputValidator, journeyTracker);
+            }
+            else if (userInput == 2) {
+                mainMenu.actionListJourneys(journeyTracker, inputValidator);
+            }
+            else if (userInput == 3) {
+                mainMenu.actionViewSummary(journeyTracker, inputValidator);
+            }
+            else if (userInput == 4) {
+                mainMenu.actionRemoveJourney(journeyTracker, inputValidator);
+            }
+            else if (userInput == 5) {
+                mainMenu.actionResetDay(journeyTracker, inputValidator);
+            }
+        }
+        while (userInput != 0);
+        scanner.close();
+    }
+}
+
+```
+
+MainMenu
+
+```java
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+public class MainMenu {
+    private Formatter formatter = new Formatter();
+
+    // methods
+    public void printWelcome() {
+        System.out.println("+++++++++++++++++++++++++++++++++++");
+        System.out.println("++   Welcome to CityRide Lite!   ++");
+        System.out.println("+++++++++++++++++++++++++++++++++++");
+    }
+
+    public void printMainMenu() {
+        System.out.println("\n");
+        System.out.println("Please choose from the following:");
+        System.out.println("1. Add journey");
+        System.out.println("2. List journeys");
+        System.out.println("3. View summaries");
+        System.out.println("4. Remove journey");
+        System.out.println("5. Reset day");
+        System.out.println("0. Exit \n");
+    }
+
+    // asking for certain input
+    public CityRideDataset.PassengerType askForPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("What is the passenger type?");
+        journeyTracker.listAllPassengerTypes();
+        int passengerTypeId = inputValidator.readIntInRange(1, 4, true);
+
+        return CityRideDataset.PassengerType.values()[passengerTypeId - 1];
+    }
+
+    public Zone askForZone(String zoneDescription, JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("What is the ID of the " + zoneDescription + " zone?");
+        journeyTracker.listAllZones();
+        int zoneId = inputValidator.readIntInRange(CityRideDataset.MIN_ZONE, CityRideDataset.MAX_ZONE, true);
+        return journeyTracker.findZoneById(zoneId);
+    }
+
+    public CityRideDataset.TimeBand askForTimeBand(InputValidator inputValidator) {
+        boolean isPeak = inputValidator.readYesNo();
+        CityRideDataset.TimeBand timeBand;
+        if (isPeak) {
+            timeBand = CityRideDataset.TimeBand.PEAK;
+        }
+        else {
+            timeBand = CityRideDataset.TimeBand.OFF_PEAK;
+        }
+        return timeBand;
+    }
+
+    // menu actions
+    public void actionAddJourney(InputValidator inputValidator, JourneyTracker journeyTracker) {
+        System.out.println("+++++++ Adding a journey +++++++");
+        System.out.println("Was the journey on peak?");
+        CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
+        Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
+        Zone endZone = this.askForZone("end", journeyTracker, inputValidator);
+        CityRideDataset.PassengerType passengerType = this.askForPassengerType(journeyTracker, inputValidator);
+
+        // calculations
+        BigDecimal baseFare = CityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
+        BigDecimal discountedFare = journeyTracker.calculateDiscountFare(startZone.getZoneId(), endZone.getZoneId(), timeBand, passengerType);
+        BigDecimal chargedFare = journeyTracker.calculateChargedFare(discountedFare, passengerType);
+        boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
+
+        // adding journey
+        Journey newJourney = new Journey(journeyTracker.getJourneyIdCounter(), timeBand, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        journeyTracker.addJourney(newJourney);
+        journeyTracker.setJourneyIdCounter(journeyTracker.getJourneyIdCounter() + 1);
+    }
+
+    // listing journeys
+    // private functions for asking for filters
+    private void printListingFilters() {
+        System.out.println("\nChoose filter:");
+        System.out.println("1. Passenger type");
+        System.out.println("2. Time band");
+        System.out.println("3. Start zone");
+        System.out.println("4. End zone");
+        System.out.println("5. Time (hours)");
+    }
+
+    private void askForFilterByTimeBand(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("Do you wish to see journeys on Peak time?");
+        System.out.println("'Yes' for Peak, 'No' for Off-peak");
+        CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
+        journeyTracker.listJourneysByTimeBand(timeBand);
+    }
+
+    private void askForFilterByTime(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("-- Sorting by the time period of when the journey was created --");
+        System.out.println("What is the start hour?");
+        int startHour = inputValidator.readIntInRange(1, 24, true);
+        System.out.println("What is the end hour?");
+        int endHour = inputValidator.readIntInRange(1, 24, true);
+        journeyTracker.listJourneysByHours(startHour, endHour);
+    }
+
+    public void actionListJourneys(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("Apply listing filters?");
+        boolean applyFilters = inputValidator.readYesNo();
+        if (applyFilters) {
+            printListingFilters();
+            int choice = inputValidator.readIntInRange(1, 5, true);
+            if (choice == 1) {
+                CityRideDataset.PassengerType passengerType = askForPassengerType(journeyTracker, inputValidator);
+                journeyTracker.listJourneysByPassengerType(passengerType);
+            }
+            else if (choice == 2) {
+                askForFilterByTimeBand(journeyTracker, inputValidator);
+            }
+            else if (choice == 3) {
+                Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
+                journeyTracker.listJourneysByZone(startZone, true);
+            }
+            else if (choice == 4) {
+                Zone endZone = this.askForZone("end", journeyTracker, inputValidator);
+                journeyTracker.listJourneysByZone(endZone, false);
+            }
+            else if (choice == 5) {
+                askForFilterByTime(journeyTracker, inputValidator);
+            }
+        }
+        else {
+            journeyTracker.listAllJourneys();
+        }
+    }
+
+    // viewing summary
+    public void actionViewSummary(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("What type of summary to view?");
+        System.out.println("1. Daily summaries");
+        System.out.println("2. Totals by passenger type");
+        System.out.println("3. Category counts");
+
+        int choice = inputValidator.readIntInRange(1, 3, true);
+        if (choice == 1) {
+            dailySummaries(journeyTracker);
+        }
+        else if (choice == 2) {
+            totalsByPassengerType(journeyTracker, inputValidator);
+        }
+        else if (choice == 3) {
+            categoryCounts(journeyTracker);
+        }
+    }
+
+    // private functions to view certain summaries
+    private void dailySummaries(JourneyTracker journeyTracker) {
+        System.out.println("\n------- Daily Summary ------");
+        System.out.println("Total number of journeys: " + journeyTracker.getTotalJourneysNum());
+        System.out.println("Total costs charged: £" + journeyTracker.getTotalCostsCharged());
+        System.out.println("Average cost per journey: £" + journeyTracker.getAverageCostPerJourney());
+
+        System.out.println("Most expensive journey(s): ");
+        List<Journey> mostExpensiveJourneysList = journeyTracker.getMostExpensiveJourneysList();
+        if (mostExpensiveJourneysList.isEmpty()) {
+            System.out.println("Most expensive journey not found.");
+        }
+        else {
+            for (Journey j : mostExpensiveJourneysList) {
+                j.printJourneyDetails();
+            }
+        }
+        System.out.println("------------------------------");
+    }
+
+    private void totalsByPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        CityRideDataset.PassengerType passengerType = this.askForPassengerType(journeyTracker, inputValidator);
+        String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
+        System.out.println("---- Daily Summary for " + passengerTypeName + " journeys ----");
+        SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(passengerType);
+        summary.printSummary();
+    }
+
+    private void printZonesCount(JourneyTracker journeyTracker) {
+        Map<Integer, Integer> zonesCountMap = journeyTracker.getZoneCounts();
+        System.out.println("------ Zone counts ------");
+        // GeekForGeeks (2025)
+        for (Map.Entry<Integer, Integer> zone : zonesCountMap.entrySet())
+            System.out.println("Zone " + zone.getKey() +
+                    ": " + zone.getValue() + " counts.");
+        System.out.println("-------------------------");
+    }
+
+    private void printPeakVsOffPeakCounts(JourneyTracker journeyTracker) {
+        int[] peakVsOffPeakArray = journeyTracker.getPeakVsOffPeakCount();
+        System.out.println("Peak counts: " + peakVsOffPeakArray[0]);
+        System.out.println("Off-peak counts: " + peakVsOffPeakArray[1]);
+    }
+
+    private void categoryCounts(JourneyTracker journeyTracker) {
+        System.out.println("----- Category counts -----");
+        printPeakVsOffPeakCounts(journeyTracker);
+        printZonesCount(journeyTracker);
+    }
+
+    // remove journey
+    private void actionRemoveJourneyConfirmed(Journey foundJourney, InputValidator inputValidator, JourneyTracker journeyTracker) {
+        System.out.println("Found journey:");
+        foundJourney.printJourneyDetails();
+        System.out.println("\nAre you sure you want to delete this journey?");
+        boolean isConfirmed = inputValidator.readYesNo();
+
+        if (isConfirmed) {
+            Journey removedJourney = journeyTracker.removeJourneyById(foundJourney.getJourneyId());
+            if (removedJourney == null) {
+                System.out.println("An error happened! The journey was not removed.");
+            } else {
+                journeyTracker.recalculateSummariesForRemovedJourney(removedJourney);
+                System.out.println("The journey with ID " + foundJourney.getJourneyId() + " was successfully removed.");
+            }
+        } else {
+            System.out.println("Removal cancelled.");
+        }
+    }
+
+    public void actionRemoveJourney(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("What is the Journey's ID you want to remove?");
+        int journeyId = inputValidator.readIntInRange(1, 99999, false); // arbitrary max value since journey ID has no limit
+        Journey foundJourney = journeyTracker.findJourneyById(journeyId);
+        if (foundJourney == null) {
+            System.out.println("Not found! The journey with ID " + journeyId + " does not exist!");
+        } else {
+            actionRemoveJourneyConfirmed(foundJourney, inputValidator, journeyTracker);
+        }
+    }
+
+    // reset day
+    public void actionResetDay(JourneyTracker journeyTracker, InputValidator inputValidator) {
+        System.out.println("Are you sure you want to reset the day?");
+        boolean isConfirmed = inputValidator.readYesNo();
+        if (isConfirmed) {
+            journeyTracker.resetDay();
+            System.out.println("The day was successfully reset.");
+        }
+        else {
+            System.out.println("Resetting cancelled.");
+        }
+    }
+}
+
+```
+
+SummaryForPassengerType
+
+```java
+import java.math.BigDecimal;
+
+public class SummaryForPassengerType {
+    // states
+    private BigDecimal totalBaseFare;
+    private BigDecimal totalDiscountedFare;
+    private BigDecimal totalChargedFare;
+    private int totalJourneyNum;
+    private boolean dailyCapReached;
+    private Formatter formatter = new Formatter();
+
+    // constructor
+    public SummaryForPassengerType() {
+        totalBaseFare = new BigDecimal("0.0");
+        totalDiscountedFare = new BigDecimal("0.0");
+        totalChargedFare = new BigDecimal("0.0");
+        totalJourneyNum = 0;
+        dailyCapReached = false;
+    }
+
+    // methods
+    // getters
+    public BigDecimal getTotalChargedFare() {
+        return totalChargedFare;
+    }
+    public BigDecimal getTotalDiscountedFare() {
+        return totalDiscountedFare;
+    }
+    public boolean getDailyCapReached() {
+        return dailyCapReached;
+    }
+    public int getTotalJourneyNum() {
+        return totalJourneyNum;
+    }
+
+    // adding journey
+    public void addJourneyToSum(Journey journey) {
+        totalBaseFare = totalBaseFare.add(journey.getBaseFare());
+        totalDiscountedFare = totalDiscountedFare.add(journey.getDiscountedFare());
+        totalChargedFare = totalChargedFare.add(journey.getChargedFare());
+        dailyCapReached = journey.getDailyCapReached();
+        totalJourneyNum++;
+    }
+
+    // viewing summary
+    public void printSummary() {
+        System.out.println("Total base fare: £" + formatter.formatBigDecimal2dp(totalBaseFare));
+        System.out.println("Total discounted fare: £" + formatter.formatBigDecimal2dp(totalDiscountedFare));
+        System.out.println("Total charged fare: £" + formatter.formatBigDecimal2dp(totalChargedFare));
+        System.out.println("Total number of journeys: " + totalJourneyNum);
+        System.out.println("Daily cap reached: " + dailyCapReached);
+    }
+
+    // removing journey
+    private boolean calculateDailyCapReached(CityRideDataset.PassengerType passengerType) {
+        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+        return totalDiscountedFare.compareTo(dailyCap) >= 0;
+    }
+
+    public void subtractJourneyFromSum(Journey journey) {
+        totalBaseFare = totalBaseFare.subtract(journey.getBaseFare());
+        totalDiscountedFare = totalDiscountedFare.subtract(journey.getDiscountedFare());
+        totalChargedFare = totalChargedFare.subtract(journey.getChargedFare());
+        dailyCapReached = calculateDailyCapReached(journey.getPassengerType());
+        totalJourneyNum--;
+    }
+
+    // resetting day
+    public void clearAllTotals() {
+        totalBaseFare = new BigDecimal("0.0");
+        totalDiscountedFare = new BigDecimal("0.0");
+        totalChargedFare = new BigDecimal("0.0");
+        totalJourneyNum = 0;
+        dailyCapReached = false;
+    }
+}
+
+```
+
+Zone
+
+```java
+public class Zone {
+    // states
+    private int zoneId;
+    private String zoneName;
+    private int count;
+
+    // constructors
+    public Zone() {
+        this.zoneId = 0;
+        this.zoneName = "Unknown";
+        this.count = 0;
+    }
+    public Zone(int zoneId, String zoneName) {
+        this.zoneId = zoneId;
+        this.zoneName = zoneName;
+        this.count = 0;
+    }
+
+    // getters
+    public int getZoneId() {
+        return zoneId;
+    }
+    public String getZoneName() {
+        return zoneName;
+    }
+    public int getCount() {
+        return count;
+    }
+
+    // setters
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    // other methods
+    public void incrementCount() {
+        this.count++;
+    }
+    public void decrementCount() {
+        this.count--;
+    }
+    public void printZoneDetails() {
+        System.out.println(this.zoneId + ". " + this.zoneName);
+    }
+}
+
+```
+
+---
+
+### References
 
 Bro Code. (2024, December 17). *Learn DATES & TIMES with Java in 8 minutes! 📆.* [YouTube Video]. Retrieved from: https://youtu.be/F2bZ1fkAQx0?si=YqrQhLJXz9YmA0rK [Accessed 8 February 2026].
 
 GeeksforGeeks. (2025). *How to Iterate Any Map in Java?.* [online] Retrieved from: https://www.geeksforgeeks.org/java/iterate-map-java [Accessed 15 February 2026].
 
 Kvasnovsky, O. (2025). *Java 101 — Lesson 14: Input Validation & Robustness.* Retrieved from: https://ondrej-kvasnovsky.medium.com/java-101-lesson-14-input-validation-robustness-908331a56f3d [Accessed 8 February 2026].
+
+
+
+---
+
+### Appendices
