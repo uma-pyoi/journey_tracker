@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class MainMenu {
     // menu actions
     public void actionAddJourney(InputValidator inputValidator, JourneyTracker journeyTracker) {
         System.out.println("+++++++ Adding a journey +++++++");
+        // TODO: remove asking user for timeband, calculate automatically
         System.out.println("Was the journey on peak?");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
         Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
@@ -67,7 +69,8 @@ public class MainMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        Journey newJourney = new Journey(journeyTracker.getJourneyIdCounter(), timeBand, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        LocalTime time = LocalTime.now();
+        Journey newJourney = new Journey(journeyTracker.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeyTracker.addJourney(newJourney);
         journeyTracker.setJourneyIdCounter(journeyTracker.getJourneyIdCounter() + 1);
     }

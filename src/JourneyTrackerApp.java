@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class JourneyTrackerApp {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         JourneyTracker journeyTracker = new JourneyTracker();
         MainMenu mainMenu = new MainMenu();
         InputValidator inputValidator = new InputValidator();
@@ -33,6 +32,5 @@ public class JourneyTrackerApp {
             }
         }
         while (userInput != 0);
-        scanner.close();
     }
 }

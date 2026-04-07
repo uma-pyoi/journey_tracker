@@ -201,7 +201,7 @@ public class JourneyTracker {
         else {
             List<Journey> hoursJourneysList = new ArrayList<>();
             for (Journey j : journeysList) {
-                if (j.getDatetime().getHour() >= startHour && j.getDatetime().getHour() <= endHour) {
+                if (j.getTime().getHour() >= startHour && j.getTime().getHour() <= endHour) {
                     hoursJourneysList.add(j);
                 }
             }

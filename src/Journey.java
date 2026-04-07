@@ -1,11 +1,11 @@
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Journey {
     // states
     private int journeyId;
     // Bro Code (2024)
-    private LocalDateTime datetime;
+    private LocalTime time;
     private CityRideDataset.TimeBand timeBand;
     private Zone startZone;
     private Zone endZone;
@@ -20,7 +20,7 @@ public class Journey {
     // constructors
     public Journey() {
         this.journeyId = 0;
-        this.datetime = LocalDateTime.now();
+        this.time = LocalTime.now();
         this.timeBand = null;
         this.startZone = null;
         this.endZone = null;
@@ -30,10 +30,10 @@ public class Journey {
         this.chargedFare = new BigDecimal("0.0");
         this.dailyCapReached = false;
     }
-    public Journey(int journeyID, CityRideDataset.TimeBand timeBand, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+
+    public Journey(int journeyID, LocalTime time, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
-        this.datetime = LocalDateTime.now();
-        this.timeBand = timeBand;
+        this.time = time;
         this.startZone = startZone;
         this.endZone = endZone;
         this.passengerType = passengerType;
@@ -48,40 +48,49 @@ public class Journey {
     public int getJourneyId() {
         return journeyId;
     }
+
     public CityRideDataset.PassengerType getPassengerType() {
         return passengerType;
     }
+
     public BigDecimal getBaseFare() {
         return baseFare;
     }
+
     public BigDecimal getDiscountedFare() {
         return discountedFare;
     }
+
     public BigDecimal getChargedFare() {
         return chargedFare;
     }
+
     public Zone getStartZone() {
         return startZone;
     }
+
     public Zone getEndZone() {
         return endZone;
     }
+
     public CityRideDataset.TimeBand getTimeBand() {
         return timeBand;
     }
+
     public boolean getDailyCapReached() {
         return dailyCapReached;
     }
-    public LocalDateTime getDatetime() {
-        return datetime;
+
+    public LocalTime getTime() {
+        return time;
     }
 
     // other methods
     public void printJourneyDetails() {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
-        String formattedDatetime = this.datetime.format(formatter.dateTimeFormatter);
-        System.out.println("Datetime: " + formattedDatetime);
+//        String formattedDatetime = this.time.format(formatter.dateTimeFormatter);
+        System.out.println("Datetime: " + this.time);
         System.out.print("Timeband: ");
         System.out.println(formatter.getNameOfTimeBand(this.timeBand));
         System.out.println("Start zone: " + this.startZone.getZoneId() + ". " + this.startZone.getZoneName());
