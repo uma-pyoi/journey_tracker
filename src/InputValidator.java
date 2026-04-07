@@ -64,24 +64,37 @@ public class InputValidator {
                 }
             }
 
+            boolean areValidIntegers = true;
             // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
+            // Oracle (n.d.)
             try {
                 String hoursString = userInput.substring(0, index_of_colon).strip();
-                System.out.println("hoursString: " + hoursString);
                 hours = Integer.parseInt(hoursString);
             } catch (NumberFormatException e) {
                 System.out.println("The hours entered were incorrect!");
+                areValidIntegers = false;
             }
             try {
                 String minutesString = userInput.substring(index_of_colon + 1).strip();
-                System.out.println("minutesString: " + minutesString);
                 minutes = Integer.parseInt(minutesString);
             } catch (NumberFormatException e) {
                 System.out.println("The minutes entered were incorrect!");
+                areValidIntegers = false;
             }
 
-            if (hours != -1 && minutes != -1) {
-                isValid = true;
+            if (areValidIntegers) {
+                if (hours < 0 || hours > 24) {
+                    System.out.println("The hours must be within the 0-24 range!");
+                    hours = -1;
+                }
+                if (minutes < 0 || minutes > 60) {
+                    System.out.println("The minutes must be within the 0-60 range!");
+                    minutes = -1;
+                }
+
+                if (hours != -1 && minutes != -1) {
+                    isValid = true;
+                }
             }
         }
 
