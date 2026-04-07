@@ -58,6 +58,9 @@ public class MainMenu {
         // TODO: remove asking user for timeband, calculate automatically
         System.out.println("Was the journey on peak?");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
+        System.out.println("What is the time of the journey?");
+
+
         Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
         Zone endZone = this.askForZone("end", journeyTracker, inputValidator);
         CityRideDataset.PassengerType passengerType = this.askForPassengerType(journeyTracker, inputValidator);
@@ -69,6 +72,7 @@ public class MainMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
+        // TODO: remove
         LocalTime time = LocalTime.now();
         Journey newJourney = new Journey(journeyTracker.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeyTracker.addJourney(newJourney);

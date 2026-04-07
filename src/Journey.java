@@ -4,7 +4,8 @@ import java.time.LocalTime;
 public class Journey {
     // states
     private int journeyId;
-    // Bro Code (2024)
+    // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
+    // Oracle (n.d.)
     private LocalTime time;
     private CityRideDataset.TimeBand timeBand;
     private Zone startZone;
@@ -89,8 +90,8 @@ public class Journey {
     public void printJourneyDetails() {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
-//        String formattedDatetime = this.time.format(formatter.dateTimeFormatter);
-        System.out.println("Datetime: " + this.time);
+        String formattedTime = this.time.format(formatter.dateTimeFormatter);
+        System.out.println("Datetime: " + formattedTime);
         System.out.print("Timeband: ");
         System.out.println(formatter.getNameOfTimeBand(this.timeBand));
         System.out.println("Start zone: " + this.startZone.getZoneId() + ". " + this.startZone.getZoneName());

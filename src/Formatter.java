@@ -3,7 +3,7 @@ import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 
 public class Formatter {
-    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public BigDecimal formatBigDecimal2dp(BigDecimal bigDecimal) {
         return bigDecimal.setScale(2, RoundingMode.HALF_UP);

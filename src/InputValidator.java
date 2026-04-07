@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class InputValidator {
@@ -36,15 +37,54 @@ public class InputValidator {
             if (userInput.equals("y") || userInput.equals("yes")) {
                 userChoice = true;
                 isValid = true;
-            }
-            else if (userInput.equals("n") || userInput.equals("no")) {
+            } else if (userInput.equals("n") || userInput.equals("no")) {
                 isValid = true;
-            }
-            else {
+            } else {
                 System.out.println("Invalid! Enter Yes or No!");
             }
         }
-
         return userChoice;
+    }
+
+    public LocalTime readTime() {
+        boolean isValid = false;
+        int hours = -1;
+        int minutes = -1;
+
+        while (!isValid) {
+            System.out.print("Enter time (in format 'hours:minutes'): ");
+            String userInput = scanner.nextLine().strip();
+
+            int index_of_colon = 0;
+            for (int i = 0; i < userInput.length(); i++) {
+                char userChar = userInput.charAt(i);
+                if (userChar == ':') {
+                    index_of_colon = i;
+                    break;
+                }
+            }
+
+            // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
+            try {
+                String hoursString = userInput.substring(0, index_of_colon).strip();
+                System.out.println("hoursString: " + hoursString);
+                hours = Integer.parseInt(hoursString);
+            } catch (NumberFormatException e) {
+                System.out.println("The hours entered were incorrect!");
+            }
+            try {
+                String minutesString = userInput.substring(index_of_colon + 1).strip();
+                System.out.println("minutesString: " + minutesString);
+                minutes = Integer.parseInt(minutesString);
+            } catch (NumberFormatException e) {
+                System.out.println("The minutes entered were incorrect!");
+            }
+
+            if (hours != -1 && minutes != -1) {
+                isValid = true;
+            }
+        }
+
+        return LocalTime.of(hours, minutes);
     }
 }

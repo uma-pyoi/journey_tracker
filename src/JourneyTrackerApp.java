@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class JourneyTrackerApp {
@@ -6,31 +7,33 @@ public class JourneyTrackerApp {
         JourneyTracker journeyTracker = new JourneyTracker();
         MainMenu mainMenu = new MainMenu();
         InputValidator inputValidator = new InputValidator();
+        LocalTime time = inputValidator.readTime();
+        System.out.println("local time: " + time);
 
-        int userInput;
-
-        mainMenu.printWelcome();
-
-        do {
-            mainMenu.printMainMenu();
-            userInput = inputValidator.readIntInRange(0, 5, true);
-
-            if (userInput == 1) {
-                mainMenu.actionAddJourney(inputValidator, journeyTracker);
-            }
-            else if (userInput == 2) {
-                mainMenu.actionListJourneys(journeyTracker, inputValidator);
-            }
-            else if (userInput == 3) {
-                mainMenu.actionViewSummary(journeyTracker, inputValidator);
-            }
-            else if (userInput == 4) {
-                mainMenu.actionRemoveJourney(journeyTracker, inputValidator);
-            }
-            else if (userInput == 5) {
-                mainMenu.actionResetDay(journeyTracker, inputValidator);
-            }
-        }
-        while (userInput != 0);
+//        int userInput;
+//
+//        mainMenu.printWelcome();
+//
+//        do {
+//            mainMenu.printMainMenu();
+//            userInput = inputValidator.readIntInRange(0, 5, true);
+//
+//            if (userInput == 1) {
+//                mainMenu.actionAddJourney(inputValidator, journeyTracker);
+//            }
+//            else if (userInput == 2) {
+//                mainMenu.actionListJourneys(journeyTracker, inputValidator);
+//            }
+//            else if (userInput == 3) {
+//                mainMenu.actionViewSummary(journeyTracker, inputValidator);
+//            }
+//            else if (userInput == 4) {
+//                mainMenu.actionRemoveJourney(journeyTracker, inputValidator);
+//            }
+//            else if (userInput == 5) {
+//                mainMenu.actionResetDay(journeyTracker, inputValidator);
+//            }
+//        }
+//        while (userInput != 0);
     }
 }
