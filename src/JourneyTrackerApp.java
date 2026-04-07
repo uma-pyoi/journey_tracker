@@ -7,8 +7,9 @@ public class JourneyTrackerApp {
         JourneyTracker journeyTracker = new JourneyTracker();
         MainMenu mainMenu = new MainMenu();
         InputValidator inputValidator = new InputValidator();
+
         LocalTime time = inputValidator.readTime();
-        System.out.println("local time: " + time);
+        System.out.println("time: " + time);
 
 //        int userInput;
 //

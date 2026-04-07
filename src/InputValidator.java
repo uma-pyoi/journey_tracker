@@ -46,6 +46,32 @@ public class InputValidator {
         return userChoice;
     }
 
+    // read time helpers
+    private int findColonIndex(String userInput) {
+        int index_of_colon = -1;
+        for (int i = 0; i < userInput.length(); i++) {
+            char userChar = userInput.charAt(i);
+            if (userChar == ':') {
+                index_of_colon = i;
+                break;
+            }
+        }
+        return index_of_colon;
+    }
+
+    // returns -1 if invalid integer
+    private int parseStringInteger(String str, String errorMessage) {
+        int hours = -1;
+        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
+        // Oracle (n.d.)
+        try {
+            hours = Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.out.println(errorMessage);
+        }
+        return hours;
+    }
+
     public LocalTime readTime() {
         boolean isValid = false;
         int hours = -1;
@@ -55,45 +81,30 @@ public class InputValidator {
             System.out.print("Enter time (in format 'hours:minutes'): ");
             String userInput = scanner.nextLine().strip();
 
-            int index_of_colon = 0;
-            for (int i = 0; i < userInput.length(); i++) {
-                char userChar = userInput.charAt(i);
-                if (userChar == ':') {
-                    index_of_colon = i;
-                    break;
-                }
+            int index_of_colon = findColonIndex(userInput);
+            if (index_of_colon == -1) {
+                System.out.println("You must put a colon (:) in between the hours and minutes!");
             }
-
-            boolean areValidIntegers = true;
-            // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
-            // Oracle (n.d.)
-            try {
+            else {
                 String hoursString = userInput.substring(0, index_of_colon).strip();
-                hours = Integer.parseInt(hoursString);
-            } catch (NumberFormatException e) {
-                System.out.println("The hours entered were incorrect!");
-                areValidIntegers = false;
-            }
-            try {
                 String minutesString = userInput.substring(index_of_colon + 1).strip();
-                minutes = Integer.parseInt(minutesString);
-            } catch (NumberFormatException e) {
-                System.out.println("The minutes entered were incorrect!");
-                areValidIntegers = false;
-            }
+                hours = parseStringInteger(hoursString, "The hours entered were incorrect!");
+                minutes = parseStringInteger(minutesString, "The minutes entered were incorrect!");
 
-            if (areValidIntegers) {
-                if (hours < 0 || hours > 24) {
-                    System.out.println("The hours must be within the 0-24 range!");
-                    hours = -1;
-                }
-                if (minutes < 0 || minutes > 60) {
-                    System.out.println("The minutes must be within the 0-60 range!");
-                    minutes = -1;
-                }
+                boolean areValidIntegers = (hours != -1 && minutes != -1);
+                if (areValidIntegers) {
+                    if (hours < 0 || hours > 24) {
+                        System.out.println("The hours must be within the 0-24 range!");
+                        hours = -1;
+                    }
+                    if (minutes < 0 || minutes > 60) {
+                        System.out.println("The minutes must be within the 0-60 range!");
+                        minutes = -1;
+                    }
 
-                if (hours != -1 && minutes != -1) {
-                    isValid = true;
+                    if (hours != -1 && minutes != -1) {
+                        isValid = true;
+                    }
                 }
             }
         }
