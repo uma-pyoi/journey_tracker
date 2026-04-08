@@ -15,6 +15,12 @@ final class CityRideDataset {
         OFF_PEAK
     }
 
+    public enum PaymentOption {
+        VISA_CARD,
+        MASTER_CARD,
+        RAIL_CARD
+    }
+
     public enum PassengerType {
         ADULT,
         STUDENT,
