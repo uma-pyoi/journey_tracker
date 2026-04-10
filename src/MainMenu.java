@@ -5,33 +5,7 @@ import java.util.Map;
 
 public class MainMenu {
     private Formatter formatter = new Formatter();
-
-    // methods
-    public void printWelcome() {
-        System.out.println("+++++++++++++++++++++++++++++++++++");
-        System.out.println("++   Welcome to CityRide Lite!   ++");
-        System.out.println("+++++++++++++++++++++++++++++++++++");
-    }
-
-    public void printMainMenu() {
-        System.out.println("\n");
-        System.out.println("Please choose from the following:");
-        System.out.println("1. New rider");
-        System.out.println("2. Load rider");
-        System.out.println("3. Admin panel");
-        System.out.println("0. Exit \n");
-    }
-
-    public void printRiderMenu() {
-        System.out.println("\n");
-        System.out.println("Please choose from the following:");
-        System.out.println("1. Add journey");
-        System.out.println("2. List journeys");
-        System.out.println("3. View summaries");
-        System.out.println("4. Remove journey");
-        System.out.println("5. Reset day");
-        System.out.println("0. Exit \n");
-    }
+    private ConsolePrinter consolePrinter = new ConsolePrinter();
 
     // asking for certain input
     public CityRideDataset.PassengerType askForPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
@@ -89,16 +63,6 @@ public class MainMenu {
     }
 
     // listing journeys
-    // private functions for asking for filters
-    private void printListingFilters() {
-        System.out.println("\nChoose filter:");
-        System.out.println("1. Passenger type");
-        System.out.println("2. Time band");
-        System.out.println("3. Start zone");
-        System.out.println("4. End zone");
-        System.out.println("5. Time (hours)");
-    }
-
     private void askForFilterByTimeBand(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
@@ -119,7 +83,7 @@ public class MainMenu {
         System.out.println("Apply listing filters?");
         boolean applyFilters = inputValidator.readYesNo();
         if (applyFilters) {
-            printListingFilters();
+            consolePrinter.printListingFilters();
             int choice = inputValidator.readIntInRange(1, 5, true);
             if (choice == 1) {
                 CityRideDataset.PassengerType passengerType = askForPassengerType(journeyTracker, inputValidator);
@@ -147,10 +111,7 @@ public class MainMenu {
 
     // viewing summary
     public void actionViewSummary(JourneyTracker journeyTracker, InputValidator inputValidator) {
-        System.out.println("What type of summary to view?");
-        System.out.println("1. Daily summaries");
-        System.out.println("2. Totals by passenger type");
-        System.out.println("3. Category counts");
+        // TODO print summary types from printer
 
         int choice = inputValidator.readIntInRange(1, 3, true);
         if (choice == 1) {

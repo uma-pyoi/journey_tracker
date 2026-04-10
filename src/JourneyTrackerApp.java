@@ -7,12 +7,13 @@ public class JourneyTrackerApp {
         JourneyTracker journeyTracker = new JourneyTracker();
         MainMenu mainMenu = new MainMenu();
         InputValidator inputValidator = new InputValidator();
+        ConsolePrinter consolePrinter = new ConsolePrinter();
 
         int userInput;
 
-        mainMenu.printWelcome();
+        consolePrinter.printWelcome();
         do {
-            mainMenu.printMainMenu();
+            consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
                 mainMenu.actionAddJourney(inputValidator, journeyTracker);
