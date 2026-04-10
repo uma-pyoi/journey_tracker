@@ -108,7 +108,23 @@ public class InputValidator {
                 }
             }
         }
-
         return LocalTime.of(hours, minutes);
+    }
+
+
+    public String readString(String prompt, boolean canEmpty) {
+        boolean isValid;
+        String userString;
+        do {
+            System.out.print(prompt);
+            userString = scanner.nextLine().strip();
+            isValid = true;
+            if (userString.isEmpty() && !canEmpty) {
+                System.out.println("You cannot leave this field empty!");
+                isValid = false;
+            }
+        }
+        while (!isValid);
+        return userString;
     }
 }

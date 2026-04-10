@@ -5,6 +5,7 @@ public class JourneyTrackerApp {
         RiderMenu riderMenu = new RiderMenu();
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
+        MainMenu mainMenu = new MainMenu();
 
         int userInput;
 
@@ -13,7 +14,7 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
-                riderMenu.actionAddJourney(inputValidator, journeyTracker);
+                mainMenu.actionNewRider(inputValidator);
             }
         }
         while (userInput != 0);
