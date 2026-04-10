@@ -2,7 +2,7 @@ public class JourneyTrackerApp {
 
     public static void main(String[] args) {
         JourneyTracker journeyTracker = new JourneyTracker();
-        RiderActions riderActions = new RiderActions();
+        RiderMenu riderMenu = new RiderMenu();
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
 
@@ -13,7 +13,7 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
-                riderActions.actionAddJourney(inputValidator, journeyTracker);
+                riderMenu.actionAddJourney(inputValidator, journeyTracker);
             }
         }
         while (userInput != 0);

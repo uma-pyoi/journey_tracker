@@ -3,7 +3,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-public class RiderActions {
+public class RiderMenu {
     private Formatter formatter = new Formatter();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
 
