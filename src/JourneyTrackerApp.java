@@ -1,11 +1,8 @@
-import java.time.LocalTime;
-import java.util.Scanner;
-
 public class JourneyTrackerApp {
 
     public static void main(String[] args) {
         JourneyTracker journeyTracker = new JourneyTracker();
-        MainMenu mainMenu = new MainMenu();
+        RiderActions riderActions = new RiderActions();
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
 
@@ -16,7 +13,7 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
-                mainMenu.actionAddJourney(inputValidator, journeyTracker);
+                riderActions.actionAddJourney(inputValidator, journeyTracker);
             }
         }
         while (userInput != 0);

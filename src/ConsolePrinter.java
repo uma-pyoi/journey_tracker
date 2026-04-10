@@ -34,7 +34,7 @@ public class ConsolePrinter {
         System.out.println("5. Time (hours)");
     }
 
-    public void printSummaryTimes() {
+    public void printSummaryTypes() {
         System.out.println("What type of summary to view?");
         System.out.println("1. Daily summaries");
         System.out.println("2. Totals by passenger type");

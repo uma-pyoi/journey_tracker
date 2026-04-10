@@ -3,7 +3,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
-public class MainMenu {
+public class RiderActions {
     private Formatter formatter = new Formatter();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
 
@@ -111,7 +111,7 @@ public class MainMenu {
 
     // viewing summary
     public void actionViewSummary(JourneyTracker journeyTracker, InputValidator inputValidator) {
-        // TODO print summary types from printer
+        consolePrinter.printSummaryTypes();
 
         int choice = inputValidator.readIntInRange(1, 3, true);
         if (choice == 1) {
