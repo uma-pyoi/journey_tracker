@@ -16,6 +16,15 @@ public class MainMenu {
     public void printMainMenu() {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
+        System.out.println("1. New rider");
+        System.out.println("2. Load rider");
+        System.out.println("3. Admin panel");
+        System.out.println("0. Exit \n");
+    }
+
+    public void printRiderMenu() {
+        System.out.println("\n");
+        System.out.println("Please choose from the following:");
         System.out.println("1. Add journey");
         System.out.println("2. List journeys");
         System.out.println("3. View summaries");

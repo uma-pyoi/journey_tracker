@@ -8,13 +8,18 @@ public class JourneyTrackerApp {
         MainMenu mainMenu = new MainMenu();
         InputValidator inputValidator = new InputValidator();
 
-        LocalTime time = inputValidator.readTime();
-        System.out.println("time: " + time);
+        int userInput;
 
-//        int userInput;
-//
-//        mainMenu.printWelcome();
-//
+        mainMenu.printWelcome();
+        do {
+            mainMenu.printMainMenu();
+            userInput = inputValidator.readIntInRange(0, 3, true);
+            if (userInput == 1) {
+                mainMenu.actionAddJourney(inputValidator, journeyTracker);
+            }
+        }
+        while (userInput != 0);
+
 //        do {
 //            mainMenu.printMainMenu();
 //            userInput = inputValidator.readIntInRange(0, 5, true);
