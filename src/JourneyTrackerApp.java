@@ -14,7 +14,7 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
-                mainMenu.actionNewRider(inputValidator);
+                mainMenu.actionNewRider();
             }
         }
         while (userInput != 0);

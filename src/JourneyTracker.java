@@ -88,15 +88,6 @@ public class JourneyTracker {
         }
     }
 
-    public void listAllPassengerTypes() {
-        System.out.println("------   Passenger Types   ------");
-        for (int i = 0; i < CityRideDataset.PassengerType.values().length; i++) {
-            String passengerTypeName = formatter.getNameOfPassengerType(CityRideDataset.PassengerType.values()[i]);
-            System.out.println((i + 1) + ". " + passengerTypeName);
-        }
-        System.out.println("---------------------------------");
-    }
-
     // listing journeys
     public void listAllJourneys() {
         if (journeysList.isEmpty()) {

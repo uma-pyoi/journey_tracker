@@ -3,6 +3,8 @@ import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 
 public class Formatter {
+    private String defaultUnknownName = "Unknown";
+
     public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public BigDecimal formatBigDecimal2dp(BigDecimal bigDecimal) {
@@ -11,7 +13,7 @@ public class Formatter {
 
     // getting names of enums
     public String getNameOfTimeBand(CityRideDataset.TimeBand timeBand) {
-        String timeBandName = "Unknown";
+        String timeBandName = defaultUnknownName;
         if (timeBand == CityRideDataset.TimeBand.PEAK) {
             timeBandName = "Peak";
         }
@@ -22,7 +24,7 @@ public class Formatter {
     }
 
     public String getNameOfPassengerType(CityRideDataset.PassengerType passengerType) {
-        String passengerTypeName = "Unknown";
+        String passengerTypeName = defaultUnknownName;
         if (passengerType == CityRideDataset.PassengerType.ADULT) {
             passengerTypeName = "Adult";
         }
@@ -36,5 +38,19 @@ public class Formatter {
             passengerTypeName = "Senior Citizen";
         }
         return passengerTypeName;
+    }
+
+    public String getNameOfPaymentOption(CityRideDataset.PaymentOption paymentOption) {
+        String paymentOptionName = defaultUnknownName;
+        if (paymentOption == CityRideDataset.PaymentOption.VISA_CARD) {
+            paymentOptionName = "Visa card";
+        }
+        else if (paymentOption == CityRideDataset.PaymentOption.MASTER_CARD) {
+            paymentOptionName = "Master card";
+        }
+        else if (paymentOption == CityRideDataset.PaymentOption.RAIL_CARD) {
+            paymentOptionName = "Rail card";
+        }
+        return paymentOptionName;
     }
 }

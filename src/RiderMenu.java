@@ -6,24 +6,25 @@ import java.util.Map;
 public class RiderMenu {
     private Formatter formatter = new Formatter();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
+    private InputValidator inputValidator = new InputValidator();
 
     // asking for certain input
-    public CityRideDataset.PassengerType askForPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public CityRideDataset.PassengerType askForPassengerType() {
         System.out.println("What is the passenger type?");
-        journeyTracker.listAllPassengerTypes();
-        int passengerTypeId = inputValidator.readIntInRange(1, 4, true);
+        consolePrinter.printPassengerTypes();
+        int passengerTypeId = inputValidator.readIntInRange(1, CityRideDataset.PassengerType.values().length, true);
 
         return CityRideDataset.PassengerType.values()[passengerTypeId - 1];
     }
 
-    public Zone askForZone(String zoneDescription, JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public Zone askForZone(String zoneDescription, JourneyTracker journeyTracker) {
         System.out.println("What is the ID of the " + zoneDescription + " zone?");
         journeyTracker.listAllZones();
         int zoneId = inputValidator.readIntInRange(CityRideDataset.MIN_ZONE, CityRideDataset.MAX_ZONE, true);
         return journeyTracker.findZoneById(zoneId);
     }
 
-    public CityRideDataset.TimeBand askForTimeBand(InputValidator inputValidator) {
+    public CityRideDataset.TimeBand askForTimeBand() {
         boolean isPeak = inputValidator.readYesNo();
         CityRideDataset.TimeBand timeBand;
         if (isPeak) {
@@ -36,17 +37,17 @@ public class RiderMenu {
     }
 
     // menu actions
-    public void actionAddJourney(InputValidator inputValidator, JourneyTracker journeyTracker) {
+    public void actionAddJourney(JourneyTracker journeyTracker) {
         System.out.println("+++++++ Adding a journey +++++++");
         // TODO: remove asking user for timeband, calculate automatically
         System.out.println("Was the journey on peak?");
-        CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
+        CityRideDataset.TimeBand timeBand = this.askForTimeBand();
         System.out.println("What is the time of the journey?");
 
 
-        Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
-        Zone endZone = this.askForZone("end", journeyTracker, inputValidator);
-        CityRideDataset.PassengerType passengerType = this.askForPassengerType(journeyTracker, inputValidator);
+        Zone startZone = this.askForZone("start", journeyTracker);
+        Zone endZone = this.askForZone("end", journeyTracker);
+        CityRideDataset.PassengerType passengerType = this.askForPassengerType();
 
         // calculations
         BigDecimal baseFare = CityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
@@ -66,7 +67,7 @@ public class RiderMenu {
     private void askForFilterByTimeBand(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
-        CityRideDataset.TimeBand timeBand = this.askForTimeBand(inputValidator);
+        CityRideDataset.TimeBand timeBand = this.askForTimeBand();
         journeyTracker.listJourneysByTimeBand(timeBand);
     }
 
@@ -86,18 +87,18 @@ public class RiderMenu {
             consolePrinter.printListingFilters();
             int choice = inputValidator.readIntInRange(1, 5, true);
             if (choice == 1) {
-                CityRideDataset.PassengerType passengerType = askForPassengerType(journeyTracker, inputValidator);
+                CityRideDataset.PassengerType passengerType = askForPassengerType();
                 journeyTracker.listJourneysByPassengerType(passengerType);
             }
             else if (choice == 2) {
                 askForFilterByTimeBand(journeyTracker, inputValidator);
             }
             else if (choice == 3) {
-                Zone startZone = this.askForZone("start", journeyTracker, inputValidator);
+                Zone startZone = this.askForZone("start", journeyTracker);
                 journeyTracker.listJourneysByZone(startZone, true);
             }
             else if (choice == 4) {
-                Zone endZone = this.askForZone("end", journeyTracker, inputValidator);
+                Zone endZone = this.askForZone("end", journeyTracker);
                 journeyTracker.listJourneysByZone(endZone, false);
             }
             else if (choice == 5) {
@@ -146,7 +147,7 @@ public class RiderMenu {
     }
 
     private void totalsByPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
-        CityRideDataset.PassengerType passengerType = this.askForPassengerType(journeyTracker, inputValidator);
+        CityRideDataset.PassengerType passengerType = this.askForPassengerType();
         String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
         System.out.println("---- Daily Summary for " + passengerTypeName + " journeys ----");
         SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(passengerType);
