@@ -46,4 +46,12 @@ public class Rider {
     public void setPaymentOption(CityRideDataset.PaymentOption paymentOption) {
         this.paymentOption = paymentOption;
     }
+
+    // other methods
+    public void printRider() {
+        System.out.println("******************************");
+        System.out.println("Name: " + name);
+        System.out.println("Passenger type: " + passengerType);
+        System.out.println("Payment Option: " + paymentOption);
+    }
 }
