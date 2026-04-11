@@ -7,6 +7,8 @@ public class RiderMenu {
     private Formatter formatter = new Formatter();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private InputValidator inputValidator = new InputValidator();
+    private JourneysManager journeysManager = new JourneysManager();
+
 
     // asking for certain input
     public CityRideDataset.PassengerType askForPassengerType() {
@@ -58,9 +60,9 @@ public class RiderMenu {
         // adding journey
         // TODO: remove
         LocalTime time = LocalTime.now();
-        Journey newJourney = new Journey(journeyTracker.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
-        journeyTracker.addJourney(newJourney);
-        journeyTracker.setJourneyIdCounter(journeyTracker.getJourneyIdCounter() + 1);
+        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        journeysManager.addJourney(newJourney, journeyTracker);
+        journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);
     }
 
     // listing journeys
@@ -68,7 +70,7 @@ public class RiderMenu {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand();
-        journeyTracker.listJourneysByTimeBand(timeBand);
+        journeysManager.listJourneysByTimeBand(timeBand);
     }
 
     private void askForFilterByTime(JourneyTracker journeyTracker, InputValidator inputValidator) {
@@ -77,7 +79,7 @@ public class RiderMenu {
         int startHour = inputValidator.readIntInRange(1, 24, true);
         System.out.println("What is the end hour?");
         int endHour = inputValidator.readIntInRange(1, 24, true);
-        journeyTracker.listJourneysByHours(startHour, endHour);
+        journeysManager.listJourneysByHours(startHour, endHour);
     }
 
     public void actionListJourneys(JourneyTracker journeyTracker, InputValidator inputValidator) {
@@ -88,25 +90,25 @@ public class RiderMenu {
             int choice = inputValidator.readIntInRange(1, 5, true);
             if (choice == 1) {
                 CityRideDataset.PassengerType passengerType = askForPassengerType();
-                journeyTracker.listJourneysByPassengerType(passengerType);
+                journeysManager.listJourneysByPassengerType(passengerType);
             }
             else if (choice == 2) {
                 askForFilterByTimeBand(journeyTracker, inputValidator);
             }
             else if (choice == 3) {
                 Zone startZone = this.askForZone("start", journeyTracker);
-                journeyTracker.listJourneysByZone(startZone, true);
+                journeysManager.listJourneysByZone(startZone, true);
             }
             else if (choice == 4) {
                 Zone endZone = this.askForZone("end", journeyTracker);
-                journeyTracker.listJourneysByZone(endZone, false);
+                journeysManager.listJourneysByZone(endZone, false);
             }
             else if (choice == 5) {
                 askForFilterByTime(journeyTracker, inputValidator);
             }
         }
         else {
-            journeyTracker.listAllJourneys();
+            journeysManager.listAllJourneys();
         }
     }
 
@@ -134,7 +136,7 @@ public class RiderMenu {
         System.out.println("Average cost per journey: £" + journeyTracker.getAverageCostPerJourney());
 
         System.out.println("Most expensive journey(s): ");
-        List<Journey> mostExpensiveJourneysList = journeyTracker.getMostExpensiveJourneysList();
+        List<Journey> mostExpensiveJourneysList = journeysManager.getMostExpensiveJourneysList();
         if (mostExpensiveJourneysList.isEmpty()) {
             System.out.println("Most expensive journey not found.");
         }
@@ -165,7 +167,7 @@ public class RiderMenu {
     }
 
     private void printPeakVsOffPeakCounts(JourneyTracker journeyTracker) {
-        int[] peakVsOffPeakArray = journeyTracker.getPeakVsOffPeakCount();
+        int[] peakVsOffPeakArray = journeyTracker.getPeakVsOffPeakCount(journeysManager.getJourneysList());
         System.out.println("Peak counts: " + peakVsOffPeakArray[0]);
         System.out.println("Off-peak counts: " + peakVsOffPeakArray[1]);
     }
@@ -184,7 +186,7 @@ public class RiderMenu {
         boolean isConfirmed = inputValidator.readYesNo();
 
         if (isConfirmed) {
-            Journey removedJourney = journeyTracker.removeJourneyById(foundJourney.getJourneyId());
+            Journey removedJourney = journeysManager.removeJourneyById(foundJourney.getJourneyId());
             if (removedJourney == null) {
                 System.out.println("An error happened! The journey was not removed.");
             } else {
@@ -199,7 +201,7 @@ public class RiderMenu {
     public void actionRemoveJourney(JourneyTracker journeyTracker, InputValidator inputValidator) {
         System.out.println("What is the Journey's ID you want to remove?");
         int journeyId = inputValidator.readIntInRange(1, 99999, false); // arbitrary max value since journey ID has no limit
-        Journey foundJourney = journeyTracker.findJourneyById(journeyId);
+        Journey foundJourney = journeysManager.findJourneyById(journeyId);
         if (foundJourney == null) {
             System.out.println("Not found! The journey with ID " + journeyId + " does not exist!");
         } else {

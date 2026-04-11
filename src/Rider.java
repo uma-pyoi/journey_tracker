@@ -3,6 +3,7 @@ public class Rider {
     private String name;
     CityRideDataset.PassengerType passengerType;
     CityRideDataset.PaymentOption paymentOption;
+    private Formatter formatter = new Formatter();
 
     // constructors
     public Rider() {
@@ -49,9 +50,9 @@ public class Rider {
 
     // other methods
     public void printRider() {
-        System.out.println("******************************");
+        System.out.println("************   Rider   ************");
         System.out.println("Name: " + name);
-        System.out.println("Passenger type: " + passengerType);
-        System.out.println("Payment Option: " + paymentOption);
+        System.out.println("Passenger type: " + formatter.getNameOfPassengerType(passengerType));
+        System.out.println("Payment Option: " + formatter.getNameOfPaymentOption(paymentOption));
     }
 }

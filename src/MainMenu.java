@@ -14,13 +14,10 @@ public class MainMenu {
     public void actionNewRider() {
         System.out.println("+++++++ New Rider +++++++");
         String name = inputValidator.readString("Enter your name: ", false);
-        System.out.println("name: " + name);
         CityRideDataset.PassengerType passengerType = riderMenu.askForPassengerType();
-        System.out.println("passengerType: " + passengerType);
         CityRideDataset.PaymentOption paymentOption = askForPaymentOption();
-        System.out.println("paymentOption: " + paymentOption);
+
         Rider rider = new Rider(name, passengerType, paymentOption);
-//        ridersManager.addRider(rider);
         rider.printRider();
     }
 }
