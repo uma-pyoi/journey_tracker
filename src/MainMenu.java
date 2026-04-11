@@ -11,7 +11,7 @@ public class MainMenu {
         return CityRideDataset.PaymentOption.values()[paymentOptionId - 1];
     }
 
-    public void actionNewRider() {
+    public Rider actionNewRider() {
         System.out.println("+++++++ New Rider +++++++");
         String name = inputValidator.readString("Enter your name: ", false);
         CityRideDataset.PassengerType passengerType = riderMenu.askForPassengerType();
@@ -19,5 +19,6 @@ public class MainMenu {
 
         Rider rider = new Rider(name, passengerType, paymentOption);
         rider.printRider();
+        return rider;
     }
 }

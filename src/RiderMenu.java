@@ -10,6 +10,32 @@ public class RiderMenu {
     private JourneysManager journeysManager = new JourneysManager();
 
 
+    public void runRiderMenu(JourneyTracker journeyTracker, Rider rider) {
+        int userInput;
+        do {
+            consolePrinter.printRiderMenu();
+            System.out.println("+++ Logged in as " + rider.getName() + " +++");
+            userInput = inputValidator.readIntInRange(0, 5, true);
+
+            if (userInput == 1) {
+                actionAddJourney(journeyTracker);
+            }
+            else if (userInput == 2) {
+                actionListJourneys(journeyTracker);
+            }
+            else if (userInput == 3) {
+                actionViewSummary(journeyTracker);
+            }
+            else if (userInput == 4) {
+                actionRemoveJourney(journeyTracker);
+            }
+            else if (userInput == 5) {
+                actionResetDay(journeyTracker);
+            }
+        }
+        while (userInput != 0);
+    }
+
     // asking for certain input
     public CityRideDataset.PassengerType askForPassengerType() {
         System.out.println("What is the passenger type?");
@@ -66,14 +92,14 @@ public class RiderMenu {
     }
 
     // listing journeys
-    private void askForFilterByTimeBand(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    private void askForFilterByTimeBand(InputValidator inputValidator) {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand();
         journeysManager.listJourneysByTimeBand(timeBand);
     }
 
-    private void askForFilterByTime(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    private void askForFilterByTime(InputValidator inputValidator) {
         System.out.println("-- Sorting by the time period of when the journey was created --");
         System.out.println("What is the start hour?");
         int startHour = inputValidator.readIntInRange(1, 24, true);
@@ -82,7 +108,7 @@ public class RiderMenu {
         journeysManager.listJourneysByHours(startHour, endHour);
     }
 
-    public void actionListJourneys(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public void actionListJourneys(JourneyTracker journeyTracker) {
         System.out.println("Apply listing filters?");
         boolean applyFilters = inputValidator.readYesNo();
         if (applyFilters) {
@@ -93,7 +119,7 @@ public class RiderMenu {
                 journeysManager.listJourneysByPassengerType(passengerType);
             }
             else if (choice == 2) {
-                askForFilterByTimeBand(journeyTracker, inputValidator);
+                askForFilterByTimeBand(inputValidator);
             }
             else if (choice == 3) {
                 Zone startZone = this.askForZone("start", journeyTracker);
@@ -104,7 +130,7 @@ public class RiderMenu {
                 journeysManager.listJourneysByZone(endZone, false);
             }
             else if (choice == 5) {
-                askForFilterByTime(journeyTracker, inputValidator);
+                askForFilterByTime(inputValidator);
             }
         }
         else {
@@ -113,7 +139,7 @@ public class RiderMenu {
     }
 
     // viewing summary
-    public void actionViewSummary(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public void actionViewSummary(JourneyTracker journeyTracker) {
         consolePrinter.printSummaryTypes();
 
         int choice = inputValidator.readIntInRange(1, 3, true);
@@ -121,7 +147,7 @@ public class RiderMenu {
             dailySummaries(journeyTracker);
         }
         else if (choice == 2) {
-            totalsByPassengerType(journeyTracker, inputValidator);
+            totalsByPassengerType(journeyTracker);
         }
         else if (choice == 3) {
             categoryCounts(journeyTracker);
@@ -148,7 +174,7 @@ public class RiderMenu {
         System.out.println("------------------------------");
     }
 
-    private void totalsByPassengerType(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    private void totalsByPassengerType(JourneyTracker journeyTracker) {
         CityRideDataset.PassengerType passengerType = this.askForPassengerType();
         String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
         System.out.println("---- Daily Summary for " + passengerTypeName + " journeys ----");
@@ -179,7 +205,7 @@ public class RiderMenu {
     }
 
     // remove journey
-    private void actionRemoveJourneyConfirmed(Journey foundJourney, InputValidator inputValidator, JourneyTracker journeyTracker) {
+    private void actionRemoveJourneyConfirmed(Journey foundJourney, JourneyTracker journeyTracker) {
         System.out.println("Found journey:");
         foundJourney.printJourneyDetails();
         System.out.println("\nAre you sure you want to delete this journey?");
@@ -198,19 +224,19 @@ public class RiderMenu {
         }
     }
 
-    public void actionRemoveJourney(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public void actionRemoveJourney(JourneyTracker journeyTracker) {
         System.out.println("What is the Journey's ID you want to remove?");
         int journeyId = inputValidator.readIntInRange(1, 99999, false); // arbitrary max value since journey ID has no limit
         Journey foundJourney = journeysManager.findJourneyById(journeyId);
         if (foundJourney == null) {
             System.out.println("Not found! The journey with ID " + journeyId + " does not exist!");
         } else {
-            actionRemoveJourneyConfirmed(foundJourney, inputValidator, journeyTracker);
+            actionRemoveJourneyConfirmed(foundJourney, journeyTracker);
         }
     }
 
     // reset day
-    public void actionResetDay(JourneyTracker journeyTracker, InputValidator inputValidator) {
+    public void actionResetDay(JourneyTracker journeyTracker) {
         System.out.println("Are you sure you want to reset the day?");
         boolean isConfirmed = inputValidator.readYesNo();
         if (isConfirmed) {

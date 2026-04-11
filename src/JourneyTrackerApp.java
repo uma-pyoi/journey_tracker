@@ -6,6 +6,7 @@ public class JourneyTrackerApp {
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
         MainMenu mainMenu = new MainMenu();
+        Rider rider;
 
         int userInput;
 
@@ -14,31 +15,12 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readIntInRange(0, 3, true);
             if (userInput == 1) {
-                mainMenu.actionNewRider();
+                rider = mainMenu.actionNewRider();
+                riderMenu.runRiderMenu(journeyTracker, rider);
             }
         }
         while (userInput != 0);
 
-//        do {
-//            mainMenu.printMainMenu();
-//            userInput = inputValidator.readIntInRange(0, 5, true);
-//
-//            if (userInput == 1) {
-//                mainMenu.actionAddJourney(inputValidator, journeyTracker);
-//            }
-//            else if (userInput == 2) {
-//                mainMenu.actionListJourneys(journeyTracker, inputValidator);
-//            }
-//            else if (userInput == 3) {
-//                mainMenu.actionViewSummary(journeyTracker, inputValidator);
-//            }
-//            else if (userInput == 4) {
-//                mainMenu.actionRemoveJourney(journeyTracker, inputValidator);
-//            }
-//            else if (userInput == 5) {
-//                mainMenu.actionResetDay(journeyTracker, inputValidator);
-//            }
-//        }
-//        while (userInput != 0);
+
     }
 }
