@@ -18,7 +18,7 @@ public class RiderMenu {
             userInput = inputValidator.readIntInRange(0, 5, true);
 
             if (userInput == 1) {
-                actionAddJourney(journeyTracker);
+                actionAddJourney(journeyTracker, rider);
             }
             else if (userInput == 2) {
                 actionListJourneys(journeyTracker);
@@ -64,18 +64,31 @@ public class RiderMenu {
         return timeBand;
     }
 
+    public CityRideDataset.PassengerType askForPassengerTypeLoggedIn(Rider rider) {
+        System.out.println("Use the profile passenger type (" + formatter.getNameOfPassengerType(rider.getPassengerType()) + ") ?");
+        System.out.println("Enter 'yes' if so, 'no' if you wish to choose a different passenger type.");
+        boolean useProfilePassengerType = inputValidator.readYesNo();
+        CityRideDataset.PassengerType passengerType;
+        if (!useProfilePassengerType) {
+            passengerType = this.askForPassengerType();
+        }
+        else {
+            passengerType = rider.getPassengerType();
+        }
+        return passengerType;
+    }
+
     // menu actions
-    public void actionAddJourney(JourneyTracker journeyTracker) {
+    public void actionAddJourney(JourneyTracker journeyTracker, Rider rider) {
         System.out.println("+++++++ Adding a journey +++++++");
         // TODO: remove asking user for timeband, calculate automatically
         System.out.println("Was the journey on peak?");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand();
         System.out.println("What is the time of the journey?");
-
-
+        LocalTime time = inputValidator.readTime();
         Zone startZone = this.askForZone("start", journeyTracker);
         Zone endZone = this.askForZone("end", journeyTracker);
-        CityRideDataset.PassengerType passengerType = this.askForPassengerType();
+        CityRideDataset.PassengerType passengerType = this.askForPassengerTypeLoggedIn(rider);
 
         // calculations
         BigDecimal baseFare = CityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
@@ -84,8 +97,6 @@ public class RiderMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        // TODO: remove
-        LocalTime time = LocalTime.now();
         Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);

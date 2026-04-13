@@ -1,5 +1,15 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ConsolePrinter {
     private Formatter formatter = new Formatter();
+
+    private void printMenuWithNumbers(List<String> menuOptionsList) {
+        for (int i = 0; i < menuOptionsList.size(); i++) {
+            System.out.println((i + 1) + ". " + menuOptionsList.get(i));
+        }
+    }
 
     public void printWelcome() {
         System.out.println("+++++++++++++++++++++++++++++++++++");
@@ -10,21 +20,20 @@ public class ConsolePrinter {
     public void printMainMenu() {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
-        System.out.println("1. New rider");
-        System.out.println("2. Load rider");
-        System.out.println("3. Admin panel");
-        System.out.println("0. Exit \n");
+        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#asList-T...-
+        // Oracle (n.d.)
+        List<String> mainMenuOptions = Arrays.asList("New rider", "Load rider", "Admin panel", "Exit");
+        printMenuWithNumbers(mainMenuOptions);
+        System.out.println();
     }
 
     public void printRiderMenu() {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
-        System.out.println("1. Add journey");
-        System.out.println("2. List journeys");
-        System.out.println("3. View summaries");
-        System.out.println("4. Remove journey");
-        System.out.println("5. Reset day");
-        System.out.println("0. Exit \n");
+        List<String> riderMenuOptions = Arrays.asList("Edit profile", "Load journeys", "Add journey",
+                "List journeys", "View summaries", "Remove journey", "Reset day", "Save", "Export summary", "Exit");
+        printMenuWithNumbers(riderMenuOptions);
+        System.out.println();
     }
 
     public void printListingFilters() {

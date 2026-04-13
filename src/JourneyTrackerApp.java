@@ -11,15 +11,17 @@ public class JourneyTrackerApp {
         int userInput;
 
         consolePrinter.printWelcome();
+
+        int mainMenuExitNum = 4;
         do {
             consolePrinter.printMainMenu();
-            userInput = inputValidator.readIntInRange(0, 3, true);
+            userInput = inputValidator.readIntInRange(1, mainMenuExitNum, true);
             if (userInput == 1) {
                 rider = mainMenu.actionNewRider();
                 riderMenu.runRiderMenu(journeyTracker, rider);
             }
         }
-        while (userInput != 0);
+        while (userInput != mainMenuExitNum);
 
 
     }
