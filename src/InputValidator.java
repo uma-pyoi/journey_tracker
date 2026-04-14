@@ -4,27 +4,67 @@ import java.util.Scanner;
 public class InputValidator {
     private Scanner scanner = new Scanner(System.in);
 
-    // Kvasnovsky (2025)
-    public int readIntInRange(int min, int max, boolean isPrintingRange) {
-        int userInput = min - 1;
-        while (userInput < min || userInput > max) {
-            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
-            String prompt = "Enter a whole number" + rangeString + ": ";
-            System.out.print(prompt);
+//    public int readIntInRange(int min, int max, boolean isPrintingRange, boolean canEmpty) {
+//        boolean isValid = false;
+//        int
+//        while (!isValid) {
+//            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
+//            String prompt = "Enter a whole number" + rangeString + ": ";
+//
+//            String userIntString = readString(prompt, canEmpty);
+//
+//        }
+//    }
 
-            while (!scanner.hasNextInt()) {
-                System.out.print("That's not a whole number! Try again: ");
-                scanner.next();
-            }
+    // returns -1 if input empty
+    public int readPosIntInRange(int min, int max, boolean isPrintingRange, boolean canEmpty) {
+        int userInt = -1;
+        boolean isValid = false;
+        do {
+            String rangePrompt = isPrintingRange ? " (" + min + "-" + max + ")" : "";
+            String blankPrompt = canEmpty ? " or leave empty" : "";
+            String prompt = "Enter a whole number" + rangePrompt + blankPrompt + ": ";
+            String userIntString = readString(prompt, canEmpty);
 
-            userInput = scanner.nextInt();
-            if (userInput < min || userInput > max) {
-                System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
+            if (!userIntString.isEmpty()) {
+                int parsedUserInt = parseStringInteger(userIntString, "Invalid! You must enter a whole number!");
+                if (parsedUserInt != -1) {
+                    if (parsedUserInt < min || parsedUserInt > max) {
+                        System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
+                    } else {
+                        userInt = parsedUserInt;
+                        isValid = true;
+                    }
+                }
+            } else {
+                isValid = true;
             }
         }
-        scanner.nextLine();
-        return userInput;
+        while (!isValid);
+        return userInt;
     }
+
+//    // Kvasnovsky (2025)
+//    public int readIntInRange(int min, int max, boolean isPrintingRange) {
+//        int userInput = min - 1;
+//        while (userInput < min || userInput > max) {
+//            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
+//            String prompt = "Enter a whole number" + rangeString + ": ";
+//            System.out.print(prompt);
+//
+//            while (!scanner.hasNextInt()) {
+//                System.out.print("That's not a whole number! Try again: ");
+//                scanner.next();
+//            }
+//
+//            userInput = scanner.nextInt();
+//            if (userInput < min || userInput > max) {
+//                System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
+//            }
+//        }
+//        scanner.nextLine();
+//        return userInput;
+//    }
 
     public boolean readYesNo() {
         boolean isValid = false;
@@ -61,15 +101,15 @@ public class InputValidator {
 
     // returns -1 if invalid integer
     private int parseStringInteger(String str, String errorMessage) {
-        int hours = -1;
+        int userInt = -1;
         // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
         // Oracle (n.d.)
         try {
-            hours = Integer.parseInt(str);
+            userInt = Integer.parseInt(str);
         } catch (NumberFormatException e) {
             System.out.println(errorMessage);
         }
-        return hours;
+        return userInt;
     }
 
     public LocalTime readTime() {
