@@ -25,17 +25,13 @@ public class RiderMenu {
             if (userInput == 1) {
                 actionEditProfile();
 //                actionAddJourney(journeyTracker, rider);
-            }
-            else if (userInput == 2) {
+            } else if (userInput == 2) {
                 actionListJourneys(journeyTracker);
-            }
-            else if (userInput == 3) {
+            } else if (userInput == 3) {
                 actionViewSummary(journeyTracker);
-            }
-            else if (userInput == 4) {
+            } else if (userInput == 4) {
                 actionRemoveJourney(journeyTracker);
-            }
-            else if (userInput == 5) {
+            } else if (userInput == 5) {
                 actionResetDay(journeyTracker);
             }
         }
@@ -63,8 +59,7 @@ public class RiderMenu {
         CityRideDataset.TimeBand timeBand;
         if (isPeak) {
             timeBand = CityRideDataset.TimeBand.PEAK;
-        }
-        else {
+        } else {
             timeBand = CityRideDataset.TimeBand.OFF_PEAK;
         }
         return timeBand;
@@ -77,8 +72,7 @@ public class RiderMenu {
         CityRideDataset.PassengerType passengerType;
         if (!useProfilePassengerType) {
             passengerType = this.askForPassengerType();
-        }
-        else {
+        } else {
             passengerType = rider.getPassengerType();
         }
         return passengerType;
@@ -92,13 +86,27 @@ public class RiderMenu {
 
         String namePrompt = "Name (current: " + rider.getName() + "): ";
         String newName = inputValidator.readString(namePrompt, true);
-        newName = newName.isEmpty() ? rider.getName() : newName;
-        consolePrinter.printPassengerTypes();
-        System.out.println("Passenger type (current: " + rider.getPassengerType() + "): ");
-        int newPassengerType = inputValidator.readPosIntInRange(1, 4, true, false);
-//        newPassengerType = newPassengerType.
+        if (!newName.isEmpty()) {
+            rider.setName(newName);
+        }
 
-        System.out.println("Payment option (current: " + rider.getPaymentOption() + "): ");
+        consolePrinter.printPassengerTypes();
+        System.out.println("Passenger type (current: " + formatter.getNameOfPassengerType(rider.getPassengerType()) + "): ");
+        int newPassengerTypeId = inputValidator.readPosIntInRange(1, 4, true, true);
+        if (newPassengerTypeId != -1) {
+            CityRideDataset.PassengerType newPassengerType = CityRideDataset.PassengerType.values()[newPassengerTypeId - 1];
+            rider.setPassengerType(newPassengerType);
+        }
+
+        consolePrinter.printPaymentOptions();
+        System.out.println("Payment option (current: " + formatter.getNameOfPaymentOption(rider.getPaymentOption()) + "): ");
+        int newPaymentOptionId = inputValidator.readPosIntInRange(1, 3, true, true);
+        if (newPaymentOptionId != -1) {
+            CityRideDataset.PaymentOption newPaymentOption = CityRideDataset.PaymentOption.values()[newPaymentOptionId - 1];
+            rider.setPaymentOption(newPaymentOption);
+        }
+        System.out.println("\nUPDATED PROFILE: ");
+        rider.printRider();
     }
 
     public void actionAddJourney(JourneyTracker journeyTracker) {
@@ -150,23 +158,18 @@ public class RiderMenu {
             if (choice == 1) {
                 CityRideDataset.PassengerType passengerType = askForPassengerType();
                 journeysManager.listJourneysByPassengerType(passengerType);
-            }
-            else if (choice == 2) {
+            } else if (choice == 2) {
                 askForFilterByTimeBand(inputValidator);
-            }
-            else if (choice == 3) {
+            } else if (choice == 3) {
                 Zone startZone = this.askForZone("start", journeyTracker);
                 journeysManager.listJourneysByZone(startZone, true);
-            }
-            else if (choice == 4) {
+            } else if (choice == 4) {
                 Zone endZone = this.askForZone("end", journeyTracker);
                 journeysManager.listJourneysByZone(endZone, false);
-            }
-            else if (choice == 5) {
+            } else if (choice == 5) {
                 askForFilterByTime(inputValidator);
             }
-        }
-        else {
+        } else {
             journeysManager.listAllJourneys();
         }
     }
@@ -178,11 +181,9 @@ public class RiderMenu {
         int choice = inputValidator.readPosIntInRange(1, 3, true, false);
         if (choice == 1) {
             dailySummaries(journeyTracker);
-        }
-        else if (choice == 2) {
+        } else if (choice == 2) {
             totalsByPassengerType(journeyTracker);
-        }
-        else if (choice == 3) {
+        } else if (choice == 3) {
             categoryCounts(journeyTracker);
         }
     }
@@ -198,8 +199,7 @@ public class RiderMenu {
         List<Journey> mostExpensiveJourneysList = journeysManager.getMostExpensiveJourneysList();
         if (mostExpensiveJourneysList.isEmpty()) {
             System.out.println("Most expensive journey not found.");
-        }
-        else {
+        } else {
             for (Journey j : mostExpensiveJourneysList) {
                 j.printJourneyDetails();
             }
@@ -275,8 +275,7 @@ public class RiderMenu {
         if (isConfirmed) {
             journeyTracker.resetDay();
             System.out.println("The day was successfully reset.");
-        }
-        else {
+        } else {
             System.out.println("Resetting cancelled.");
         }
     }
