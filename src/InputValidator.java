@@ -4,18 +4,6 @@ import java.util.Scanner;
 public class InputValidator {
     private Scanner scanner = new Scanner(System.in);
 
-//    public int readIntInRange(int min, int max, boolean isPrintingRange, boolean canEmpty) {
-//        boolean isValid = false;
-//        int
-//        while (!isValid) {
-//            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
-//            String prompt = "Enter a whole number" + rangeString + ": ";
-//
-//            String userIntString = readString(prompt, canEmpty);
-//
-//        }
-//    }
-
     // returns -1 if input empty
     public int readPosIntInRange(int min, int max, boolean isPrintingRange, boolean canEmpty) {
         int userInt = -1;
@@ -43,28 +31,6 @@ public class InputValidator {
         while (!isValid);
         return userInt;
     }
-
-//    // Kvasnovsky (2025)
-//    public int readIntInRange(int min, int max, boolean isPrintingRange) {
-//        int userInput = min - 1;
-//        while (userInput < min || userInput > max) {
-//            String rangeString = isPrintingRange ? " (" + min + "-" + max + ")" : "";
-//            String prompt = "Enter a whole number" + rangeString + ": ";
-//            System.out.print(prompt);
-//
-//            while (!scanner.hasNextInt()) {
-//                System.out.print("That's not a whole number! Try again: ");
-//                scanner.next();
-//            }
-//
-//            userInput = scanner.nextInt();
-//            if (userInput < min || userInput > max) {
-//                System.out.println("Invalid! The number must be between " + min + " and " + max + "!");
-//            }
-//        }
-//        scanner.nextLine();
-//        return userInput;
-//    }
 
     public boolean readYesNo() {
         boolean isValid = false;
