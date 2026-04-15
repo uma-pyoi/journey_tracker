@@ -4,6 +4,7 @@ import java.time.LocalTime;
 public class Journey {
     // states
     private int journeyId;
+    private int riderId;
     // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
     private LocalTime time;
@@ -21,6 +22,7 @@ public class Journey {
     // constructors
     public Journey() {
         this.journeyId = 0;
+        this.riderId = 0;
         this.time = LocalTime.now();
         this.timeBand = null;
         this.startZone = null;
@@ -32,8 +34,9 @@ public class Journey {
         this.dailyCapReached = false;
     }
 
-    public Journey(int journeyID, LocalTime time, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+    public Journey(int journeyID, int riderId, LocalTime time, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
+        this.riderId = riderId;
         this.time = time;
         this.startZone = startZone;
         this.endZone = endZone;
@@ -49,6 +52,8 @@ public class Journey {
     public int getJourneyId() {
         return journeyId;
     }
+
+    public int getRiderId() {return riderId;}
 
     public CityRideDataset.PassengerType getPassengerType() {
         return passengerType;
@@ -90,6 +95,7 @@ public class Journey {
     public void printJourneyDetails() {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
+        System.out.println("Rider ID: " + this.riderId);
         String formattedTime = this.time.format(formatter.dateTimeFormatter);
         System.out.println("Datetime: " + formattedTime);
         System.out.print("Timeband: ");

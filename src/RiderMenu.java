@@ -24,15 +24,25 @@ public class RiderMenu {
 
             if (userInput == 1) {
                 actionEditProfile();
-//                actionAddJourney(journeyTracker, rider);
             } else if (userInput == 2) {
-                actionListJourneys(journeyTracker);
+                // TODO: add loading journeys
+                System.out.println("need to make loading journeys");
             } else if (userInput == 3) {
-                actionViewSummary(journeyTracker);
+                actionAddJourney(journeyTracker);
             } else if (userInput == 4) {
-                actionRemoveJourney(journeyTracker);
+                actionListJourneys(journeyTracker);
             } else if (userInput == 5) {
+                actionViewSummary(journeyTracker);
+            } else if (userInput == 6) {
+                actionRemoveJourney(journeyTracker);
+            } else if (userInput == 7) {
                 actionResetDay(journeyTracker);
+            } else if (userInput == 8) {
+                // TODO: add saving day
+                System.out.println("need to make saving day");
+            } else {
+                // TODO: add export summary
+                System.out.println("need to make export summary");
             }
         }
         while (userInput != exitNum);
@@ -91,7 +101,7 @@ public class RiderMenu {
         }
 
         consolePrinter.printPassengerTypes();
-        System.out.println("Passenger type (current: " + formatter.getNameOfPassengerType(rider.getPassengerType()) + "): ");
+        System.out.println("Passenger type (current: " + formatter.getNameOfPassengerType(rider.getPassengerType()) + ")");
         int newPassengerTypeId = inputValidator.readPosIntInRange(1, 4, true, true);
         if (newPassengerTypeId != -1) {
             CityRideDataset.PassengerType newPassengerType = CityRideDataset.PassengerType.values()[newPassengerTypeId - 1];
@@ -99,7 +109,7 @@ public class RiderMenu {
         }
 
         consolePrinter.printPaymentOptions();
-        System.out.println("Payment option (current: " + formatter.getNameOfPaymentOption(rider.getPaymentOption()) + "): ");
+        System.out.println("Payment option (current: " + formatter.getNameOfPaymentOption(rider.getPaymentOption()) + ")");
         int newPaymentOptionId = inputValidator.readPosIntInRange(1, 3, true, true);
         if (newPaymentOptionId != -1) {
             CityRideDataset.PaymentOption newPaymentOption = CityRideDataset.PaymentOption.values()[newPaymentOptionId - 1];
@@ -127,20 +137,20 @@ public class RiderMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), rider.getId(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);
     }
 
     // listing journeys
-    private void askForFilterByTimeBand(InputValidator inputValidator) {
+    private void askForFilterByTimeBand() {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand();
         journeysManager.listJourneysByTimeBand(timeBand);
     }
 
-    private void askForFilterByTime(InputValidator inputValidator) {
+    private void askForFilterByTime() {
         System.out.println("-- Sorting by the time period of when the journey was created --");
         System.out.println("What is the start hour?");
         int startHour = inputValidator.readPosIntInRange(1, 24, true, false);
@@ -159,7 +169,7 @@ public class RiderMenu {
                 CityRideDataset.PassengerType passengerType = askForPassengerType();
                 journeysManager.listJourneysByPassengerType(passengerType);
             } else if (choice == 2) {
-                askForFilterByTimeBand(inputValidator);
+                askForFilterByTimeBand();
             } else if (choice == 3) {
                 Zone startZone = this.askForZone("start", journeyTracker);
                 journeysManager.listJourneysByZone(startZone, true);
@@ -167,7 +177,7 @@ public class RiderMenu {
                 Zone endZone = this.askForZone("end", journeyTracker);
                 journeysManager.listJourneysByZone(endZone, false);
             } else if (choice == 5) {
-                askForFilterByTime(inputValidator);
+                askForFilterByTime();
             }
         } else {
             journeysManager.listAllJourneys();
