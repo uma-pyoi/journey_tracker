@@ -7,7 +7,7 @@ public class JourneyTrackerApp {
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
         MainMenu mainMenu = new MainMenu();
-        Rider rider;
+        Rider rider = new Rider();
 
         int userInput;
 
@@ -19,9 +19,17 @@ public class JourneyTrackerApp {
             userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
             if (userInput == 1) {
                 rider = mainMenu.actionNewRider(riderMenu);
-//                rider = new Rider("kai", CityRideDataset.PassengerType.STUDENT, CityRideDataset.PaymentOption.RAIL_CARD);
+            } else if (userInput == 2) {
+                rider = mainMenu.actionLoadRider(riderMenu);
+            } else if (userInput == 3) {
+                System.out.println("Oops! need to make admin panel still");
+            }
+
+            // starts rider menu if user is logged in
+            if (rider.getId() != -1) {
                 riderMenu.setRider(rider, journeysManager);
                 riderMenu.runRiderMenu(journeyTracker);
+                userInput = mainMenuExitNum; // terminate program when rider menu exits
             }
         }
         while (userInput != mainMenuExitNum);

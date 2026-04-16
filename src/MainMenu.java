@@ -21,4 +21,13 @@ public class MainMenu {
         rider.printRider(formatter);
         return rider;
     }
+
+    public Rider actionLoadRider(RiderMenu riderMenu) {
+        Rider rider = riderMenu.loadRiderProfile();
+        if (rider.getId() == -1) {
+            System.out.println("You will need to create a new rider profile.");
+            rider = actionNewRider(riderMenu);
+        }
+        return rider;
+    }
 }

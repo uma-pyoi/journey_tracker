@@ -6,7 +6,7 @@ public class Rider {
 
     // constructors
     public Rider() {
-        this.id = 0; // TODO: make id unique
+        this.id = -1; // -1 signifies that rider has been default created
         this.name = "Anonymous";
         this.passengerType = CityRideDataset.PassengerType.ADULT;
         this.paymentOption = CityRideDataset.PaymentOption.VISA_CARD;

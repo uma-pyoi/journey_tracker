@@ -1,9 +1,13 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +58,7 @@ public class RiderMenu {
                 actionResetDay(journeyTracker);
             } else if (userInput == 8) {
                 actionSave();
-            } else {
+            } else if (userInput == 9) {
                 // TODO: add export summary
                 System.out.println("need to make export summary");
             }
@@ -305,16 +309,31 @@ public class RiderMenu {
         }
     }
 
-    private void saveRiderProfile() {
+    public void saveRiderProfile() {
         try {
             FileWriter writer = new FileWriter(riderProfileFilename);
             gson.toJson(rider, writer);
             writer.close();
-            System.out.println("Rider profile saved to file.");
+            System.out.println("Rider profile saved to file!");
         }
         catch (Exception e) {
-            System.err.println("Error saving rider profile!");
+            System.err.println("Error saving rider profile.");
         }
+    }
+
+    public Rider loadRiderProfile() {
+        Rider loadedRider = new Rider();
+        try {
+            FileReader reader = new FileReader(riderProfileFilename);
+            Type riderProfileType = new TypeToken<Rider>() {}.getType();
+            loadedRider = gson.fromJson(reader, riderProfileType);
+            System.out.println("Rider successfully loaded!");
+        }
+        catch (Exception e) {
+            System.err.println("No existing file for rider profile found.");
+        }
+
+        return loadedRider;
     }
 
     public void actionSave() {
