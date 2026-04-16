@@ -21,8 +21,6 @@ public class JourneysManager {
     // adding Journey
     public void addJourney(Journey journey, JourneyTracker journeyTracker) {
         journeysList.add(journey);
-        System.out.println("Journey with Journey ID of " + journey.getJourneyId() + " has been added.");
-
         SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(journey.getPassengerType());
         summary.addJourneyToSum(journey);
         journey.getStartZone().incrementCount();
@@ -188,6 +186,18 @@ public class JourneysManager {
             }
         }
         return removedJourney;
+    }
+
+    public void recalculateAllJourneysFares(JourneyTracker journeyTracker) {
+        List<Journey> journeysListCopy = new ArrayList<>(journeysList);
+        journeyTracker.resetDay();
+        for (Journey journey : journeysListCopy) {
+            BigDecimal chargedFare = journeyTracker.calculateChargedFare(journey.getDiscountedFare(), journey.getPassengerType());
+            boolean dailyCapReached = journeyTracker.calculateDailyCapReached(journey.getDiscountedFare(), journey.getPassengerType());
+            journey.setChargedFare(chargedFare);
+            journey.setDailyCapReached(dailyCapReached);
+            addJourney(journey, journeyTracker);
+        }
     }
 
     // resetting the day

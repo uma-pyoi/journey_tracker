@@ -91,6 +91,14 @@ public class Journey {
         return time;
     }
 
+    // setters
+    public void setChargedFare(BigDecimal chargedFare) {
+        this.chargedFare = chargedFare;
+    }
+    public void setDailyCapReached(boolean dailyCapReached) {
+        this.dailyCapReached = dailyCapReached;
+    }
+
     // other methods
     public void printJourneyDetails() {
         System.out.println("--------------------------");

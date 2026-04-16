@@ -7,11 +7,13 @@ public class RiderMenu {
     private Formatter formatter = new Formatter();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private InputValidator inputValidator = new InputValidator();
-    private JourneysManager journeysManager = new JourneysManager();
+
+    private JourneysManager journeysManager;
     private Rider rider;
 
-    public void setRider(Rider rider) {
+    public void setRider(Rider rider, JourneysManager journeysManager) {
         this.rider = rider;
+        this.journeysManager = journeysManager;
     }
 
     public void runRiderMenu(JourneyTracker journeyTracker) {
@@ -139,6 +141,7 @@ public class RiderMenu {
         // adding journey
         Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), rider.getId(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
+        System.out.println("Journey with Journey ID of " + newJourney.getJourneyId() + " has been added.");
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);
     }
 
@@ -259,7 +262,7 @@ public class RiderMenu {
             if (removedJourney == null) {
                 System.out.println("An error happened! The journey was not removed.");
             } else {
-                journeyTracker.recalculateSummariesForRemovedJourney(removedJourney);
+                journeysManager.recalculateAllJourneysFares(journeyTracker);
                 System.out.println("The journey with ID " + foundJourney.getJourneyId() + " was successfully removed.");
             }
         } else {

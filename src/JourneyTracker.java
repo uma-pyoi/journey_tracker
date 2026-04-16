@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class JourneyTracker {
     private Formatter formatter = new Formatter();
-    private JourneysManager journeysManager = new JourneysManager();
+    private JourneysManager journeysManager;
 
     private Zone[] zonesArr = {new Zone(1, "Central"),
             new Zone(2, "Inner"),
@@ -19,6 +19,10 @@ public class JourneyTracker {
     private SummaryForPassengerType studentSummary = new SummaryForPassengerType();
     private SummaryForPassengerType childSummary = new SummaryForPassengerType();
     private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
+
+    JourneyTracker(JourneysManager journeysManager) {
+        this.journeysManager = journeysManager;
+    }
 
     // methods
     public SummaryForPassengerType getSummaryObjForPassengerType(CityRideDataset.PassengerType passengerType) {
@@ -149,14 +153,6 @@ public class JourneyTracker {
         BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
 
         return newDailyTotal.compareTo(dailyCap) >= 0;
-    }
-
-    public void recalculateSummariesForRemovedJourney(Journey removedJourney) {
-        CityRideDataset.PassengerType passengerType = removedJourney.getPassengerType();
-        SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
-        summary.subtractJourneyFromSum(removedJourney);
-        removedJourney.getStartZone().decrementCount();
-        removedJourney.getEndZone().decrementCount();
     }
 
     // resetting the day
