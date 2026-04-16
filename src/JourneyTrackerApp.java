@@ -13,17 +13,17 @@ public class JourneyTrackerApp {
 
         consolePrinter.printWelcome();
 
-//        int mainMenuExitNum = 4;
-//        do {
-//            consolePrinter.printMainMenu();
-//            userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
-//            if (userInput == 1) {
-//                rider = mainMenu.actionNewRider(riderMenu);
-                rider = new Rider("kai", CityRideDataset.PassengerType.STUDENT, CityRideDataset.PaymentOption.RAIL_CARD);
+        int mainMenuExitNum = 4;
+        do {
+            consolePrinter.printMainMenu();
+            userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
+            if (userInput == 1) {
+                rider = mainMenu.actionNewRider(riderMenu);
+//                rider = new Rider("kai", CityRideDataset.PassengerType.STUDENT, CityRideDataset.PaymentOption.RAIL_CARD);
                 riderMenu.setRider(rider, journeysManager);
                 riderMenu.runRiderMenu(journeyTracker);
-//            }
-//        }
-//        while (userInput != mainMenuExitNum);
+            }
+        }
+        while (userInput != mainMenuExitNum);
     }
 }

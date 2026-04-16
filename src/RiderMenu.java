@@ -40,8 +40,8 @@ public class RiderMenu {
             } else if (userInput == 7) {
                 actionResetDay(journeyTracker);
             } else if (userInput == 8) {
-                // TODO: add saving day
-                System.out.println("need to make saving day");
+                consolePrinter.printRiderSaveMenu();
+                int userSaveChoice = inputValidator.readPosIntInRange(1, 2, true, false);
             } else {
                 // TODO: add export summary
                 System.out.println("need to make export summary");

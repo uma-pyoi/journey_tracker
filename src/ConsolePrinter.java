@@ -36,20 +36,22 @@ public class ConsolePrinter {
         System.out.println();
     }
 
+    public void printRiderSaveMenu() {
+        System.out.println("\nChoose what to save:");
+        List<String> menuOptions = Arrays.asList("Rider profile", "Journeys");
+        printMenuWithNumbers(menuOptions);
+    }
+
     public void printListingFilters() {
         System.out.println("\nChoose filter:");
-        System.out.println("1. Passenger type");
-        System.out.println("2. Time band");
-        System.out.println("3. Start zone");
-        System.out.println("4. End zone");
-        System.out.println("5. Time (hours)");
+        List<String> menuOptions = Arrays.asList("Passenger type", "Time band", "Start zone", "End zone", "Time (hours)");
+        printMenuWithNumbers(menuOptions);
     }
 
     public void printSummaryTypes() {
         System.out.println("What type of summary to view?");
-        System.out.println("1. Daily summaries");
-        System.out.println("2. Totals by passenger type");
-        System.out.println("3. Category counts");
+        List<String> menuOptions = Arrays.asList("Daily summaries", "Totals by passenger type", "Category counts");
+        printMenuWithNumbers(menuOptions);
     }
 
     public void printPassengerTypes() {
