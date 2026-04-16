@@ -4,8 +4,6 @@ public class Rider {
     CityRideDataset.PassengerType passengerType;
     CityRideDataset.PaymentOption paymentOption;
 
-    private Formatter formatter = new Formatter();
-
     // constructors
     public Rider() {
         this.id = 0; // TODO: make id unique
@@ -50,7 +48,7 @@ public class Rider {
     }
 
     // other methods
-    public void printRider() {
+    public void printRider(Formatter formatter) {
         System.out.println("**********   Rider Profile   **********");
         System.out.println("Name: " + name);
         System.out.println("Passenger type: " + formatter.getNameOfPassengerType(passengerType));

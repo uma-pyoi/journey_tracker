@@ -1,3 +1,7 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
@@ -10,6 +14,15 @@ public class RiderMenu {
 
     private JourneysManager journeysManager;
     private Rider rider;
+
+    // file handling
+    private String riderProfileFilename = "profile.json";
+    private Gson gson;
+
+    // constructor
+    public RiderMenu() {
+        gson = new GsonBuilder().setPrettyPrinting().create();
+    }
 
     public void setRider(Rider rider, JourneysManager journeysManager) {
         this.rider = rider;
@@ -40,8 +53,7 @@ public class RiderMenu {
             } else if (userInput == 7) {
                 actionResetDay(journeyTracker);
             } else if (userInput == 8) {
-                consolePrinter.printRiderSaveMenu();
-                int userSaveChoice = inputValidator.readPosIntInRange(1, 2, true, false);
+                actionSave();
             } else {
                 // TODO: add export summary
                 System.out.println("need to make export summary");
@@ -92,7 +104,7 @@ public class RiderMenu {
 
     // menu actions
     public void actionEditProfile() {
-        rider.printRider();
+        rider.printRider(formatter);
         System.out.println("To update the field, enter a value.");
         System.out.println("Leave the field empty if you want to keep the current value.");
 
@@ -118,7 +130,7 @@ public class RiderMenu {
             rider.setPaymentOption(newPaymentOption);
         }
         System.out.println("\nUPDATED PROFILE: ");
-        rider.printRider();
+        rider.printRider(formatter);
     }
 
     public void actionAddJourney(JourneyTracker journeyTracker) {
@@ -290,6 +302,26 @@ public class RiderMenu {
             System.out.println("The day was successfully reset.");
         } else {
             System.out.println("Resetting cancelled.");
+        }
+    }
+
+    private void saveRiderProfile() {
+        try {
+            FileWriter writer = new FileWriter(riderProfileFilename);
+            gson.toJson(rider, writer);
+            writer.close();
+            System.out.println("Rider profile saved to file.");
+        }
+        catch (Exception e) {
+            System.err.println("Error saving rider profile!");
+        }
+    }
+
+    public void actionSave() {
+        consolePrinter.printRiderSaveMenu();
+        int userChoice = inputValidator.readPosIntInRange(1, 2, true, false);
+        if (userChoice == 1) {
+            saveRiderProfile();
         }
     }
 }

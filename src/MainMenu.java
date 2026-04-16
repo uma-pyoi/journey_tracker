@@ -1,6 +1,7 @@
 public class MainMenu {
     private InputValidator inputValidator = new InputValidator();
     private ConsolePrinter consolePrinter = new ConsolePrinter();
+    private Formatter formatter = new Formatter();
 
     public CityRideDataset.PaymentOption askForPaymentOption() {
         System.out.println("What is the payment option?");
@@ -17,7 +18,7 @@ public class MainMenu {
         CityRideDataset.PaymentOption paymentOption = askForPaymentOption();
 
         Rider rider = new Rider(name, passengerType, paymentOption);
-        rider.printRider();
+        rider.printRider(formatter);
         return rider;
     }
 }
