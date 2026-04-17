@@ -31,7 +31,7 @@ public class ConsolePrinter {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
         List<String> riderMenuOptions = Arrays.asList("Edit profile", "Load journeys", "Add journey",
-                "List journeys", "View summaries", "Remove journey", "Reset day", "Save", "Export summary", "Exit");
+                "List journeys", "View summaries", "Remove journey", "Reset day", "Save", "Export report", "Exit");
         printMenuWithNumbers(riderMenuOptions);
         System.out.println();
     }

@@ -7,7 +7,7 @@ public class SummaryForPassengerType {
     private BigDecimal totalChargedFare;
     private int totalJourneyNum;
     private boolean dailyCapReached;
-    private Formatter formatter = new Formatter();
+//    private Formatter formatter = new Formatter();
 
     // constructor
     public SummaryForPassengerType() {
@@ -43,7 +43,7 @@ public class SummaryForPassengerType {
     }
 
     // viewing summary
-    public void printSummary() {
+    public void printSummary(Formatter formatter) {
         System.out.println("Total base fare: £" + formatter.formatBigDecimal2dp(totalBaseFare));
         System.out.println("Total discounted fare: £" + formatter.formatBigDecimal2dp(totalDiscountedFare));
         System.out.println("Total charged fare: £" + formatter.formatBigDecimal2dp(totalChargedFare));

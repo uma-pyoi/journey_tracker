@@ -44,7 +44,7 @@ public class RiderMenu {
             if (userInput == 1) {
                 actionEditProfile();
             } else if (userInput == 2) {
-                journeysManager.loadJourneys();
+                journeysManager.loadJourneys(rider);
             } else if (userInput == 3) {
                 actionAddJourney(journeyTracker);
             } else if (userInput == 4) {
@@ -60,6 +60,7 @@ public class RiderMenu {
             } else if (userInput == 9) {
                 // TODO: add export summary
                 System.out.println("need to make export summary");
+                actionExportReport();
             } else if (userInput == 10) {
                 actionExit();
             }
@@ -242,7 +243,7 @@ public class RiderMenu {
         String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
         System.out.println("---- Daily Summary for " + passengerTypeName + " journeys ----");
         SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(passengerType);
-        summary.printSummary();
+        summary.printSummary(formatter);
     }
 
     private void printZonesCount(JourneyTracker journeyTracker) {
@@ -346,6 +347,10 @@ public class RiderMenu {
         } else if (userChoice == 2) {
             journeysManager.saveJourneys();
         }
+    }
+
+    public void actionExportReport() {
+
     }
 
     public void actionExit() {
