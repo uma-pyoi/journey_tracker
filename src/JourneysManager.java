@@ -1,3 +1,13 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +16,9 @@ public class JourneysManager {
     private int journeyIdCounter = 1;
     private Formatter formatter = new Formatter();
     private List<Journey> journeysList = new ArrayList<>();
+
+    // file handling
+    private String journeysFilename = "journeys.csv";
 
     // methods
     public List<Journey> getJourneysList() {
@@ -23,25 +36,28 @@ public class JourneysManager {
         journeysList.add(journey);
         SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(journey.getPassengerType());
         summary.addJourneyToSum(journey);
-        journey.getStartZone().incrementCount();
-        journey.getEndZone().incrementCount();
+
+        Zone startZone = journeyTracker.findZoneById(journey.getStartZoneId());
+        Zone endZone = journeyTracker.findZoneById(journey.getEndZoneId());
+        startZone.incrementCount();
+        endZone.incrementCount();
     }
 
     // listing journeys
-    public void listAllJourneys() {
+    public void listAllJourneys(JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
         }
         else {
             System.out.println("------   Journeys   ------");
             for (Journey j : journeysList) {
-                j.printJourneyDetails();
+                j.printJourneyDetails(formatter, journeyTracker);
             }
             System.out.println("--------------------------");
         }
     }
 
-    public void listJourneysByPassengerType(CityRideDataset.PassengerType passengerType) {
+    public void listJourneysByPassengerType(CityRideDataset.PassengerType passengerType, JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
         }
@@ -59,14 +75,14 @@ public class JourneysManager {
                 System.out.println("------ " + formatter.getNameOfPassengerType(passengerType) + " Journeys ------");
 
                 for (Journey j : passengerTypeJourneysList) {
-                    j.printJourneyDetails();
+                    j.printJourneyDetails(formatter, journeyTracker);
                 }
                 System.out.println("--------------------------");
             }
         }
     }
 
-    public void listJourneysByTimeBand(CityRideDataset.TimeBand timeBand) {
+    public void listJourneysByTimeBand(CityRideDataset.TimeBand timeBand, JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
         }
@@ -84,28 +100,29 @@ public class JourneysManager {
                 System.out.println("------ " + formatter.getNameOfTimeBand(timeBand) + " Journeys ------");
 
                 for (Journey j : timeBandJourneysList) {
-                    j.printJourneyDetails();
+                    j.printJourneyDetails(formatter, journeyTracker);
                 }
                 System.out.println("--------------------------");
             }
         }
     }
 
-    public void listJourneysByZone(Zone zone, boolean isStartZone) {
+    // TODO: test
+    public void listJourneysByZone(int zoneId, boolean isStartZone, JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
         }
         else {
             List<Journey> zonesJourneysList = new ArrayList<>();
             for (Journey j : journeysList) {
-                Zone zoneToCompare;
+                int zoneIdToCompare;
                 if (isStartZone) {
-                    zoneToCompare = j.getStartZone();
+                    zoneIdToCompare = j.getStartZoneId();
                 }
                 else {
-                    zoneToCompare = j.getEndZone();
+                    zoneIdToCompare = j.getEndZoneId();
                 }
-                if (zoneToCompare == zone) {
+                if (zoneIdToCompare == zoneId) {
                     zonesJourneysList.add(j);
                 }
             }
@@ -117,14 +134,14 @@ public class JourneysManager {
                 System.out.println("------ " + zoneDescription + " zone Journeys ------");
 
                 for (Journey j : zonesJourneysList) {
-                    j.printJourneyDetails();
+                    j.printJourneyDetails(formatter, journeyTracker);
                 }
                 System.out.println("--------------------------");
             }
         }
     }
 
-    public void listJourneysByHours(int startHour, int endHour) {
+    public void listJourneysByHours(int startHour, int endHour, JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
         }
@@ -142,7 +159,7 @@ public class JourneysManager {
                 System.out.println("------ " + startHour + "-" + endHour + " hours Journeys ------");
 
                 for (Journey j : hoursJourneysList) {
-                    j.printJourneyDetails();
+                    j.printJourneyDetails(formatter, journeyTracker);
                 }
                 System.out.println("--------------------------");
             }
@@ -204,5 +221,53 @@ public class JourneysManager {
     public void clearJourneysList() {
         journeysList.clear();
     }
+
+    // file handling
+//    private List<Journey> reformatJourneysToWrite() {
+//        List<Journey> newJourneysList = new ArrayList<>();
+//        for (Journey journey : journeysList) {
+//            journey.getStartZone().getZoneId();
+//        }
+//    }
+
+    public void saveJourneys() {
+        try {
+            // REFERENCE: https://opencsv.sourceforge.net/#writing
+            //
+            Writer writer = new FileWriter(journeysFilename);
+            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+
+
+
+            beanToCsv.write(journeysList);
+            writer.close();
+            System.out.println("Journeys saved to file!");
+
+//
+//            FileWriter writer = new FileWriter(riderProfileFilename);
+//            gson.toJson(rider, writer);
+//            writer.close();
+//            System.out.println("Rider profile saved to file!");
+        }
+        catch (Exception e) {
+            System.err.println("Error saving journeys.");
+        }
+    }
+
+//    public Rider loadJourneys() {
+//        Rider loadedRider = new Rider();
+//        try {
+//            FileReader reader = new FileReader(riderProfileFilename);
+//            Type riderProfileType = new TypeToken<Rider>() {}.getType();
+//            loadedRider = gson.fromJson(reader, riderProfileType);
+//            System.out.println("Rider successfully loaded!");
+//        }
+//        catch (Exception e) {
+//            System.err.println("No existing file for rider profile found.");
+//        }
+//
+//        return loadedRider;
+//    }
+//
 
 }

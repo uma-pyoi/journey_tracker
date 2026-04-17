@@ -9,15 +9,17 @@ public class Journey {
     // Oracle (n.d.)
     private LocalTime time;
     private CityRideDataset.TimeBand timeBand;
-    private Zone startZone;
-    private Zone endZone;
+//    private Zone startZone;
+//    private Zone endZone;
+    private int startZoneId;
+    private int endZoneId;
     private CityRideDataset.PassengerType passengerType;
     private BigDecimal baseFare;
     private BigDecimal discountedFare;
     private BigDecimal chargedFare;
     private boolean dailyCapReached;
     // money formatter
-    private Formatter formatter = new Formatter();
+//    private Formatter formatter = new Formatter();
 
     // constructors
     public Journey() {
@@ -25,8 +27,8 @@ public class Journey {
         this.riderId = 0;
         this.time = LocalTime.now();
         this.timeBand = null;
-        this.startZone = null;
-        this.endZone = null;
+        this.startZoneId = 0;
+        this.endZoneId = 0;
         this.passengerType = null;
         this.baseFare = new BigDecimal("0.0");
         this.discountedFare = new BigDecimal("0.0");
@@ -34,12 +36,12 @@ public class Journey {
         this.dailyCapReached = false;
     }
 
-    public Journey(int journeyID, int riderId, LocalTime time, Zone startZone, Zone endZone, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+    public Journey(int journeyID, int riderId, LocalTime time, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
         this.riderId = riderId;
         this.time = time;
-        this.startZone = startZone;
-        this.endZone = endZone;
+        this.startZoneId = startZoneId;
+        this.endZoneId = endZoneId;
         this.passengerType = passengerType;
         this.baseFare = baseFare;
         this.discountedFare = discountedFare;
@@ -71,12 +73,12 @@ public class Journey {
         return chargedFare;
     }
 
-    public Zone getStartZone() {
-        return startZone;
+    public int getStartZoneId() {
+        return startZoneId;
     }
 
-    public Zone getEndZone() {
-        return endZone;
+    public int getEndZoneId() {
+        return endZoneId;
     }
 
     public CityRideDataset.TimeBand getTimeBand() {
@@ -100,7 +102,7 @@ public class Journey {
     }
 
     // other methods
-    public void printJourneyDetails() {
+    public void printJourneyDetails(Formatter formatter, JourneyTracker journeyTracker) {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
         System.out.println("Rider ID: " + this.riderId);
@@ -108,8 +110,12 @@ public class Journey {
         System.out.println("Datetime: " + formattedTime);
         System.out.print("Timeband: ");
         System.out.println(formatter.getNameOfTimeBand(this.timeBand));
-        System.out.println("Start zone: " + this.startZone.getZoneId() + ". " + this.startZone.getZoneName());
-        System.out.println("End zone: " + this.endZone.getZoneId() + ". " + this.endZone.getZoneName());
+
+        Zone startZone = journeyTracker.findZoneById(startZoneId);
+        Zone endZone = journeyTracker.findZoneById(endZoneId);
+
+        System.out.println("Start zone: " + startZoneId + ". " + startZone.getZoneName());
+        System.out.println("End zone: " + endZoneId + ". " + endZone.getZoneName());
         System.out.println("Passenger type: " + formatter.getNameOfPassengerType(passengerType));
 
         System.out.println("Base fare: £" + formatter.formatBigDecimal2dp(this.baseFare));

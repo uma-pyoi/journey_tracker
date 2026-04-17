@@ -155,27 +155,27 @@ public class RiderMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), rider.getId(), time, startZone, endZone, passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), rider.getId(), time, startZone.getZoneId(), endZone.getZoneId(), passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
         System.out.println("Journey with Journey ID of " + newJourney.getJourneyId() + " has been added.");
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);
     }
 
     // listing journeys
-    private void askForFilterByTimeBand() {
+    private void askForFilterByTimeBand(JourneyTracker journeyTracker) {
         System.out.println("Do you wish to see journeys on Peak time?");
         System.out.println("'Yes' for Peak, 'No' for Off-peak");
         CityRideDataset.TimeBand timeBand = this.askForTimeBand();
-        journeysManager.listJourneysByTimeBand(timeBand);
+        journeysManager.listJourneysByTimeBand(timeBand, journeyTracker);
     }
 
-    private void askForFilterByTime() {
+    private void askForFilterByTime(JourneyTracker journeyTracker) {
         System.out.println("-- Sorting by the time period of when the journey was created --");
         System.out.println("What is the start hour?");
         int startHour = inputValidator.readPosIntInRange(1, 24, true, false);
         System.out.println("What is the end hour?");
         int endHour = inputValidator.readPosIntInRange(1, 24, true, false);
-        journeysManager.listJourneysByHours(startHour, endHour);
+        journeysManager.listJourneysByHours(startHour, endHour, journeyTracker);
     }
 
     public void actionListJourneys(JourneyTracker journeyTracker) {
@@ -186,20 +186,20 @@ public class RiderMenu {
             int choice = inputValidator.readPosIntInRange(1, 5, true, false);
             if (choice == 1) {
                 CityRideDataset.PassengerType passengerType = askForPassengerType();
-                journeysManager.listJourneysByPassengerType(passengerType);
+                journeysManager.listJourneysByPassengerType(passengerType, journeyTracker);
             } else if (choice == 2) {
-                askForFilterByTimeBand();
+                askForFilterByTimeBand(journeyTracker);
             } else if (choice == 3) {
                 Zone startZone = this.askForZone("start", journeyTracker);
-                journeysManager.listJourneysByZone(startZone, true);
+                journeysManager.listJourneysByZone(startZone.getZoneId(), true, journeyTracker);
             } else if (choice == 4) {
                 Zone endZone = this.askForZone("end", journeyTracker);
-                journeysManager.listJourneysByZone(endZone, false);
+                journeysManager.listJourneysByZone(endZone.getZoneId(), false, journeyTracker);
             } else if (choice == 5) {
-                askForFilterByTime();
+                askForFilterByTime(journeyTracker);
             }
         } else {
-            journeysManager.listAllJourneys();
+            journeysManager.listAllJourneys(journeyTracker);
         }
     }
 
@@ -230,7 +230,7 @@ public class RiderMenu {
             System.out.println("Most expensive journey not found.");
         } else {
             for (Journey j : mostExpensiveJourneysList) {
-                j.printJourneyDetails();
+                j.printJourneyDetails(formatter, journeyTracker);
             }
         }
         System.out.println("------------------------------");
@@ -269,7 +269,7 @@ public class RiderMenu {
     // remove journey
     private void actionRemoveJourneyConfirmed(Journey foundJourney, JourneyTracker journeyTracker) {
         System.out.println("Found journey:");
-        foundJourney.printJourneyDetails();
+        foundJourney.printJourneyDetails(formatter, journeyTracker);
         System.out.println("\nAre you sure you want to delete this journey?");
         boolean isConfirmed = inputValidator.readYesNo();
 
@@ -341,6 +341,8 @@ public class RiderMenu {
         int userChoice = inputValidator.readPosIntInRange(1, 2, true, false);
         if (userChoice == 1) {
             saveRiderProfile();
+        } else if (userChoice == 2) {
+            journeysManager.saveJourneys();
         }
     }
 }
