@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,7 +150,8 @@ public class JourneysManager {
         else {
             List<Journey> hoursJourneysList = new ArrayList<>();
             for (Journey j : journeysList) {
-                if (j.getTime().getHour() >= startHour && j.getTime().getHour() <= endHour) {
+                int journeyHour = LocalTime.parse(j.getTime()).getHour(); // TODO: Test
+                if (journeyHour >= startHour && journeyHour <= endHour) {
                     hoursJourneysList.add(j);
                 }
             }
@@ -236,38 +239,26 @@ public class JourneysManager {
             //
             Writer writer = new FileWriter(journeysFilename);
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
-
-
-
             beanToCsv.write(journeysList);
             writer.close();
             System.out.println("Journeys saved to file!");
-
-//
-//            FileWriter writer = new FileWriter(riderProfileFilename);
-//            gson.toJson(rider, writer);
-//            writer.close();
-//            System.out.println("Rider profile saved to file!");
         }
         catch (Exception e) {
             System.err.println("Error saving journeys.");
         }
     }
 
-//    public Rider loadJourneys() {
-//        Rider loadedRider = new Rider();
-//        try {
-//            FileReader reader = new FileReader(riderProfileFilename);
-//            Type riderProfileType = new TypeToken<Rider>() {}.getType();
-//            loadedRider = gson.fromJson(reader, riderProfileType);
-//            System.out.println("Rider successfully loaded!");
-//        }
-//        catch (Exception e) {
-//            System.err.println("No existing file for rider profile found.");
-//        }
-//
-//        return loadedRider;
-//    }
-//
+    public List<Journey> loadJourneys() {
+        List<Journey> loadedJourneys = new ArrayList<>();
+        try {
+            loadedJourneys = new CsvToBeanBuilder(new FileReader(journeysFilename))
+                    .withType(Journey.class).build().parse();
+            System.out.println("Journeys successfully loaded!");
+        }
+        catch (Exception e) {
+            System.err.println("No existing file for journeys found.");
+        }
 
+        return loadedJourneys;
+    }
 }

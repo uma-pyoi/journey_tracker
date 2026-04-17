@@ -1,3 +1,6 @@
+import com.opencsv.bean.CsvCustomBindByName;
+import com.opencsv.bean.customconverter.ConvertGermanToBoolean;
+
 import java.math.BigDecimal;
 import java.time.LocalTime;
 
@@ -7,7 +10,9 @@ public class Journey {
     private int riderId;
     // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
-    private LocalTime time;
+//    @CsvCustomBindByName(converter = ConvertGermanToBoolean.class)
+//    private LocalTime time;
+    private String time;
     private CityRideDataset.TimeBand timeBand;
 //    private Zone startZone;
 //    private Zone endZone;
@@ -25,7 +30,7 @@ public class Journey {
     public Journey() {
         this.journeyId = 0;
         this.riderId = 0;
-        this.time = LocalTime.now();
+        this.time = "0:00";
         this.timeBand = null;
         this.startZoneId = 0;
         this.endZoneId = 0;
@@ -39,7 +44,7 @@ public class Journey {
     public Journey(int journeyID, int riderId, LocalTime time, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
         this.riderId = riderId;
-        this.time = time;
+        this.time = time.toString();
         this.startZoneId = startZoneId;
         this.endZoneId = endZoneId;
         this.passengerType = passengerType;
@@ -89,7 +94,7 @@ public class Journey {
         return dailyCapReached;
     }
 
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -106,8 +111,8 @@ public class Journey {
         System.out.println("--------------------------");
         System.out.println("Journey ID: " + this.journeyId);
         System.out.println("Rider ID: " + this.riderId);
-        String formattedTime = this.time.format(formatter.dateTimeFormatter);
-        System.out.println("Datetime: " + formattedTime);
+//        String formattedTime = this.time.format(formatter.dateTimeFormatter);
+        System.out.println("Time: " + time);
         System.out.print("Timeband: ");
         System.out.println(formatter.getNameOfTimeBand(this.timeBand));
 
