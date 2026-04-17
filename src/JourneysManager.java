@@ -1,14 +1,9 @@
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -110,7 +105,6 @@ public class JourneysManager {
         }
     }
 
-    // TODO: test
     public void listJourneysByZone(int zoneId, boolean isStartZone, JourneyTracker journeyTracker) {
         if (journeysList.isEmpty()) {
             System.out.println("No journeys have been added yet.");
@@ -225,14 +219,6 @@ public class JourneysManager {
     public void clearJourneysList() {
         journeysList.clear();
     }
-
-    // file handling
-//    private List<Journey> reformatJourneysToWrite() {
-//        List<Journey> newJourneysList = new ArrayList<>();
-//        for (Journey journey : journeysList) {
-//            journey.getStartZone().getZoneId();
-//        }
-//    }
 
     public void saveJourneys() {
         try {

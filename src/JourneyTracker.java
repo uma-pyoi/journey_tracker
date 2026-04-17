@@ -1,9 +1,6 @@
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -76,8 +73,6 @@ public class JourneyTracker {
             System.out.println("-----------------------");
         }
     }
-
-    // listing journeys
 
     // Summary: daily summaries
     public int getTotalJourneysNum() {
@@ -177,7 +172,7 @@ public class JourneyTracker {
         resetZoneCounts();
     }
 
-    // exporting report
+    // exporting csv report
     private List<SummaryForPassengerType> getPassengerSummariesList() {
         List<SummaryForPassengerType> passengerSummaries = new ArrayList<>();
         passengerSummaries.add(adultSummary);

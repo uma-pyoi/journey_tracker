@@ -1,19 +1,13 @@
-import com.opencsv.bean.CsvCustomBindByName;
-import com.opencsv.bean.customconverter.ConvertGermanToBoolean;
-
 import java.math.BigDecimal;
 import java.time.LocalTime;
 
 public class Journey {
-    // states
     private String journeyId;
     private String riderId;
     // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
     private String time;
     private CityRideDataset.TimeBand timeBand;
-    //    private Zone startZone;
-//    private Zone endZone;
     private int startZoneId;
     private int endZoneId;
     private CityRideDataset.PassengerType passengerType;
@@ -21,10 +15,7 @@ public class Journey {
     private BigDecimal discountedFare;
     private BigDecimal chargedFare;
     private boolean dailyCapReached;
-    // money formatter
-//    private Formatter formatter = new Formatter();
 
-    // constructors
     public Journey() {
         this.journeyId = "None";
         this.riderId = "None";

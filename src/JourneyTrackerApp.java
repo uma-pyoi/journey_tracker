@@ -1,7 +1,6 @@
 import java.util.Objects;
 
 public class JourneyTrackerApp {
-
     public static void main(String[] args) {
         JourneysManager journeysManager = new JourneysManager();
         JourneyTracker journeyTracker = new JourneyTracker(journeysManager);

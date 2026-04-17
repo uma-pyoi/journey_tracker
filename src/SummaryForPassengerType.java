@@ -1,16 +1,13 @@
 import java.math.BigDecimal;
 
 public class SummaryForPassengerType {
-    // states
     private String passengerTypeName;
     private BigDecimal totalBaseFare;
     private BigDecimal totalDiscountedFare;
     private BigDecimal totalChargedFare;
     private int totalJourneyNum;
     private boolean dailyCapReached;
-//    private Formatter formatter = new Formatter();
 
-    // constructor
     public SummaryForPassengerType() {
         passengerTypeName = "None";
         totalBaseFare = new BigDecimal("0.0");
@@ -29,7 +26,6 @@ public class SummaryForPassengerType {
         dailyCapReached = false;
     }
 
-    // methods
     // getters
     public BigDecimal getTotalChargedFare() {
         return totalChargedFare;

@@ -1,10 +1,8 @@
 public class Zone {
-    // states
     private int zoneId;
     private String zoneName;
     private int count;
 
-    // constructors
     public Zone() {
         this.zoneId = 0;
         this.zoneName = "Unknown";
@@ -35,9 +33,6 @@ public class Zone {
     // other methods
     public void incrementCount() {
         this.count++;
-    }
-    public void decrementCount() {
-        this.count--;
     }
     public void printZoneDetails() {
         System.out.println(this.zoneId + ". " + this.zoneName);

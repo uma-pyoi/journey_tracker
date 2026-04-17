@@ -4,7 +4,6 @@ public class Rider {
     CityRideDataset.PassengerType passengerType;
     CityRideDataset.PaymentOption paymentOption;
 
-    // constructors
     public Rider() {
         this.id = "-1"; // -1 signifies that rider has been default created
         this.name = "Anonymous";
