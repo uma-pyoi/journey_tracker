@@ -60,6 +60,8 @@ public class RiderMenu {
             } else if (userInput == 9) {
                 // TODO: add export summary
                 System.out.println("need to make export summary");
+            } else if (userInput == 10) {
+                actionExit();
             }
         }
         while (userInput != exitNum);
@@ -344,5 +346,15 @@ public class RiderMenu {
         } else if (userChoice == 2) {
             journeysManager.saveJourneys();
         }
+    }
+
+    public void actionExit() {
+        System.out.println("Do you wish to save the day? (Will save Rider Profile and Journeys)");
+        boolean userChoice = inputValidator.readYesNo();
+        if (userChoice) {
+            saveRiderProfile();
+            journeysManager.saveJourneys();
+        }
+        System.out.println("Thank you for using our program :3");
     }
 }
