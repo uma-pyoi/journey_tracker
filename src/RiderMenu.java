@@ -44,7 +44,7 @@ public class RiderMenu {
             if (userInput == 1) {
                 actionEditProfile();
             } else if (userInput == 2) {
-                journeysManager.loadJourneys(rider);
+                journeysManager.loadJourneys(rider, journeyTracker);
             } else if (userInput == 3) {
                 actionAddJourney(journeyTracker);
             } else if (userInput == 4) {
@@ -60,7 +60,7 @@ public class RiderMenu {
             } else if (userInput == 9) {
                 // TODO: add export summary
                 System.out.println("need to make export summary");
-                actionExportReport();
+                actionExportReport(journeyTracker);
             } else if (userInput == 10) {
                 actionExit();
             }
@@ -289,8 +289,6 @@ public class RiderMenu {
     }
 
     public void actionRemoveJourney(JourneyTracker journeyTracker) {
-//        System.out.println("What is the Journey's ID you want to remove?");
-//        int journeyId = inputValidator.readPosIntInRange(1, 99999, false, false); // arbitrary max value since journey ID has no limit
         String journeyId = inputValidator.readString("Journey ID to remove: ", false);
         Journey foundJourney = journeysManager.findJourneyById(journeyId);
         if (foundJourney == null) {
@@ -349,8 +347,8 @@ public class RiderMenu {
         }
     }
 
-    public void actionExportReport() {
-
+    public void actionExportReport(JourneyTracker journeyTracker) {
+        journeyTracker.exportPassengerSummaries();
     }
 
     public void actionExit() {

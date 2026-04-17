@@ -1,25 +1,28 @@
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
+import java.io.FileWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class JourneyTracker {
     private Formatter formatter = new Formatter();
     private JourneysManager journeysManager;
+    private String passengerSummariesFilename = "summary.csv";
 
     private Zone[] zonesArr = {new Zone(1, "Central"),
             new Zone(2, "Inner"),
             new Zone(3, "Suburban"),
             new Zone(4, "Outer"),
-            new Zone(5,"Rural")};
+            new Zone(5, "Rural")};
 
     // daily running total for each Passenger Type
-    private SummaryForPassengerType adultSummary = new SummaryForPassengerType();
-    private SummaryForPassengerType studentSummary = new SummaryForPassengerType();
-    private SummaryForPassengerType childSummary = new SummaryForPassengerType();
-    private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType();
+    private SummaryForPassengerType adultSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.ADULT));
+    private SummaryForPassengerType studentSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.STUDENT));
+    private SummaryForPassengerType childSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.CHILD));
+    private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.SENIOR_CITIZEN));
 
     JourneyTracker(JourneysManager journeysManager) {
         this.journeysManager = journeysManager;
@@ -37,17 +40,13 @@ public class JourneyTracker {
         SummaryForPassengerType foundSummary;
         if (passengerType == CityRideDataset.PassengerType.ADULT) {
             foundSummary = adultSummary;
-        }
-        else if (passengerType == CityRideDataset.PassengerType.STUDENT) {
+        } else if (passengerType == CityRideDataset.PassengerType.STUDENT) {
             foundSummary = studentSummary;
-        }
-        else if (passengerType == CityRideDataset.PassengerType.CHILD) {
+        } else if (passengerType == CityRideDataset.PassengerType.CHILD) {
             foundSummary = childSummary;
-        }
-        else if (passengerType == CityRideDataset.PassengerType.SENIOR_CITIZEN) {
+        } else if (passengerType == CityRideDataset.PassengerType.SENIOR_CITIZEN) {
             foundSummary = seniorCitizenSummary;
-        }
-        else {
+        } else {
             foundSummary = null;
         }
         return foundSummary;
@@ -66,8 +65,7 @@ public class JourneyTracker {
     public void listAllZones() {
         if (zonesArr.length == 0) {
             System.out.println("No zones available!");
-        }
-        else {
+        } else {
             System.out.println("------   Zones   ------");
             for (Zone z : zonesArr) {
                 System.out.println(z.getZoneId() + ". " + z.getZoneName());
@@ -93,8 +91,7 @@ public class JourneyTracker {
         BigDecimal averageCost;
         if (getTotalJourneysNum() == 0) {
             averageCost = new BigDecimal("0.00");
-        }
-        else {
+        } else {
             BigDecimal totalJourneysNum = new BigDecimal(getTotalJourneysNum());
             averageCost = totalChargedFare.divide(totalJourneysNum, RoundingMode.HALF_UP);
         }
@@ -108,8 +105,7 @@ public class JourneyTracker {
         for (Journey j : journeysList) {
             if (j.getTimeBand() == CityRideDataset.TimeBand.PEAK) {
                 peakCounter++;
-            }
-            else {
+            } else {
                 offPeakCounter++;
             }
         }
@@ -148,8 +144,7 @@ public class JourneyTracker {
             } else {
                 chargedFare = discountedFare;
             }
-        }
-        else {
+        } else {
             chargedFare = new BigDecimal("0.00");
         }
         return chargedFare;
@@ -177,5 +172,28 @@ public class JourneyTracker {
         childSummary.clearAllTotals();
         seniorCitizenSummary.clearAllTotals();
         resetZoneCounts();
+    }
+
+    private List<SummaryForPassengerType> getPassengerSummariesList() {
+        List<SummaryForPassengerType> passengerSummaries = new ArrayList<>();
+        passengerSummaries.add(adultSummary);
+        passengerSummaries.add(studentSummary);
+        passengerSummaries.add(childSummary);
+        passengerSummaries.add(seniorCitizenSummary);
+        return passengerSummaries;
+    }
+
+    public void exportPassengerSummaries() {
+        try {
+            Writer writer = new FileWriter(passengerSummariesFilename);
+            StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+
+            List<SummaryForPassengerType> passengerSummaries = getPassengerSummariesList();
+            beanToCsv.write(passengerSummaries);
+            writer.close();
+            System.out.println("Summary (CSV file) exported!");
+        } catch (Exception e) {
+            System.err.println("Error creating summary file.");
+        }
     }
 }

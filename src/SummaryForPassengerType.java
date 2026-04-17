@@ -2,6 +2,7 @@ import java.math.BigDecimal;
 
 public class SummaryForPassengerType {
     // states
+    private String passengerTypeName;
     private BigDecimal totalBaseFare;
     private BigDecimal totalDiscountedFare;
     private BigDecimal totalChargedFare;
@@ -11,6 +12,16 @@ public class SummaryForPassengerType {
 
     // constructor
     public SummaryForPassengerType() {
+        passengerTypeName = "None";
+        totalBaseFare = new BigDecimal("0.0");
+        totalDiscountedFare = new BigDecimal("0.0");
+        totalChargedFare = new BigDecimal("0.0");
+        totalJourneyNum = 0;
+        dailyCapReached = false;
+    }
+
+    public SummaryForPassengerType(String passengerTypeName) {
+        this.passengerTypeName = passengerTypeName;
         totalBaseFare = new BigDecimal("0.0");
         totalDiscountedFare = new BigDecimal("0.0");
         totalChargedFare = new BigDecimal("0.0");

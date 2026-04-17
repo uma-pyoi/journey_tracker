@@ -249,19 +249,23 @@ public class JourneysManager {
         }
     }
 
-    public void loadJourneys(Rider rider) {
+    public void loadJourneys(Rider rider, JourneyTracker journeyTracker) {
         List<Journey> loadedJourneys = new ArrayList<>();
         try {
             // REFERENCE: https://opencsv.sourceforge.net/#quick_start
             loadedJourneys = new CsvToBeanBuilder(new FileReader(journeysFilename))
                     .withType(Journey.class).build().parse();
-            journeysList.clear();
+
+            // only load journeys that belong to the current rider
+            List<Journey> loadedJourneysOfRider = new ArrayList<>();
             for (Journey journey : loadedJourneys) {
                 if (Objects.equals(journey.getRiderId(), rider.getId())) {
-                    journeysList.add(journey);
+                    loadedJourneysOfRider.add(journey);
                 }
             }
-//            journeysList = new ArrayList<>(loadedJourneys);
+            journeysList = new ArrayList<>(loadedJourneysOfRider);
+
+            recalculateAllJourneysFares(journeyTracker);
             System.out.println("Journeys for " + rider.getName() + " successfully loaded!");
         }
         catch (Exception e) {
