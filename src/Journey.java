@@ -6,8 +6,8 @@ import java.time.LocalTime;
 
 public class Journey {
     // states
-    private int journeyId;
-    private int riderId;
+    private String journeyId;
+    private String riderId;
     // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
 //    @CsvCustomBindByName(converter = ConvertGermanToBoolean.class)
@@ -28,8 +28,8 @@ public class Journey {
 
     // constructors
     public Journey() {
-        this.journeyId = 0;
-        this.riderId = 0;
+        this.journeyId = "None";
+        this.riderId = "None";
         this.time = "0:00";
         this.timeBand = null;
         this.startZoneId = 0;
@@ -41,7 +41,7 @@ public class Journey {
         this.dailyCapReached = false;
     }
 
-    public Journey(int journeyID, int riderId, LocalTime time, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+    public Journey(String journeyID, String riderId, LocalTime time, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
         this.riderId = riderId;
         this.time = time.toString();
@@ -56,11 +56,11 @@ public class Journey {
 
 
     // getters
-    public int getJourneyId() {
+    public String getJourneyId() {
         return journeyId;
     }
 
-    public int getRiderId() {return riderId;}
+    public String getRiderId() {return riderId;}
 
     public CityRideDataset.PassengerType getPassengerType() {
         return passengerType;

@@ -1,26 +1,26 @@
 public class Rider {
-    private int id;
+    private String id;
     private String name;
     CityRideDataset.PassengerType passengerType;
     CityRideDataset.PaymentOption paymentOption;
 
     // constructors
     public Rider() {
-        this.id = -1; // -1 signifies that rider has been default created
+        this.id = "-1"; // -1 signifies that rider has been default created
         this.name = "Anonymous";
         this.passengerType = CityRideDataset.PassengerType.ADULT;
         this.paymentOption = CityRideDataset.PaymentOption.VISA_CARD;
     }
 
-    public Rider(String name, CityRideDataset.PassengerType passengerType, CityRideDataset.PaymentOption paymentOption) {
-        this.id = 0; // TODO: make id unique
+    public Rider(String id, String name, CityRideDataset.PassengerType passengerType, CityRideDataset.PaymentOption paymentOption) {
+        this.id = id;
         this.name = name;
         this.passengerType = passengerType;
         this.paymentOption = paymentOption;
     }
 
     // getters
-    public int getId() {
+    public String getId() {
         return id;
     }
     public String getName() {
@@ -34,9 +34,6 @@ public class Rider {
     }
 
     // setters
-    public void setId(int id) {
-        this.id = id;
-    }
     public void setName(String name) {
         this.name = name;
     }

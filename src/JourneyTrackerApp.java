@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class JourneyTrackerApp {
 
     public static void main(String[] args) {
@@ -18,15 +20,15 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
             if (userInput == 1) {
-                rider = mainMenu.actionNewRider(riderMenu);
+                rider = mainMenu.actionNewRider(riderMenu, journeyTracker);
             } else if (userInput == 2) {
-                rider = mainMenu.actionLoadRider(riderMenu);
+                rider = mainMenu.actionLoadRider(riderMenu, journeyTracker);
             } else if (userInput == 3) {
                 System.out.println("Oops! need to make admin panel still");
             }
 
             // starts rider menu if user is logged in
-            if (rider.getId() != -1) {
+            if (!Objects.equals(rider.getId(), "-1")) {
                 riderMenu.setRider(rider, journeysManager);
                 riderMenu.runRiderMenu(journeyTracker);
                 userInput = mainMenuExitNum; // terminate program when rider menu exits

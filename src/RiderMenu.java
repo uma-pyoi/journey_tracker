@@ -154,7 +154,7 @@ public class RiderMenu {
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        Journey newJourney = new Journey(journeysManager.getJourneyIdCounter(), rider.getId(), time, startZone.getZoneId(), endZone.getZoneId(), passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        Journey newJourney = new Journey(journeyTracker.generateUUID(), rider.getId(), time, startZone.getZoneId(), endZone.getZoneId(), passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
         System.out.println("Journey with Journey ID of " + newJourney.getJourneyId() + " has been added.");
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);
@@ -286,8 +286,9 @@ public class RiderMenu {
     }
 
     public void actionRemoveJourney(JourneyTracker journeyTracker) {
-        System.out.println("What is the Journey's ID you want to remove?");
-        int journeyId = inputValidator.readPosIntInRange(1, 99999, false, false); // arbitrary max value since journey ID has no limit
+//        System.out.println("What is the Journey's ID you want to remove?");
+//        int journeyId = inputValidator.readPosIntInRange(1, 99999, false, false); // arbitrary max value since journey ID has no limit
+        String journeyId = inputValidator.readString("Journey ID to remove: ", false);
         Journey foundJourney = journeysManager.findJourneyById(journeyId);
         if (foundJourney == null) {
             System.out.println("Not found! The journey with ID " + journeyId + " does not exist!");

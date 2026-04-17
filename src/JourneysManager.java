@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JourneysManager {
     private int journeyIdCounter = 1;
@@ -188,19 +189,19 @@ public class JourneysManager {
     }
 
     // removing journey
-    public Journey findJourneyById(int journeyId) {
+    public Journey findJourneyById(String journeyId) {
         for(Journey journey : journeysList) {
-            if(journey.getJourneyId() == journeyId) {
+            if(Objects.equals(journey.getJourneyId(), journeyId)) {
                 return journey;
             }
         }
         return null;
     }
 
-    public Journey removeJourneyById(int journeyId) {
+    public Journey removeJourneyById(String journeyId) {
         Journey removedJourney = null;
         for(int i = 0; i < journeysList.size(); i++) {
-            if(journeysList.get(i).getJourneyId() == journeyId) {
+            if(Objects.equals(journeysList.get(i).getJourneyId(), journeyId)) {
                 removedJourney = journeysList.remove(i);
                 break;
             }
