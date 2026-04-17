@@ -3,6 +3,7 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class JourneyTracker {
     private Formatter formatter = new Formatter();
@@ -25,6 +26,13 @@ public class JourneyTracker {
     }
 
     // methods
+    public String generateUUID() {
+        // REFERENCE: https://www.uuidgenerator.net/dev-corner/java
+        //
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+
     public SummaryForPassengerType getSummaryObjForPassengerType(CityRideDataset.PassengerType passengerType) {
         SummaryForPassengerType foundSummary;
         if (passengerType == CityRideDataset.PassengerType.ADULT) {

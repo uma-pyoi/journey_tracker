@@ -248,17 +248,17 @@ public class JourneysManager {
         }
     }
 
-    public List<Journey> loadJourneys() {
+    public void loadJourneys() {
         List<Journey> loadedJourneys = new ArrayList<>();
         try {
+            // REFERENCE: https://opencsv.sourceforge.net/#quick_start
             loadedJourneys = new CsvToBeanBuilder(new FileReader(journeysFilename))
                     .withType(Journey.class).build().parse();
+            journeysList = new ArrayList<>(loadedJourneys);
             System.out.println("Journeys successfully loaded!");
         }
         catch (Exception e) {
             System.err.println("No existing file for journeys found.");
         }
-
-        return loadedJourneys;
     }
 }

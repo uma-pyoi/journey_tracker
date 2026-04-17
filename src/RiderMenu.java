@@ -44,14 +44,7 @@ public class RiderMenu {
             if (userInput == 1) {
                 actionEditProfile();
             } else if (userInput == 2) {
-//                 TODO: add loading journeys
-//                System.out.println("need to make loading journeys");
-                List<Journey> loadedJourneys = journeysManager.loadJourneys();
-                System.out.println("I LOADED JOURNEYS!!!");
-                for (Journey j : loadedJourneys) {
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!");
-                    j.printJourneyDetails(formatter, journeyTracker);
-                }
+                journeysManager.loadJourneys();
             } else if (userInput == 3) {
                 actionAddJourney(journeyTracker);
             } else if (userInput == 4) {
