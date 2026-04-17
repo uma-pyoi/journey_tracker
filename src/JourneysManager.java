@@ -21,7 +21,7 @@ public class JourneysManager {
     private List<Journey> journeysList = new ArrayList<>();
 
     // file handling
-    private String journeysFilename = "journeys.csv";
+    private String JOURNEYS_FILENAME = "journeys.csv";
 
     // methods
     public List<Journey> getJourneysList() {
@@ -54,7 +54,7 @@ public class JourneysManager {
         else {
             System.out.println("------   Journeys   ------");
             for (Journey j : journeysList) {
-                j.printJourneyDetails(formatter, journeyTracker);
+                System.out.println(j.buildJourneyDetailsString(formatter, journeyTracker));
             }
             System.out.println("--------------------------");
         }
@@ -78,7 +78,7 @@ public class JourneysManager {
                 System.out.println("------ " + formatter.getNameOfPassengerType(passengerType) + " Journeys ------");
 
                 for (Journey j : passengerTypeJourneysList) {
-                    j.printJourneyDetails(formatter, journeyTracker);
+                    System.out.println(j.buildJourneyDetailsString(formatter, journeyTracker));
                 }
                 System.out.println("--------------------------");
             }
@@ -103,7 +103,7 @@ public class JourneysManager {
                 System.out.println("------ " + formatter.getNameOfTimeBand(timeBand) + " Journeys ------");
 
                 for (Journey j : timeBandJourneysList) {
-                    j.printJourneyDetails(formatter, journeyTracker);
+                    System.out.println(j.buildJourneyDetailsString(formatter, journeyTracker));
                 }
                 System.out.println("--------------------------");
             }
@@ -137,7 +137,7 @@ public class JourneysManager {
                 System.out.println("------ " + zoneDescription + " zone Journeys ------");
 
                 for (Journey j : zonesJourneysList) {
-                    j.printJourneyDetails(formatter, journeyTracker);
+                    System.out.println(j.buildJourneyDetailsString(formatter, journeyTracker));
                 }
                 System.out.println("--------------------------");
             }
@@ -163,7 +163,7 @@ public class JourneysManager {
                 System.out.println("------ " + startHour + "-" + endHour + " hours Journeys ------");
 
                 for (Journey j : hoursJourneysList) {
-                    j.printJourneyDetails(formatter, journeyTracker);
+                    System.out.println(j.buildJourneyDetailsString(formatter, journeyTracker));
                 }
                 System.out.println("--------------------------");
             }
@@ -238,7 +238,7 @@ public class JourneysManager {
         try {
             // REFERENCE: https://opencsv.sourceforge.net/#writing
             //
-            Writer writer = new FileWriter(journeysFilename);
+            Writer writer = new FileWriter(JOURNEYS_FILENAME);
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
             beanToCsv.write(journeysList);
             writer.close();
@@ -250,10 +250,10 @@ public class JourneysManager {
     }
 
     public void loadJourneys(Rider rider, JourneyTracker journeyTracker) {
-        List<Journey> loadedJourneys = new ArrayList<>();
+        List<Journey> loadedJourneys;
         try {
             // REFERENCE: https://opencsv.sourceforge.net/#quick_start
-            loadedJourneys = new CsvToBeanBuilder(new FileReader(journeysFilename))
+            loadedJourneys = new CsvToBeanBuilder(new FileReader(JOURNEYS_FILENAME))
                     .withType(Journey.class).build().parse();
 
             // only load journeys that belong to the current rider

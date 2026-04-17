@@ -10,11 +10,9 @@ public class Journey {
     private String riderId;
     // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
-//    @CsvCustomBindByName(converter = ConvertGermanToBoolean.class)
-//    private LocalTime time;
     private String time;
     private CityRideDataset.TimeBand timeBand;
-//    private Zone startZone;
+    //    private Zone startZone;
 //    private Zone endZone;
     private int startZoneId;
     private int endZoneId;
@@ -60,7 +58,9 @@ public class Journey {
         return journeyId;
     }
 
-    public String getRiderId() {return riderId;}
+    public String getRiderId() {
+        return riderId;
+    }
 
     public CityRideDataset.PassengerType getPassengerType() {
         return passengerType;
@@ -102,31 +102,28 @@ public class Journey {
     public void setChargedFare(BigDecimal chargedFare) {
         this.chargedFare = chargedFare;
     }
+
     public void setDailyCapReached(boolean dailyCapReached) {
         this.dailyCapReached = dailyCapReached;
     }
 
     // other methods
-    public void printJourneyDetails(Formatter formatter, JourneyTracker journeyTracker) {
-        System.out.println("--------------------------");
-        System.out.println("Journey ID: " + this.journeyId);
-        System.out.println("Rider ID: " + this.riderId);
-//        String formattedTime = this.time.format(formatter.dateTimeFormatter);
-        System.out.println("Time: " + time);
-        System.out.print("Timeband: ");
-        System.out.println(formatter.getNameOfTimeBand(this.timeBand));
-
+    public String buildJourneyDetailsString(Formatter formatter, JourneyTracker journeyTracker) {
         Zone startZone = journeyTracker.findZoneById(startZoneId);
         Zone endZone = journeyTracker.findZoneById(endZoneId);
 
-        System.out.println("Start zone: " + startZoneId + ". " + startZone.getZoneName());
-        System.out.println("End zone: " + endZoneId + ". " + endZone.getZoneName());
-        System.out.println("Passenger type: " + formatter.getNameOfPassengerType(passengerType));
-
-        System.out.println("Base fare: £" + formatter.formatBigDecimal2dp(this.baseFare));
-        System.out.println("Discounted fare: £" + formatter.formatBigDecimal2dp(this.discountedFare));
-        System.out.println("Charged fare: £" + formatter.formatBigDecimal2dp(this.chargedFare));
-
-        System.out.println("Daily cap reached: " + this.dailyCapReached);
+        String journeyDetails = "--------------------------" +
+                "\nJourney ID: " + this.journeyId +
+                "\nRider ID: " + this.riderId +
+                "\nTime: " + time +
+                "\nTimeband: " + formatter.getNameOfTimeBand(this.timeBand) +
+                "\nStart zone: " + startZoneId + ". " + startZone.getZoneName() +
+                "\nEnd zone: " + endZoneId + ". " + endZone.getZoneName() +
+                "\nPassenger type: " + formatter.getNameOfPassengerType(passengerType) +
+                "\nBase fare: £" + formatter.formatBigDecimal2dp(this.baseFare) +
+                "\nDiscounted fare: £" + formatter.formatBigDecimal2dp(this.discountedFare) +
+                "\nCharged fare: £" + formatter.formatBigDecimal2dp(this.chargedFare) +
+                "\nDaily cap reached: " + this.dailyCapReached;
+        return journeyDetails;
     }
 }

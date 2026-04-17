@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -20,7 +21,8 @@ public class RiderMenu {
     private Rider rider;
 
     // file handling
-    private String riderProfileFilename = "profile.json";
+    private String RIDER_PROFILE_FILENAME = "profile.json";
+    private String REPORT_FILENAME = "report.txt";
     private Gson gson;
 
     // constructor
@@ -58,8 +60,6 @@ public class RiderMenu {
             } else if (userInput == 8) {
                 actionSave();
             } else if (userInput == 9) {
-                // TODO: add export summary
-                System.out.println("need to make export summary");
                 actionExportReport(journeyTracker);
             } else if (userInput == 10) {
                 actionExit();
@@ -211,7 +211,8 @@ public class RiderMenu {
 
         int choice = inputValidator.readPosIntInRange(1, 3, true, false);
         if (choice == 1) {
-            dailySummaries(journeyTracker);
+            String dailySummary = buildDailySummaryString(journeyTracker);
+            System.out.println(dailySummary);
         } else if (choice == 2) {
             totalsByPassengerType(journeyTracker);
         } else if (choice == 3) {
@@ -220,22 +221,25 @@ public class RiderMenu {
     }
 
     // private functions to view certain summaries
-    private void dailySummaries(JourneyTracker journeyTracker) {
-        System.out.println("\n------- Daily Summary ------");
-        System.out.println("Total number of journeys: " + journeyTracker.getTotalJourneysNum());
-        System.out.println("Total costs charged: £" + journeyTracker.getTotalCostsCharged());
-        System.out.println("Average cost per journey: £" + journeyTracker.getAverageCostPerJourney());
+    private String buildDailySummaryString(JourneyTracker journeyTracker) {
+        String dailySummary = "\n------- Daily Summary ------" +
+                "\nTotal number of journeys: " + journeyTracker.getTotalJourneysNum() +
+                "\nTotal costs charged: £" + journeyTracker.getTotalCostsCharged() +
+                "\nAverage cost per journey: £" + journeyTracker.getAverageCostPerJourney() +
+                "\nMost expensive journey(s): \n";
 
-        System.out.println("Most expensive journey(s): ");
         List<Journey> mostExpensiveJourneysList = journeysManager.getMostExpensiveJourneysList();
         if (mostExpensiveJourneysList.isEmpty()) {
-            System.out.println("Most expensive journey not found.");
+            dailySummary += "\nMost expensive journey not found.";
         } else {
             for (Journey j : mostExpensiveJourneysList) {
-                j.printJourneyDetails(formatter, journeyTracker);
+                String journeyDetails = j.buildJourneyDetailsString(formatter, journeyTracker);
+                dailySummary += journeyDetails;
             }
         }
-        System.out.println("------------------------------");
+        dailySummary += "\n------------------------------";
+
+        return dailySummary;
     }
 
     private void totalsByPassengerType(JourneyTracker journeyTracker) {
@@ -271,7 +275,8 @@ public class RiderMenu {
     // remove journey
     private void actionRemoveJourneyConfirmed(Journey foundJourney, JourneyTracker journeyTracker) {
         System.out.println("Found journey:");
-        foundJourney.printJourneyDetails(formatter, journeyTracker);
+        String journeyDetails = foundJourney.buildJourneyDetailsString(formatter, journeyTracker);
+        System.out.println(journeyDetails);
         System.out.println("\nAre you sure you want to delete this journey?");
         boolean isConfirmed = inputValidator.readYesNo();
 
@@ -312,7 +317,7 @@ public class RiderMenu {
 
     public void saveRiderProfile() {
         try {
-            FileWriter writer = new FileWriter(riderProfileFilename);
+            FileWriter writer = new FileWriter(RIDER_PROFILE_FILENAME);
             gson.toJson(rider, writer);
             writer.close();
             System.out.println("Rider profile saved to file!");
@@ -325,7 +330,7 @@ public class RiderMenu {
     public Rider loadRiderProfile() {
         Rider loadedRider = new Rider();
         try {
-            FileReader reader = new FileReader(riderProfileFilename);
+            FileReader reader = new FileReader(RIDER_PROFILE_FILENAME);
             Type riderProfileType = new TypeToken<Rider>() {}.getType();
             loadedRider = gson.fromJson(reader, riderProfileType);
             System.out.println("Rider successfully loaded!");
@@ -347,8 +352,22 @@ public class RiderMenu {
         }
     }
 
+    public void exportReport(JourneyTracker journeyTracker) {
+        // REFERENCE: https://www.w3schools.com/java/java_files_write.asp
+        try {
+            FileWriter myWriter = new FileWriter(REPORT_FILENAME);
+            myWriter.write(buildDailySummaryString(journeyTracker));
+            myWriter.close();
+            System.out.println("Report (TXT file) exported!");
+        } catch (IOException e) {
+            System.err.println("Error exporting report file.");
+            e.printStackTrace();
+        }
+    }
+
     public void actionExportReport(JourneyTracker journeyTracker) {
         journeyTracker.exportPassengerSummaries();
+        exportReport(journeyTracker);
     }
 
     public void actionExit() {

@@ -1,7 +1,9 @@
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,7 +12,8 @@ import java.util.*;
 public class JourneyTracker {
     private Formatter formatter = new Formatter();
     private JourneysManager journeysManager;
-    private String passengerSummariesFilename = "summary.csv";
+
+    private String PASSENGER_SUMMARIES_FILENAME = "summary.csv";
 
     private Zone[] zonesArr = {new Zone(1, "Central"),
             new Zone(2, "Inner"),
@@ -174,6 +177,7 @@ public class JourneyTracker {
         resetZoneCounts();
     }
 
+    // exporting report
     private List<SummaryForPassengerType> getPassengerSummariesList() {
         List<SummaryForPassengerType> passengerSummaries = new ArrayList<>();
         passengerSummaries.add(adultSummary);
@@ -185,7 +189,7 @@ public class JourneyTracker {
 
     public void exportPassengerSummaries() {
         try {
-            Writer writer = new FileWriter(passengerSummariesFilename);
+            Writer writer = new FileWriter(PASSENGER_SUMMARIES_FILENAME);
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
 
             List<SummaryForPassengerType> passengerSummaries = getPassengerSummariesList();
@@ -193,7 +197,7 @@ public class JourneyTracker {
             writer.close();
             System.out.println("Summary (CSV file) exported!");
         } catch (Exception e) {
-            System.err.println("Error creating summary file.");
+            System.err.println("Error exporting summary file.");
         }
     }
 }
