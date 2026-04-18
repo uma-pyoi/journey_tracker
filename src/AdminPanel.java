@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class AdminPanel {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
@@ -73,30 +74,22 @@ public class AdminPanel {
         cityRideDataset.setPeakEnd(endHour);
     }
 
-    public void editDiscountRates(JourneyTracker journeyTracker) {
+    public void editDiscountRates() {
         System.out.println("+++ Editing discount rates +++");
         System.out.println("Leave the field empty if you want to keep the current value.\n");
 
-        for (CityRideDataset.PassengerType passengerType : CityRideDataset.DISCOUNT_RATE.keySet()) {
+        for (CityRideDataset.PassengerType passengerType : cityRideDataset.getDiscountRateMap().keySet()) {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
 
-            BigDecimal discountRatePercent = CityRideDataset.DISCOUNT_RATE.get(passengerType).multiply(new BigDecimal("100"));
-            System.out.println("Enter discount rate for " + passengerTypeName + " (current: " + discountRatePercent + "%)."); // TODO: test how big decimal prints to console
+            BigDecimal discountRatePercent = cityRideDataset.getDiscountRateMap().get(passengerType).multiply(new BigDecimal("100"));
+            System.out.println("Enter discount rate for " + passengerTypeName + " (current: " + discountRatePercent.intValue() + "%).");
             int userDiscountRate = inputValidator.readPosIntInRange(0, 100, true, true);
 
-            BigDecimal newDiscountRate;
-            if (newDiscountRate = -1) {
-
+            if (userDiscountRate != -1) {
+                BigDecimal newDiscountRate = new BigDecimal(userDiscountRate);
+                cityRideDataset.setDiscountRate(passengerType, newDiscountRate.divide(new BigDecimal(100)));
             }
-
         }
-
-        System.out.println("Enter the START hour of peak time. (current: " + cityRideDataset.getPeakStart() + ")");
-//        System.out.println("Which passenger type's discount rate to edit?");
-//        consolePrinter.printPassengerTypes();
-//        int passengerTypeInt = inputValidator.readPosIntInRange(1, 4, true, false);
-//        CityRideDataset.PassengerType passengerType = CityRideDataset.PassengerType.values()[passengerTypeInt - 1];
-//        System.out.println("The current discount rate");
     }
 
     public void editRules() {
@@ -107,7 +100,7 @@ public class AdminPanel {
             editPeakHours();
         }
         else if (userChoice == 2) {
-
+            editDiscountRates();
         }
     }
 }

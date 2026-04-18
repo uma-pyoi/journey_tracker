@@ -9,6 +9,7 @@ import java.util.*;
 public class JourneyTracker {
     private Formatter formatter = new Formatter();
     private JourneysManager journeysManager;
+    private CityRideDataset cityRideDataset;
 
     private String PASSENGER_SUMMARIES_FILENAME = "summary.csv";
 
@@ -24,8 +25,9 @@ public class JourneyTracker {
     private SummaryForPassengerType childSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.CHILD));
     private SummaryForPassengerType seniorCitizenSummary = new SummaryForPassengerType(formatter.getNameOfPassengerType(CityRideDataset.PassengerType.SENIOR_CITIZEN));
 
-    JourneyTracker(JourneysManager journeysManager) {
+    JourneyTracker(JourneysManager journeysManager, CityRideDataset cityRideDataset) {
         this.journeysManager = journeysManager;
+        this.cityRideDataset = cityRideDataset;
     }
 
     // methods
@@ -121,7 +123,7 @@ public class JourneyTracker {
     // fare calculations
     public BigDecimal calculateDiscountFare(int startZoneId, int endZoneId, CityRideDataset.TimeBand timeBand, CityRideDataset.PassengerType passengerType) {
         BigDecimal baseFare = CityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
-        BigDecimal discount = CityRideDataset.DISCOUNT_RATE.get(passengerType);
+        BigDecimal discount = cityRideDataset.getDiscountRateMap().get(passengerType);
         BigDecimal discountOfBaseFare = baseFare.multiply(discount);
         return baseFare.subtract(discountOfBaseFare);
     }

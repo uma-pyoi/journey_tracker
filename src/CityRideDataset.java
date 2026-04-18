@@ -32,8 +32,26 @@ public class CityRideDataset {
         SENIOR_CITIZEN
     }
 
+    private Map<PassengerType, BigDecimal> discountRateMap = new HashMap<>(Map.of(
+            PassengerType.ADULT, new BigDecimal("0.00"),
+            PassengerType.STUDENT, new BigDecimal("0.25"),
+            PassengerType.CHILD, new BigDecimal("0.50"),
+            PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30"))
+    );
+
+    public static final Map<PassengerType, BigDecimal> DAILY_CAP = Map.of(
+            PassengerType.ADULT, new BigDecimal("8.00"),
+            PassengerType.STUDENT, new BigDecimal("6.00"),
+            PassengerType.CHILD, new BigDecimal("4.00"),
+            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00")
+    );
+
     public int getPeakStart() {
         return peakStart;
+    }
+
+    public Map<PassengerType, BigDecimal> getDiscountRateMap() {
+        return discountRateMap;
     }
 
     public int getPeakEnd() {
@@ -48,19 +66,11 @@ public class CityRideDataset {
         this.peakEnd = peakEnd;
     }
 
-    public static final Map<PassengerType, BigDecimal> DISCOUNT_RATE = Map.of(
-            PassengerType.ADULT, new BigDecimal("0.00"),
-            PassengerType.STUDENT, new BigDecimal("0.25"),
-            PassengerType.CHILD, new BigDecimal("0.50"),
-            PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30")
-    );
+    public void setDiscountRate(PassengerType passengerType, BigDecimal discountRate) {
+        discountRateMap.replace(passengerType, discountRate);
+    }
 
-    public static final Map<PassengerType, BigDecimal> DAILY_CAP = Map.of(
-            PassengerType.ADULT, new BigDecimal("8.00"),
-            PassengerType.STUDENT, new BigDecimal("6.00"),
-            PassengerType.CHILD, new BigDecimal("4.00"),
-            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00")
-    );
+
 
     public static final Map<String, BigDecimal> BASE_FARE = buildBaseFare();
 
@@ -131,9 +141,9 @@ public class CityRideDataset {
     // printing
     public void printDiscountRates() {
         System.out.println("---------- Discount rates ----------");
-        for (PassengerType passengerType : DISCOUNT_RATE.keySet()) {
+        for (PassengerType passengerType : discountRateMap.keySet()) {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
-            int discountRatePercent = DISCOUNT_RATE.get(passengerType).multiply(new BigDecimal("100")).intValue();
+            int discountRatePercent = discountRateMap.get(passengerType).multiply(new BigDecimal("100")).intValue();
 //            int discountRatePercent = formatter.formatPercentage(DISCOUNT_RATE.get(passengerType));
             System.out.println(passengerTypeName + ": " + discountRatePercent + "%");
         }

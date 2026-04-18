@@ -2,14 +2,14 @@ import java.util.Objects;
 
 public class JourneyTrackerApp {
     public static void main(String[] args) {
+        CityRideDataset cityRideDataset = new CityRideDataset();
         JourneysManager journeysManager = new JourneysManager();
-        JourneyTracker journeyTracker = new JourneyTracker(journeysManager);
+        JourneyTracker journeyTracker = new JourneyTracker(journeysManager, cityRideDataset);
         RiderMenu riderMenu = new RiderMenu();
         InputValidator inputValidator = new InputValidator();
         ConsolePrinter consolePrinter = new ConsolePrinter();
         MainMenu mainMenu = new MainMenu();
         AdminPanel adminPanel = new AdminPanel();
-        CityRideDataset cityRideDataset = new CityRideDataset();
         Rider rider = new Rider();
 
         int userInput;
