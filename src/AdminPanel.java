@@ -82,12 +82,32 @@ public class AdminPanel {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
 
             BigDecimal discountRatePercent = cityRideDataset.getDiscountRateMap().get(passengerType).multiply(new BigDecimal("100"));
-            System.out.println("Enter discount rate for " + passengerTypeName + " (current: " + discountRatePercent.intValue() + "%).");
+            System.out.println("\nEnter discount rate for " + passengerTypeName + " (current: " + discountRatePercent.intValue() + "%).");
             int userDiscountRate = inputValidator.readPosIntInRange(0, 100, true, true);
 
             if (userDiscountRate != -1) {
                 BigDecimal newDiscountRate = new BigDecimal(userDiscountRate);
                 cityRideDataset.setDiscountRate(passengerType, newDiscountRate.divide(new BigDecimal(100)));
+            }
+        }
+    }
+
+    public void editDailyCaps() {
+        System.out.println("+++ Editing daily caps +++");
+        System.out.println("Leave the field empty if you want to keep the current value.\n");
+
+        for (CityRideDataset.PassengerType passengerType : cityRideDataset.getDailyCapMap().keySet()) {
+            String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
+
+            BigDecimal dailyCap = cityRideDataset.getDailyCapMap().get(passengerType);
+            System.out.println("\nEnter daily cap for " + passengerTypeName + " (current: £" + dailyCap + ").");
+            int userDailyCap = inputValidator.readPosIntInRange(0, 99999, false, true);
+
+            if (userDailyCap != -1) {
+                // TODO: allow float for daily cap (maybe)
+                BigDecimal newDailyCap = new BigDecimal(userDailyCap);
+                System.out.println("CHANGING DAILY CAP TO " + newDailyCap);
+                cityRideDataset.setDailyCap(passengerType, newDailyCap);
             }
         }
     }
@@ -101,6 +121,9 @@ public class AdminPanel {
         }
         else if (userChoice == 2) {
             editDiscountRates();
+        }
+        else if (userChoice == 3) {
+            editDailyCaps();
         }
     }
 }

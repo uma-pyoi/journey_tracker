@@ -39,11 +39,11 @@ public class CityRideDataset {
             PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30"))
     );
 
-    public static final Map<PassengerType, BigDecimal> DAILY_CAP = Map.of(
+    public Map<PassengerType, BigDecimal> dailyCapMap = new HashMap<>(Map.of(
             PassengerType.ADULT, new BigDecimal("8.00"),
             PassengerType.STUDENT, new BigDecimal("6.00"),
             PassengerType.CHILD, new BigDecimal("4.00"),
-            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00")
+            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00"))
     );
 
     public int getPeakStart() {
@@ -52,6 +52,10 @@ public class CityRideDataset {
 
     public Map<PassengerType, BigDecimal> getDiscountRateMap() {
         return discountRateMap;
+    }
+
+    public Map<PassengerType, BigDecimal> getDailyCapMap() {
+        return dailyCapMap;
     }
 
     public int getPeakEnd() {
@@ -68,6 +72,10 @@ public class CityRideDataset {
 
     public void setDiscountRate(PassengerType passengerType, BigDecimal discountRate) {
         discountRateMap.replace(passengerType, discountRate);
+    }
+
+    public void setDailyCap(PassengerType passengerType, BigDecimal dailyCap) {
+        dailyCapMap.replace(passengerType, dailyCap);
     }
 
 
@@ -152,9 +160,9 @@ public class CityRideDataset {
 
     public void printDailyCaps() {
         System.out.println("---------- Daily caps ----------");
-        for (PassengerType passengerType : DAILY_CAP.keySet()) {
+        for (PassengerType passengerType : dailyCapMap.keySet()) {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
-            System.out.println(passengerTypeName + ": £" + formatter.formatBigDecimal2dp(DAILY_CAP.get(passengerType)));
+            System.out.println(passengerTypeName + ": £" + formatter.formatBigDecimal2dp(dailyCapMap.get(passengerType)));
         }
         System.out.println("--------------------------------");
     }

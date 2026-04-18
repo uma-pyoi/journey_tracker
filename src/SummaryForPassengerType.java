@@ -63,18 +63,18 @@ public class SummaryForPassengerType {
     }
 
     // removing journey
-    private boolean calculateDailyCapReached(CityRideDataset.PassengerType passengerType) {
-        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
-        return totalDiscountedFare.compareTo(dailyCap) >= 0;
-    }
+//    private boolean calculateDailyCapReached(CityRideDataset.PassengerType passengerType, CityRideDataset cityRideDataset) {
+//        BigDecimal dailyCap = cityRideDataset.getDailyCapMap().get(passengerType);
+//        return totalDiscountedFare.compareTo(dailyCap) >= 0;
+//    }
 
-    public void subtractJourneyFromSum(Journey journey) {
-        totalBaseFare = totalBaseFare.subtract(journey.getBaseFare());
-        totalDiscountedFare = totalDiscountedFare.subtract(journey.getDiscountedFare());
-        totalChargedFare = totalChargedFare.subtract(journey.getChargedFare());
-        dailyCapReached = calculateDailyCapReached(journey.getPassengerType());
-        totalJourneyNum--;
-    }
+//    public void subtractJourneyFromSum(Journey journey, CityRideDataset cityRideDataset) {
+//        totalBaseFare = totalBaseFare.subtract(journey.getBaseFare());
+//        totalDiscountedFare = totalDiscountedFare.subtract(journey.getDiscountedFare());
+//        totalChargedFare = totalChargedFare.subtract(journey.getChargedFare());
+//        dailyCapReached = calculateDailyCapReached(journey.getPassengerType(), cityRideDataset);
+//        totalJourneyNum--;
+//    }
 
     // resetting day
     public void clearAllTotals() {

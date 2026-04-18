@@ -134,7 +134,7 @@ public class JourneyTracker {
         SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
         BigDecimal totalDiscountedFare = summary.getTotalDiscountedFare();
         BigDecimal newDiscountedTotal = discountedFare.add(summary.getTotalDiscountedFare());
-        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+        BigDecimal dailyCap = cityRideDataset.getDailyCapMap().get(passengerType);
 
         boolean dailyCapReached = summary.getDailyCapReached();
 
@@ -153,7 +153,7 @@ public class JourneyTracker {
     public boolean calculateDailyCapReached(BigDecimal discountedFare, CityRideDataset.PassengerType passengerType) {
         SummaryForPassengerType summary = getSummaryObjForPassengerType(passengerType);
         BigDecimal newDailyTotal = discountedFare.add(summary.getTotalChargedFare());
-        BigDecimal dailyCap = CityRideDataset.DAILY_CAP.get(passengerType);
+        BigDecimal dailyCap = cityRideDataset.getDailyCapMap().get(passengerType);
 
         return newDailyTotal.compareTo(dailyCap) >= 0;
     }
