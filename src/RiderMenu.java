@@ -141,7 +141,6 @@ public class RiderMenu {
     // listing journeys
     private void askForFilterByTimeBand(JourneyTracker journeyTracker) {
         System.out.println("Do you wish to see journeys on Peak time?");
-        System.out.println("'Yes' for Peak, 'No' for Off-peak");
         CityRideDataset.TimeBand timeBand = mainMenu.askForTimeBand();
         journeysManager.listJourneysByTimeBand(timeBand, journeyTracker);
     }

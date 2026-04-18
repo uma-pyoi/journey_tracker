@@ -51,7 +51,7 @@ public class AdminPanel {
             } else if (userInput == 2) {
                 editRules(journeyTracker);
             } else if (userInput == 3) {
-                System.out.println("thank u bai bai");
+                System.out.println("Thank you. :)");
             }
         }
         while (userInput != exitNum);
@@ -120,10 +120,11 @@ public class AdminPanel {
         journeyTracker.listAllZones();
         int endZoneId = inputValidator.readPosIntInRange(1, 5, true, false);
 
+        System.out.println("What is the timeband?");
         CityRideDataset.TimeBand timeband = mainMenu.askForTimeBand();
 
         BigDecimal currentBaseFare = cityRideDataset.getBaseFare(startZoneId, endZoneId, timeband);
-        System.out.println("Current base fare: " + currentBaseFare);
+        System.out.println("Current base fare: £" + formatter.formatBigDecimal2dp(currentBaseFare));
         System.out.println("What will be the new base fare?");
         System.out.println("(Leave empty to keep current base fare)");
         float userBaseFare = inputValidator.readPosFloat(true);

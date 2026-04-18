@@ -22,6 +22,7 @@ public class MainMenu {
     }
 
     public CityRideDataset.TimeBand askForTimeBand() {
+        System.out.println("'Yes' for Peak, 'No' for Off-peak");
         boolean isPeak = inputValidator.readYesNo();
         CityRideDataset.TimeBand timeBand;
         if (isPeak) {

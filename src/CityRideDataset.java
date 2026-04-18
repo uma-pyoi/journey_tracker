@@ -222,8 +222,11 @@ public class CityRideDataset {
 
             String startZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(0))).getZoneName();
             String endZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(1))).getZoneName();
+            String timebandName = formatter.getNameOfTimeBandString(baseFareKeyList.get(2));
 
-            System.out.println(startZoneName + " (" + baseFareKeyList.get(0) + ") - " + endZoneName + " (" + baseFareKeyList.get(1) + ") | " + baseFareKeyList.get(2) + ": " + baseFareMap.get(baseFareKey));
+            System.out.println(startZoneName + " (" + baseFareKeyList.get(0) + ") - " + endZoneName +
+                    " (" + baseFareKeyList.get(1) + ") | " + timebandName +
+                    ": £" + formatter.formatBigDecimal2dp(baseFareMap.get(baseFareKey)));
         }
         System.out.println("--------------------------------");
     }

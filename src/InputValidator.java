@@ -33,7 +33,7 @@ public class InputValidator {
     }
 
 
-    // returns -1 if empty
+    // returns -1 if input empty, has a max of 999999
     public float readPosFloat(boolean canEmpty) {
         float userFloat = -1;
         boolean isValid = false;
@@ -45,8 +45,13 @@ public class InputValidator {
             if (!userFloatString.isEmpty()) {
                 float parsedUserFloat = parseStringFloat(userFloatString, "Invalid! You must enter a decimal number!");
                 if (parsedUserFloat != -1) {
-                    userFloat = parsedUserFloat;
-                    isValid = true;
+                    if (parsedUserFloat <= 999999) {
+                        userFloat = parsedUserFloat;
+                        isValid = true;
+                    }
+                    else {
+                        System.out.println("The entered number is too big.");
+                    }
                 }
             } else {
                 isValid = true;

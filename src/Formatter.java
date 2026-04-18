@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Formatter {
     private String defaultUnknownName = "Unknown";
@@ -14,10 +15,18 @@ public class Formatter {
     // getting names of enums
     public String getNameOfTimeBand(CityRideDataset.TimeBand timeBand) {
         String timeBandName = defaultUnknownName;
-        if (timeBand == CityRideDataset.TimeBand.PEAK) {
+        if (timeBand != null) {
+            timeBandName = getNameOfTimeBandString(timeBand.toString());
+        }
+        return timeBandName;
+    }
+
+    public String getNameOfTimeBandString(String timeBand) {
+        String timeBandName = defaultUnknownName;
+        if (Objects.equals(timeBand, "PEAK")) {
             timeBandName = "Peak";
         }
-        else if (timeBand == CityRideDataset.TimeBand.OFF_PEAK) {
+        else if (Objects.equals(timeBand, "OFF_PEAK")) {
             timeBandName = "Off-peak";
         }
         return timeBandName;
