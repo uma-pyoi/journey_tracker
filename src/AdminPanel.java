@@ -2,6 +2,31 @@ public class AdminPanel {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private InputValidator inputValidator = new InputValidator();
 
+    private String adminPassword = "1234";
+
+    public boolean grantAdminAccess() {
+        boolean isGranted = false;
+        boolean keepAsking = true;
+        System.out.println("\nLeave the password field empty if you wish to exit.");
+
+        do {
+            String userPassword = inputValidator.readString("\nEnter admin password (or blank to exit): ", true);
+            if (userPassword.isEmpty()) {
+                keepAsking = false;
+            }
+            else if (userPassword.equals(adminPassword)) {
+                System.out.println("Admin access granted.");
+                isGranted = true;
+                keepAsking = false;
+            }
+            else {
+                System.out.println("Wrong password. Try again.");
+            }
+        }
+        while (keepAsking);
+        return isGranted;
+    }
+
 
     public void runAdminMenu() {
         int userInput;

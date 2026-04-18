@@ -24,8 +24,11 @@ public class JourneyTrackerApp {
             } else if (userInput == 2) {
                 rider = mainMenu.actionLoadRider(riderMenu, journeyTracker);
             } else if (userInput == 3) {
-                adminPanel.runAdminMenu();
-                userInput = mainMenuExitNum; // terminate program when admin menu exits
+                boolean isAdmin = adminPanel.grantAdminAccess();
+                if (isAdmin) {
+                    adminPanel.runAdminMenu();
+                    userInput = mainMenuExitNum; // terminate program when admin menu exits
+                }
             }
 
             // starts rider menu if user is logged in
