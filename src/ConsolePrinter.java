@@ -26,6 +26,7 @@ public class ConsolePrinter {
         System.out.println();
     }
 
+    // rider related
     public void printRiderMenu() {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
@@ -69,6 +70,15 @@ public class ConsolePrinter {
             System.out.println((i + 1) + ". " + paymentOptionName);
         }
         System.out.println("---------------------------------");
+    }
 
+    // admin related
+    public void printAdminMenu() {
+        System.out.println("\n");
+        System.out.println("****** Admin Panel ******");
+        System.out.println("Please choose from the following:");
+        List<String> menuOptions = Arrays.asList("View rules", "Edit rules", "Exit");
+        printMenuWithNumbers(menuOptions);
+        System.out.println();
     }
 }
