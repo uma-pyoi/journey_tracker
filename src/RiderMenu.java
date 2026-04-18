@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -216,7 +217,8 @@ public class RiderMenu {
         } else if (choice == 2) {
             totalsByPassengerType(journeyTracker);
         } else if (choice == 3) {
-            categoryCounts(journeyTracker);
+            String categoryCounts = buildCategoryCountsString(journeyTracker);
+            System.out.println(categoryCounts);
         }
     }
 
@@ -247,29 +249,33 @@ public class RiderMenu {
         String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
         System.out.println("---- Daily Summary for " + passengerTypeName + " journeys ----");
         SummaryForPassengerType summary = journeyTracker.getSummaryObjForPassengerType(passengerType);
-        summary.printSummary(formatter);
+        System.out.println(summary.buildSummaryString(formatter));
     }
 
-    private void printZonesCount(JourneyTracker journeyTracker) {
+    private String buildZonesCountString (JourneyTracker journeyTracker) {
+        String zonesCount = "------ Zone counts ------\n";
+
         Map<Integer, Integer> zonesCountMap = journeyTracker.getZoneCounts();
-        System.out.println("------ Zone counts ------");
         // GeekForGeeks (2025)
         for (Map.Entry<Integer, Integer> zone : zonesCountMap.entrySet())
-            System.out.println("Zone " + zone.getKey() +
-                    ": " + zone.getValue() + " counts.");
-        System.out.println("-------------------------");
+            zonesCount += "Zone " + zone.getKey() +
+                    ": " + zone.getValue() + " counts.\n";
+        zonesCount +=  "-------------------------\n";
+        return zonesCount;
     }
 
-    private void printPeakVsOffPeakCounts(JourneyTracker journeyTracker) {
+    private String buildPrintPeakVsOffPeakString(JourneyTracker journeyTracker) {
         int[] peakVsOffPeakArray = journeyTracker.getPeakVsOffPeakCount(journeysManager.getJourneysList());
-        System.out.println("Peak counts: " + peakVsOffPeakArray[0]);
-        System.out.println("Off-peak counts: " + peakVsOffPeakArray[1]);
+        String peakVsOffPeakString = "Peak counts: " + peakVsOffPeakArray[0] +
+                "\nOff-peak counts: " + peakVsOffPeakArray[1] + "\n";
+        return peakVsOffPeakString;
     }
 
-    private void categoryCounts(JourneyTracker journeyTracker) {
-        System.out.println("----- Category counts -----");
-        printPeakVsOffPeakCounts(journeyTracker);
-        printZonesCount(journeyTracker);
+    private String buildCategoryCountsString(JourneyTracker journeyTracker) {
+        String categoryCounts = "----- Category counts -----\n";
+        categoryCounts += buildPrintPeakVsOffPeakString(journeyTracker);
+        categoryCounts += buildZonesCountString(journeyTracker);
+        return categoryCounts;
     }
 
     // remove journey
@@ -321,8 +327,7 @@ public class RiderMenu {
             gson.toJson(rider, writer);
             writer.close();
             System.out.println("Rider profile saved to file!");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Error saving rider profile.");
         }
     }
@@ -331,11 +336,11 @@ public class RiderMenu {
         Rider loadedRider = new Rider();
         try {
             FileReader reader = new FileReader(RIDER_PROFILE_FILENAME);
-            Type riderProfileType = new TypeToken<Rider>() {}.getType();
+            Type riderProfileType = new TypeToken<Rider>() {
+            }.getType();
             loadedRider = gson.fromJson(reader, riderProfileType);
             System.out.println("Rider successfully loaded!");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("No existing file for rider profile found.");
         }
 
@@ -352,11 +357,27 @@ public class RiderMenu {
         }
     }
 
+    // exporting report
     public void exportReport(JourneyTracker journeyTracker) {
         // REFERENCE: https://www.w3schools.com/java/java_files_write.asp
         try {
             FileWriter myWriter = new FileWriter(REPORT_FILENAME);
-            myWriter.write(buildDailySummaryString(journeyTracker));
+
+            String date = LocalDate.now().format(formatter.dateTimeFormatter);
+            String report = date + ". Report for " + rider.getName() + "\n";
+            report += buildDailySummaryString(journeyTracker) + "\n\n";
+
+            report += "++++++++++++++ Passenger type summaries ++++++++++++++\n";
+            for (SummaryForPassengerType summary : journeyTracker.getPassengerSummariesList()) {
+                report += "++++++++++ " + summary.getPassengerTypeName() + " ++++++++++\n";
+                report += summary.buildSummaryString(formatter) + "\n";
+            }
+            report += "++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
+
+            report += buildCategoryCountsString(journeyTracker) + "\n\n";
+            report += "End of report.\n";
+
+            myWriter.write(report);
             myWriter.close();
             System.out.println("Report (TXT file) exported!");
         } catch (IOException e) {

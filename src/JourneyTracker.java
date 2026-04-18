@@ -172,8 +172,8 @@ public class JourneyTracker {
         resetZoneCounts();
     }
 
-    // exporting csv report
-    private List<SummaryForPassengerType> getPassengerSummariesList() {
+    // exporting report
+    public List<SummaryForPassengerType> getPassengerSummariesList() {
         List<SummaryForPassengerType> passengerSummaries = new ArrayList<>();
         passengerSummaries.add(adultSummary);
         passengerSummaries.add(studentSummary);

@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 public class Formatter {
     private String defaultUnknownName = "Unknown";
 
-    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    public DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 
     public BigDecimal formatBigDecimal2dp(BigDecimal bigDecimal) {
         return bigDecimal.setScale(2, RoundingMode.HALF_UP);

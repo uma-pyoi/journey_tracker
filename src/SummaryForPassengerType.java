@@ -27,6 +27,9 @@ public class SummaryForPassengerType {
     }
 
     // getters
+    public String getPassengerTypeName() {
+        return passengerTypeName;
+    }
     public BigDecimal getTotalChargedFare() {
         return totalChargedFare;
     }
@@ -50,12 +53,13 @@ public class SummaryForPassengerType {
     }
 
     // viewing summary
-    public void printSummary(Formatter formatter) {
-        System.out.println("Total base fare: £" + formatter.formatBigDecimal2dp(totalBaseFare));
-        System.out.println("Total discounted fare: £" + formatter.formatBigDecimal2dp(totalDiscountedFare));
-        System.out.println("Total charged fare: £" + formatter.formatBigDecimal2dp(totalChargedFare));
-        System.out.println("Total number of journeys: " + totalJourneyNum);
-        System.out.println("Daily cap reached: " + dailyCapReached);
+    public String buildSummaryString(Formatter formatter) {
+        String summary = "Total base fare: £" + formatter.formatBigDecimal2dp(totalBaseFare) +
+                "\nTotal discounted fare: £" + formatter.formatBigDecimal2dp(totalDiscountedFare) +
+                "\nTotal charged fare: £" + formatter.formatBigDecimal2dp(totalChargedFare) +
+                "\nTotal number of journeys: " + totalJourneyNum +
+                "\nDaily cap reached: " + dailyCapReached + "\n";
+        return summary;
     }
 
     // removing journey
