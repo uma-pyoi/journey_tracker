@@ -21,7 +21,7 @@ public class JourneyTrackerApp {
             consolePrinter.printMainMenu();
             userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
             if (userInput == 1) {
-                rider = mainMenu.actionNewRider(riderMenu, journeyTracker);
+                rider = mainMenu.actionNewRider(journeyTracker);
             } else if (userInput == 2) {
                 rider = mainMenu.actionLoadRider(riderMenu, journeyTracker);
             } else if (userInput == 3) {

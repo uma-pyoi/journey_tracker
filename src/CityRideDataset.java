@@ -79,7 +79,6 @@ public class CityRideDataset {
     }
 
 
-
     public static final Map<String, BigDecimal> BASE_FARE = buildBaseFare();
 
     public static BigDecimal getBaseFare(int fromZone, int toZone, TimeBand timeBand) {

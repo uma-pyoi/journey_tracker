@@ -5,6 +5,7 @@ public class AdminPanel {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private InputValidator inputValidator = new InputValidator();
     private Formatter formatter = new Formatter();
+    private MainMenu mainMenu = new MainMenu();
     private CityRideDataset cityRideDataset;
 
     private String adminPassword = "1234";
@@ -112,6 +113,21 @@ public class AdminPanel {
         }
     }
 
+    public void editBaseFares(JourneyTracker journeyTracker) {
+        System.out.println("What is the START zone?");
+        journeyTracker.listAllZones();
+        int startZoneId = inputValidator.readPosIntInRange(1, 5, true, false);
+
+        System.out.println("What is the END zone?");
+        journeyTracker.listAllZones();
+        int endZoneId = inputValidator.readPosIntInRange(1, 5, true, false);
+
+        CityRideDataset.TimeBand timeband = mainMenu.askForTimeBand();
+        String baseFareKey = CityRideDataset.key(startZoneId, endZoneId, timeband);
+
+        System.out.println("What is the new fare?");
+    }
+
     public void editRules() {
         consolePrinter.printRulesEdit();
 
@@ -124,6 +140,9 @@ public class AdminPanel {
         }
         else if (userChoice == 3) {
             editDailyCaps();
+        }
+        else if (userChoice == 4) {
+
         }
     }
 }

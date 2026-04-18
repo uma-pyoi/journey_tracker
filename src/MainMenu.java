@@ -5,6 +5,33 @@ public class MainMenu {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private Formatter formatter = new Formatter();
 
+    // asking for certain input
+    public CityRideDataset.PassengerType askForPassengerType() {
+        System.out.println("What is the passenger type?");
+        consolePrinter.printPassengerTypes();
+        int passengerTypeId = inputValidator.readPosIntInRange(1, CityRideDataset.PassengerType.values().length, true, false);
+
+        return CityRideDataset.PassengerType.values()[passengerTypeId - 1];
+    }
+
+    public Zone askForZone(String zoneDescription, JourneyTracker journeyTracker) {
+        System.out.println("What is the ID of the " + zoneDescription + " zone?");
+        journeyTracker.listAllZones();
+        int zoneId = inputValidator.readPosIntInRange(CityRideDataset.MIN_ZONE, CityRideDataset.MAX_ZONE, true, false);
+        return journeyTracker.findZoneById(zoneId);
+    }
+
+    public CityRideDataset.TimeBand askForTimeBand() {
+        boolean isPeak = inputValidator.readYesNo();
+        CityRideDataset.TimeBand timeBand;
+        if (isPeak) {
+            timeBand = CityRideDataset.TimeBand.PEAK;
+        } else {
+            timeBand = CityRideDataset.TimeBand.OFF_PEAK;
+        }
+        return timeBand;
+    }
+
     public CityRideDataset.PaymentOption askForPaymentOption() {
         System.out.println("What is the payment option?");
         consolePrinter.printPaymentOptions();
@@ -13,10 +40,11 @@ public class MainMenu {
         return CityRideDataset.PaymentOption.values()[paymentOptionId - 1];
     }
 
-    public Rider actionNewRider(RiderMenu riderMenu, JourneyTracker journeyTracker) {
+    // menu actions
+    public Rider actionNewRider(JourneyTracker journeyTracker) {
         System.out.println("+++++++ New Rider +++++++");
         String name = inputValidator.readString("Enter your name: ", false);
-        CityRideDataset.PassengerType passengerType = riderMenu.askForPassengerType();
+        CityRideDataset.PassengerType passengerType = askForPassengerType();
         CityRideDataset.PaymentOption paymentOption = askForPaymentOption();
 
         Rider rider = new Rider(journeyTracker.generateUUID(), name, passengerType, paymentOption);
@@ -28,7 +56,7 @@ public class MainMenu {
         Rider rider = riderMenu.loadRiderProfile();
         if (Objects.equals(rider.getId(), "-1")) {
             System.out.println("You will need to create a new rider profile.");
-            rider = actionNewRider(riderMenu, journeyTracker);
+            rider = actionNewRider(journeyTracker);
         }
         return rider;
     }
