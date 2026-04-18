@@ -46,8 +46,15 @@ public class CityRideDataset {
             PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00"))
     );
 
+    private Map<String, BigDecimal> baseFareMap = new HashMap<>(buildBaseFare());
+
+    // getters
     public int getPeakStart() {
         return peakStart;
+    }
+
+    public int getPeakEnd() {
+        return peakEnd;
     }
 
     public Map<PassengerType, BigDecimal> getDiscountRateMap() {
@@ -58,10 +65,11 @@ public class CityRideDataset {
         return dailyCapMap;
     }
 
-    public int getPeakEnd() {
-        return peakEnd;
+    public Map<String, BigDecimal> getBaseFareMap() {
+        return baseFareMap;
     }
 
+    // setters
     public void setPeakStart(int peakStart) {
         this.peakStart = peakStart;
     }
@@ -78,11 +86,13 @@ public class CityRideDataset {
         dailyCapMap.replace(passengerType, dailyCap);
     }
 
+    public void setBaseFare(String key, BigDecimal baseFare) {
+        baseFareMap.replace(key, baseFare);
+    }
 
-    public static final Map<String, BigDecimal> BASE_FARE = buildBaseFare();
-
-    public static BigDecimal getBaseFare(int fromZone, int toZone, TimeBand timeBand) {
-        return BASE_FARE.get(key(fromZone, toZone, timeBand));
+    // other methods
+    public BigDecimal getBaseFare(int fromZone, int toZone, TimeBand timeBand) {
+        return baseFareMap.get(key(fromZone, toZone, timeBand));
     }
 
     public static String key(int fromZone, int toZone, TimeBand timeBand) {
@@ -207,13 +217,13 @@ public class CityRideDataset {
 
     public void printBaseFares(JourneyTracker journeyTracker) {
         System.out.println("---------- Base Fares ----------");
-        for (String baseFareKey : BASE_FARE.keySet()) {
+        for (String baseFareKey : baseFareMap.keySet()) {
             List<String> baseFareKeyList = splitBaseFareKey(baseFareKey);
 
             String startZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(0))).getZoneName();
             String endZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(1))).getZoneName();
 
-            System.out.println(startZoneName + " (" + baseFareKeyList.get(0) + ") - " + endZoneName + " (" + baseFareKeyList.get(1) + ") | " + baseFareKeyList.get(2) + ": " + BASE_FARE.get(baseFareKey));
+            System.out.println(startZoneName + " (" + baseFareKeyList.get(0) + ") - " + endZoneName + " (" + baseFareKeyList.get(1) + ") | " + baseFareKeyList.get(2) + ": " + baseFareMap.get(baseFareKey));
         }
         System.out.println("--------------------------------");
     }

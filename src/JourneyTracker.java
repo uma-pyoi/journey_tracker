@@ -122,7 +122,7 @@ public class JourneyTracker {
 
     // fare calculations
     public BigDecimal calculateDiscountFare(int startZoneId, int endZoneId, CityRideDataset.TimeBand timeBand, CityRideDataset.PassengerType passengerType) {
-        BigDecimal baseFare = CityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
+        BigDecimal baseFare = cityRideDataset.getBaseFare(startZoneId, endZoneId, timeBand);
         BigDecimal discount = cityRideDataset.getDiscountRateMap().get(passengerType);
         BigDecimal discountOfBaseFare = baseFare.multiply(discount);
         return baseFare.subtract(discountOfBaseFare);

@@ -18,12 +18,6 @@ public class JourneyTrackerApp {
 
         int mainMenuExitNum = 4;
         do {
-
-            float poop = inputValidator.readPosFloat(true);
-            System.out.println("poop: " + poop);
-            System.out.println("poop is -1: " + (poop == -1));
-
-
             consolePrinter.printMainMenu();
             userInput = inputValidator.readPosIntInRange(1, mainMenuExitNum, true, false);
             if (userInput == 1) {
@@ -42,7 +36,7 @@ public class JourneyTrackerApp {
             // starts rider menu if user is logged in
             if (!Objects.equals(rider.getId(), "-1")) {
                 riderMenu.setRider(rider, journeysManager);
-                riderMenu.runRiderMenu(journeyTracker);
+                riderMenu.runRiderMenu(journeyTracker, cityRideDataset);
                 userInput = mainMenuExitNum; // terminate program when rider menu exits
             }
         }

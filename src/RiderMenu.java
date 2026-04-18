@@ -36,7 +36,7 @@ public class RiderMenu {
         this.journeysManager = journeysManager;
     }
 
-    public void runRiderMenu(JourneyTracker journeyTracker) {
+    public void runRiderMenu(JourneyTracker journeyTracker, CityRideDataset cityRideDataset) {
         int userInput;
         int exitNum = 10;
         do {
@@ -49,7 +49,7 @@ public class RiderMenu {
             } else if (userInput == 2) {
                 journeysManager.loadJourneys(rider, journeyTracker);
             } else if (userInput == 3) {
-                actionAddJourney(journeyTracker);
+                actionAddJourney(journeyTracker, cityRideDataset);
             } else if (userInput == 4) {
                 actionListJourneys(journeyTracker);
             } else if (userInput == 5) {
@@ -114,7 +114,7 @@ public class RiderMenu {
         rider.printRider(formatter);
     }
 
-    public void actionAddJourney(JourneyTracker journeyTracker) {
+    public void actionAddJourney(JourneyTracker journeyTracker, CityRideDataset cityRideDataset) {
         System.out.println("+++++++ Adding a journey +++++++");
         // TODO: remove asking user for timeband, calculate automatically
         System.out.println("Was the journey on peak?");
@@ -126,7 +126,7 @@ public class RiderMenu {
         CityRideDataset.PassengerType passengerType = this.askForPassengerTypeLoggedIn();
 
         // calculations
-        BigDecimal baseFare = CityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
+        BigDecimal baseFare = cityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
         BigDecimal discountedFare = journeyTracker.calculateDiscountFare(startZone.getZoneId(), endZone.getZoneId(), timeBand, passengerType);
         BigDecimal chargedFare = journeyTracker.calculateChargedFare(discountedFare, passengerType);
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);

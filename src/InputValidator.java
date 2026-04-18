@@ -108,7 +108,7 @@ public class InputValidator {
         // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
         // Oracle (n.d.)
         try {
-            userFloat = Float.parseFloat(str); // TODO: test if works
+            userFloat = Float.parseFloat(str);
         } catch (NumberFormatException e) {
             System.out.println(errorMessage);
         }

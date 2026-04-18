@@ -49,7 +49,7 @@ public class AdminPanel {
             if (userInput == 1) {
                 cityRideDataset.printRules(journeyTracker);
             } else if (userInput == 2) {
-                editRules();
+                editRules(journeyTracker);
             } else if (userInput == 3) {
                 System.out.println("thank u bai bai");
             }
@@ -101,13 +101,11 @@ public class AdminPanel {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
 
             BigDecimal dailyCap = cityRideDataset.getDailyCapMap().get(passengerType);
-            System.out.println("\nEnter daily cap for " + passengerTypeName + " (current: £" + dailyCap + ").");
-            int userDailyCap = inputValidator.readPosIntInRange(0, 99999, false, true);
+            System.out.println("\nEnter daily cap for " + passengerTypeName + " (current: £" + formatter.formatBigDecimal2dp(dailyCap) + ").");
+            float userDailyCap = inputValidator.readPosFloat(true);
 
             if (userDailyCap != -1) {
-                // TODO: allow float for daily cap (maybe)
                 BigDecimal newDailyCap = new BigDecimal(userDailyCap);
-                System.out.println("CHANGING DAILY CAP TO " + newDailyCap);
                 cityRideDataset.setDailyCap(passengerType, newDailyCap);
             }
         }
@@ -123,12 +121,21 @@ public class AdminPanel {
         int endZoneId = inputValidator.readPosIntInRange(1, 5, true, false);
 
         CityRideDataset.TimeBand timeband = mainMenu.askForTimeBand();
-        String baseFareKey = CityRideDataset.key(startZoneId, endZoneId, timeband);
 
-        System.out.println("What is the new fare?");
+        BigDecimal currentBaseFare = cityRideDataset.getBaseFare(startZoneId, endZoneId, timeband);
+        System.out.println("Current base fare: " + currentBaseFare);
+        System.out.println("What will be the new base fare?");
+        System.out.println("(Leave empty to keep current base fare)");
+        float userBaseFare = inputValidator.readPosFloat(true);
+
+        if (userBaseFare != -1) {
+            BigDecimal newBaseFare = new BigDecimal(userBaseFare);
+            String baseFareKey = CityRideDataset.key(startZoneId, endZoneId, timeband);
+            cityRideDataset.setBaseFare(baseFareKey, newBaseFare);
+        }
     }
 
-    public void editRules() {
+    public void editRules(JourneyTracker journeyTracker) {
         consolePrinter.printRulesEdit();
 
         int userChoice = inputValidator.readPosIntInRange(1, 4, true, false);
@@ -142,7 +149,7 @@ public class AdminPanel {
             editDailyCaps();
         }
         else if (userChoice == 4) {
-
+            editBaseFares(journeyTracker);
         }
     }
 }
