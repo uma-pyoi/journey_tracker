@@ -4,7 +4,7 @@ import java.util.List;
 public class ConsolePrinter {
     private Formatter formatter = new Formatter();
 
-    private void printMenuWithNumbers(List<String> menuOptionsList) {
+    public void printMenuWithNumbers(List<String> menuOptionsList) {
         for (int i = 0; i < menuOptionsList.size(); i++) {
             System.out.println((i + 1) + ". " + menuOptionsList.get(i));
         }
@@ -80,5 +80,11 @@ public class ConsolePrinter {
         List<String> menuOptions = Arrays.asList("View rules", "Edit rules", "Exit");
         printMenuWithNumbers(menuOptions);
         System.out.println();
+    }
+
+    public void printRulesEdit() {
+        System.out.println("Which rule to edit?");
+        List<String> menuOptions = Arrays.asList("Peak time window", "Discount rates", "Daily caps", "Base fares");
+        printMenuWithNumbers(menuOptions);
     }
 }

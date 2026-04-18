@@ -9,6 +9,7 @@ public class JourneyTrackerApp {
         ConsolePrinter consolePrinter = new ConsolePrinter();
         MainMenu mainMenu = new MainMenu();
         AdminPanel adminPanel = new AdminPanel();
+        CityRideDataset cityRideDataset = new CityRideDataset();
         Rider rider = new Rider();
 
         int userInput;
@@ -26,7 +27,8 @@ public class JourneyTrackerApp {
             } else if (userInput == 3) {
                 boolean isAdmin = adminPanel.grantAdminAccess();
                 if (isAdmin) {
-                    adminPanel.runAdminMenu();
+                    adminPanel.setCityRideDataset(cityRideDataset);
+                    adminPanel.runAdminMenu(journeyTracker);
                     userInput = mainMenuExitNum; // terminate program when admin menu exits
                 }
             }

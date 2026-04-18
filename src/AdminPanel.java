@@ -1,8 +1,16 @@
+import java.math.BigDecimal;
+
 public class AdminPanel {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
     private InputValidator inputValidator = new InputValidator();
+    private Formatter formatter = new Formatter();
+    private CityRideDataset cityRideDataset;
 
     private String adminPassword = "1234";
+
+    public void setCityRideDataset(CityRideDataset cityRideDataset) {
+        this.cityRideDataset = cityRideDataset;
+    }
 
     public boolean grantAdminAccess() {
         boolean isGranted = false;
@@ -28,7 +36,7 @@ public class AdminPanel {
     }
 
 
-    public void runAdminMenu() {
+    public void runAdminMenu(JourneyTracker journeyTracker) {
         int userInput;
         int exitNum = 3;
 
@@ -37,13 +45,69 @@ public class AdminPanel {
             userInput = inputValidator.readPosIntInRange(1, exitNum, true, false);
 
             if (userInput == 1) {
-                System.out.println("view rules");
+                cityRideDataset.printRules(journeyTracker);
             } else if (userInput == 2) {
-                System.out.println("edit rules");
+                editRules();
             } else if (userInput == 3) {
                 System.out.println("thank u bai bai");
             }
         }
         while (userInput != exitNum);
+    }
+
+    private void editPeakHours() {
+        System.out.println("+++ Editing peak time windows +++");
+        System.out.println("Leave the field empty if you want to keep the current value.\n");
+        System.out.println("Enter the START hour of peak time. (current: " + cityRideDataset.getPeakStart() + ")");
+        int startHour = inputValidator.readPosIntInRange(0, 24, true, true);
+        if (startHour == -1) {
+            startHour = cityRideDataset.getPeakStart();
+        }
+        cityRideDataset.setPeakStart(startHour);
+
+        System.out.println("Enter the END hour of peak time. (current: " + cityRideDataset.getPeakEnd() + ")");
+        int endHour = inputValidator.readPosIntInRange(0, 24, true, true);
+        if (endHour == -1) {
+            endHour = cityRideDataset.getPeakEnd();
+        }
+        cityRideDataset.setPeakEnd(endHour);
+    }
+
+    public void editDiscountRates(JourneyTracker journeyTracker) {
+        System.out.println("+++ Editing discount rates +++");
+        System.out.println("Leave the field empty if you want to keep the current value.\n");
+
+        for (CityRideDataset.PassengerType passengerType : CityRideDataset.DISCOUNT_RATE.keySet()) {
+            String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
+
+            BigDecimal discountRatePercent = CityRideDataset.DISCOUNT_RATE.get(passengerType).multiply(new BigDecimal("100"));
+            System.out.println("Enter discount rate for " + passengerTypeName + " (current: " + discountRatePercent + "%)."); // TODO: test how big decimal prints to console
+            int userDiscountRate = inputValidator.readPosIntInRange(0, 100, true, true);
+
+            BigDecimal newDiscountRate;
+            if (newDiscountRate = -1) {
+
+            }
+
+        }
+
+        System.out.println("Enter the START hour of peak time. (current: " + cityRideDataset.getPeakStart() + ")");
+//        System.out.println("Which passenger type's discount rate to edit?");
+//        consolePrinter.printPassengerTypes();
+//        int passengerTypeInt = inputValidator.readPosIntInRange(1, 4, true, false);
+//        CityRideDataset.PassengerType passengerType = CityRideDataset.PassengerType.values()[passengerTypeInt - 1];
+//        System.out.println("The current discount rate");
+    }
+
+    public void editRules() {
+        consolePrinter.printRulesEdit();
+
+        int userChoice = inputValidator.readPosIntInRange(1, 4, true, false);
+        if (userChoice == 1) {
+            editPeakHours();
+        }
+        else if (userChoice == 2) {
+
+        }
     }
 }

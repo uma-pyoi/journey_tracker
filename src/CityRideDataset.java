@@ -1,11 +1,15 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-final class CityRideDataset {
-
-    private CityRideDataset() {}
+public class CityRideDataset {
+    private Formatter formatter = new Formatter();
+    // TODO: add feature to have multiple peak time windows
+    private int peakStart = 16;
+    private int peakEnd = 20;
 
     public static final int MIN_ZONE = 1;
     public static final int MAX_ZONE = 5;
@@ -26,6 +30,22 @@ final class CityRideDataset {
         STUDENT,
         CHILD,
         SENIOR_CITIZEN
+    }
+
+    public int getPeakStart() {
+        return peakStart;
+    }
+
+    public int getPeakEnd() {
+        return peakEnd;
+    }
+
+    public void setPeakStart(int peakStart) {
+        this.peakStart = peakStart;
+    }
+
+    public void setPeakEnd(int peakEnd) {
+        this.peakEnd = peakEnd;
     }
 
     public static final Map<PassengerType, BigDecimal> DISCOUNT_RATE = Map.of(
@@ -106,5 +126,87 @@ final class CityRideDataset {
 
     private static void put(Map<String, BigDecimal> m, int from, int to, TimeBand band, String amount) {
         m.put(key(from, to, band), money(amount));
+    }
+
+    // printing
+    public void printDiscountRates() {
+        System.out.println("---------- Discount rates ----------");
+        for (PassengerType passengerType : DISCOUNT_RATE.keySet()) {
+            String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
+            int discountRatePercent = DISCOUNT_RATE.get(passengerType).multiply(new BigDecimal("100")).intValue();
+//            int discountRatePercent = formatter.formatPercentage(DISCOUNT_RATE.get(passengerType));
+            System.out.println(passengerTypeName + ": " + discountRatePercent + "%");
+        }
+        System.out.println("------------------------------------");
+    }
+
+    public void printDailyCaps() {
+        System.out.println("---------- Daily caps ----------");
+        for (PassengerType passengerType : DAILY_CAP.keySet()) {
+            String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
+            System.out.println(passengerTypeName + ": £" + formatter.formatBigDecimal2dp(DAILY_CAP.get(passengerType)));
+        }
+        System.out.println("--------------------------------");
+    }
+
+    private List<String> splitBaseFareKey(String baseFareKey) {
+        int dashEncounters = 0;
+
+        // initialised so that ide won't complain
+        String startZone = "None";
+        String endZone = "None";
+        String timeband = "None";
+
+        int dashIndex0 = -1;
+        int dashIndex1 = -1;
+
+        for (int i = 0; i < baseFareKey.length(); i++) {
+            if (baseFareKey.charAt(i) == '-') {
+                switch (dashEncounters) {
+                    case 0:
+                        startZone = baseFareKey.substring(0, i);
+                        dashIndex0 = i;
+                        break;
+                    case 1:
+                        endZone = baseFareKey.substring(dashIndex0 + 1, i);
+                        dashIndex1 = i;
+                        break;
+                }
+                dashEncounters++;
+            }
+        }
+
+        if (dashIndex1 != -1) {
+            timeband = baseFareKey.substring(dashIndex1 + 1);
+        }
+
+        List<String> baseFareKeyList = new ArrayList<>();
+        baseFareKeyList.add(startZone);
+        baseFareKeyList.add(endZone);
+        baseFareKeyList.add(timeband);
+
+        return baseFareKeyList;
+    }
+
+    public void printBaseFares(JourneyTracker journeyTracker) {
+        System.out.println("---------- Base Fares ----------");
+        for (String baseFareKey : BASE_FARE.keySet()) {
+            List<String> baseFareKeyList = splitBaseFareKey(baseFareKey);
+
+            String startZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(0))).getZoneName();
+            String endZoneName = journeyTracker.findZoneById(Integer.parseInt(baseFareKeyList.get(1))).getZoneName();
+
+            System.out.println(startZoneName + " (" + baseFareKeyList.get(0) + ") - " + endZoneName + " (" + baseFareKeyList.get(1) + ") | " + baseFareKeyList.get(2) + ": " + BASE_FARE.get(baseFareKey));
+        }
+        System.out.println("--------------------------------");
+    }
+
+    public void printRules(JourneyTracker journeyTracker) {
+        System.out.println("***********   CityRide Lite Rules   ***********");
+        System.out.println("Peak hours: " + peakStart + "-" + peakEnd);
+
+        printDiscountRates();
+        printDailyCaps();
+        printBaseFares(journeyTracker);
     }
 }
