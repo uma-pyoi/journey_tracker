@@ -32,6 +32,30 @@ public class InputValidator {
         return userInt;
     }
 
+
+    // returns -1 if empty
+    public float readPosFloat(boolean canEmpty) {
+        float userFloat = -1;
+        boolean isValid = false;
+        do {
+            String blankPrompt = canEmpty ? " or leave empty" : "";
+            String prompt = "Enter a decimal number" + blankPrompt + ": ";
+            String userFloatString = readString(prompt, canEmpty);
+
+            if (!userFloatString.isEmpty()) {
+                float parsedUserFloat = parseStringFloat(userFloatString, "Invalid! You must enter a decimal number!");
+                if (parsedUserFloat != -1) {
+                    userFloat = parsedUserFloat;
+                    isValid = true;
+                }
+            } else {
+                isValid = true;
+            }
+        }
+        while (!isValid);
+        return userFloat;
+    }
+
     public boolean readYesNo() {
         boolean isValid = false;
         boolean userChoice = false;
@@ -78,6 +102,19 @@ public class InputValidator {
         return userInt;
     }
 
+    // returns -1 if invalid integer
+    private float parseStringFloat(String str, String errorMessage) {
+        float userFloat = -1;
+        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
+        // Oracle (n.d.)
+        try {
+            userFloat = Float.parseFloat(str); // TODO: test if works
+        } catch (NumberFormatException e) {
+            System.out.println(errorMessage);
+        }
+        return userFloat;
+    }
+
     public LocalTime readTime() {
         boolean isValid = false;
         int hours = -1;
@@ -90,8 +127,7 @@ public class InputValidator {
             int index_of_colon = findColonIndex(userInput);
             if (index_of_colon == -1) {
                 System.out.println("You must put a colon (:) in between the hours and minutes!");
-            }
-            else {
+            } else {
                 String hoursString = userInput.substring(0, index_of_colon).strip();
                 String minutesString = userInput.substring(index_of_colon + 1).strip();
                 hours = parseStringInteger(hoursString, "The hours entered were incorrect!");
