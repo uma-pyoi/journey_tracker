@@ -116,23 +116,22 @@ public class RiderMenu {
 
     public void actionAddJourney(JourneyTracker journeyTracker, CityRideDataset cityRideDataset) {
         System.out.println("+++++++ Adding a journey +++++++");
-        // TODO: remove asking user for timeband, calculate automatically
-        System.out.println("Was the journey on peak?");
-        CityRideDataset.TimeBand timeBand = mainMenu.askForTimeBand();
         System.out.println("What is the time of the journey?");
         LocalTime time = inputValidator.readTime();
+        CityRideDataset.TimeBand timeband = cityRideDataset.calculateTimeBand(time.getHour());
+
         Zone startZone = mainMenu.askForZone("start", journeyTracker);
         Zone endZone = mainMenu.askForZone("end", journeyTracker);
         CityRideDataset.PassengerType passengerType = this.askForPassengerTypeLoggedIn();
 
         // calculations
-        BigDecimal baseFare = cityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeBand);
-        BigDecimal discountedFare = journeyTracker.calculateDiscountFare(startZone.getZoneId(), endZone.getZoneId(), timeBand, passengerType);
+        BigDecimal baseFare = cityRideDataset.getBaseFare(startZone.getZoneId(), endZone.getZoneId(), timeband);
+        BigDecimal discountedFare = journeyTracker.calculateDiscountFare(startZone.getZoneId(), endZone.getZoneId(), timeband, passengerType);
         BigDecimal chargedFare = journeyTracker.calculateChargedFare(discountedFare, passengerType);
         boolean dailyCapReached = journeyTracker.calculateDailyCapReached(discountedFare, passengerType);
 
         // adding journey
-        Journey newJourney = new Journey(journeyTracker.generateUUID(), rider.getId(), time, startZone.getZoneId(), endZone.getZoneId(), passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
+        Journey newJourney = new Journey(journeyTracker.generateUUID(), rider.getId(), time, timeband, startZone.getZoneId(), endZone.getZoneId(), passengerType, baseFare, discountedFare, chargedFare, dailyCapReached);
         journeysManager.addJourney(newJourney, journeyTracker);
         System.out.println("Journey with Journey ID of " + newJourney.getJourneyId() + " has been added.");
         journeysManager.setJourneyIdCounter(journeysManager.getJourneyIdCounter() + 1);

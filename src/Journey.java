@@ -30,10 +30,11 @@ public class Journey {
         this.dailyCapReached = false;
     }
 
-    public Journey(String journeyID, String riderId, LocalTime time, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
+    public Journey(String journeyID, String riderId, LocalTime time, CityRideDataset.TimeBand timeBand, int startZoneId, int endZoneId, CityRideDataset.PassengerType passengerType, BigDecimal baseFare, BigDecimal discountedFare, BigDecimal chargedFare, boolean dailyCapReached) {
         this.journeyId = journeyID;
         this.riderId = riderId;
         this.time = time.toString();
+        this.timeBand = timeBand;
         this.startZoneId = startZoneId;
         this.endZoneId = endZoneId;
         this.passengerType = passengerType;
@@ -102,6 +103,7 @@ public class Journey {
     public String buildJourneyDetailsString(Formatter formatter, JourneyTracker journeyTracker) {
         Zone startZone = journeyTracker.findZoneById(startZoneId);
         Zone endZone = journeyTracker.findZoneById(endZoneId);
+        System.out.println("!!!!!!!!timeband: " + this.timeBand);
 
         String journeyDetails = "--------------------------" +
                 "\nJourney ID: " + this.journeyId +

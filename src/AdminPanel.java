@@ -54,7 +54,7 @@ public class AdminPanel {
 
     public void runAdminMenu(JourneyTracker journeyTracker) {
         int userInput;
-        int exitNum = 3;
+        int exitNum = 4;
 
         do {
             consolePrinter.printAdminMenu();
@@ -65,7 +65,8 @@ public class AdminPanel {
             } else if (userInput == 2) {
                 editRules(journeyTracker);
             } else if (userInput == 3) {
-                // TODO: add reset button
+                resetConfig();
+            } else if (userInput == 4) {
                 System.out.println("Thank you. :)");
             }
         }
@@ -192,10 +193,17 @@ public class AdminPanel {
             loadedCityRideDataset = gson.fromJson(reader, cityRideDatasetType);
             System.out.println("Configuration file successfully loaded!");
         } catch (Exception e) {
-            System.err.println("No existing configuration file found.");
+            System.err.println("No existing configuration file found. Starting with default values.");
+            loadedCityRideDataset.resetRules();
             e.printStackTrace(); // TODO: remove
         }
 
         return loadedCityRideDataset;
+    }
+
+    public void resetConfig() {
+        cityRideDataset.resetRules();
+        saveConfig();
+        System.out.println("Configuration file rules successfully reset!");
     }
 }

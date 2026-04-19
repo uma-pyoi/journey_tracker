@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class CityRideDataset {
     // TODO: add feature to have multiple peak time windows
-    private int peakStart = 16;
-    private int peakEnd = 20;
+    private int peakStart;
+    private int peakEnd;
 
     public static final int MIN_ZONE = 1;
     public static final int MAX_ZONE = 5;
@@ -31,19 +31,9 @@ public class CityRideDataset {
         SENIOR_CITIZEN
     }
 
-    private Map<PassengerType, BigDecimal> discountRateMap = new HashMap<>(Map.of(
-            PassengerType.ADULT, new BigDecimal("0.00"),
-            PassengerType.STUDENT, new BigDecimal("0.25"),
-            PassengerType.CHILD, new BigDecimal("0.50"),
-            PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30"))
-    );
+    private Map<PassengerType, BigDecimal> discountRateMap;
 
-    public Map<PassengerType, BigDecimal> dailyCapMap = new HashMap<>(Map.of(
-            PassengerType.ADULT, new BigDecimal("8.00"),
-            PassengerType.STUDENT, new BigDecimal("6.00"),
-            PassengerType.CHILD, new BigDecimal("4.00"),
-            PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00"))
-    );
+    public Map<PassengerType, BigDecimal> dailyCapMap;
 
     private Map<String, BigDecimal> baseFareMap = new HashMap<>(buildBaseFare());
 
@@ -62,10 +52,6 @@ public class CityRideDataset {
 
     public Map<PassengerType, BigDecimal> getDailyCapMap() {
         return dailyCapMap;
-    }
-
-    public Map<String, BigDecimal> getBaseFareMap() {
-        return baseFareMap;
     }
 
     // setters
@@ -90,6 +76,16 @@ public class CityRideDataset {
     }
 
     // other methods
+    public TimeBand calculateTimeBand(int hour) {
+        System.out.println("HOUR IS " + hour);
+        TimeBand timeband = TimeBand.OFF_PEAK;
+        if (hour >= peakStart && hour <= peakEnd) {
+            System.out.println("hour is indeed peak");
+            timeband = TimeBand.PEAK;
+        }
+        return timeband;
+    }
+
     public BigDecimal getBaseFare(int fromZone, int toZone, TimeBand timeBand) {
         return baseFareMap.get(key(fromZone, toZone, timeBand));
     }
@@ -237,5 +233,26 @@ public class CityRideDataset {
         printDiscountRates(formatter);
         printDailyCaps(formatter);
         printBaseFares(journeyTracker, formatter);
+    }
+
+    public void resetRules() {
+        this.peakStart = 16;
+        this.peakEnd = 20;
+
+        discountRateMap = new HashMap<>(Map.of(
+                PassengerType.ADULT, new BigDecimal("0.00"),
+                PassengerType.STUDENT, new BigDecimal("0.25"),
+                PassengerType.CHILD, new BigDecimal("0.50"),
+                PassengerType.SENIOR_CITIZEN, new BigDecimal("0.30"))
+        );
+
+        dailyCapMap = new HashMap<>(Map.of(
+                PassengerType.ADULT, new BigDecimal("8.00"),
+                PassengerType.STUDENT, new BigDecimal("6.00"),
+                PassengerType.CHILD, new BigDecimal("4.00"),
+                PassengerType.SENIOR_CITIZEN, new BigDecimal("7.00"))
+        );
+
+        baseFareMap = new HashMap<>(buildBaseFare());
     }
 }

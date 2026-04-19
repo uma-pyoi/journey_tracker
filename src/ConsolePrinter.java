@@ -77,7 +77,7 @@ public class ConsolePrinter {
         System.out.println("\n");
         System.out.println("****** Admin Panel ******");
         System.out.println("Please choose from the following:");
-        List<String> menuOptions = Arrays.asList("View rules", "Edit rules", "Exit");
+        List<String> menuOptions = Arrays.asList("View rules", "Edit rules", "Reset rules", "Exit");
         printMenuWithNumbers(menuOptions);
         System.out.println();
     }
