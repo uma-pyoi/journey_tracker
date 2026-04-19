@@ -191,6 +191,7 @@ public class AdminPanel {
             System.out.println("Configuration file successfully loaded!\n");
         } catch (Exception e) {
             System.err.println("No existing configuration file found. Starting with default values.");
+            cityRideDataset = loadedCityRideDataset;
             loadedCityRideDataset.resetRules();
             saveConfig();
         }

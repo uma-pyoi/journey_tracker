@@ -76,10 +76,8 @@ public class CityRideDataset {
 
     // other methods
     public TimeBand calculateTimeBand(int hour) {
-        System.out.println("HOUR IS " + hour);
         TimeBand timeband = TimeBand.OFF_PEAK;
         if (hour >= peakStart && hour <= peakEnd) {
-            System.out.println("hour is indeed peak");
             timeband = TimeBand.PEAK;
         }
         return timeband;

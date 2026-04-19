@@ -102,7 +102,6 @@ public class Journey {
     public String buildJourneyDetailsString(Formatter formatter, JourneyTracker journeyTracker) {
         Zone startZone = journeyTracker.findZoneById(startZoneId);
         Zone endZone = journeyTracker.findZoneById(endZoneId);
-        System.out.println("!!!!!!!!timeband: " + this.timeBand);
 
         String journeyDetails = "--------------------------" +
                 "\nJourney ID: " + this.journeyId +

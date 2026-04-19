@@ -4,6 +4,7 @@ public class JourneyTrackerApp {
     public static void main(String[] args) {
         AdminPanel adminPanel = new AdminPanel();
         CityRideDataset cityRideDataset = adminPanel.loadConfig();
+        System.out.println("aaa " + cityRideDataset.calculateTimeBand(1));
 
         JourneysManager journeysManager = new JourneysManager();
         JourneyTracker journeyTracker = new JourneyTracker(journeysManager, cityRideDataset);
