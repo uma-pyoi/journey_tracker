@@ -4,7 +4,7 @@ public class JourneyTrackerApp {
     public static void main(String[] args) {
         AdminPanel adminPanel = new AdminPanel();
         CityRideDataset cityRideDataset = adminPanel.loadConfig();
-//        CityRideDataset cityRideDataset = new CityRideDataset();
+
         JourneysManager journeysManager = new JourneysManager();
         JourneyTracker journeyTracker = new JourneyTracker(journeysManager, cityRideDataset);
         RiderMenu riderMenu = new RiderMenu();
@@ -14,7 +14,6 @@ public class JourneyTrackerApp {
         Rider rider = new Rider();
 
         int userInput;
-
         consolePrinter.printWelcome();
 
         int mainMenuExitNum = 4;

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class CityRideDataset {
-    // TODO: add feature to have multiple peak time windows
     private int peakStart;
     private int peakEnd;
 

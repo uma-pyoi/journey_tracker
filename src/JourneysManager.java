@@ -145,7 +145,7 @@ public class JourneysManager {
         else {
             List<Journey> hoursJourneysList = new ArrayList<>();
             for (Journey j : journeysList) {
-                int journeyHour = LocalTime.parse(j.getTime()).getHour(); // TODO: Test
+                int journeyHour = LocalTime.parse(j.getTime()).getHour();
                 if (journeyHour >= startHour && journeyHour <= endHour) {
                     hoursJourneysList.add(j);
                 }

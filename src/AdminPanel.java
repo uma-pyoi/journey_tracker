@@ -1,12 +1,10 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class AdminPanel {
     private ConsolePrinter consolePrinter = new ConsolePrinter();
@@ -180,7 +178,6 @@ public class AdminPanel {
             System.out.println("Configuration saved to file!");
         } catch (Exception e) {
             System.err.println("Error saving configuration file.");
-            e.printStackTrace(); // TODO: remove
         }
     }
 
@@ -191,11 +188,11 @@ public class AdminPanel {
             Type cityRideDatasetType = new TypeToken<CityRideDataset>() {
             }.getType();
             loadedCityRideDataset = gson.fromJson(reader, cityRideDatasetType);
-            System.out.println("Configuration file successfully loaded!");
+            System.out.println("Configuration file successfully loaded!\n");
         } catch (Exception e) {
             System.err.println("No existing configuration file found. Starting with default values.");
             loadedCityRideDataset.resetRules();
-            e.printStackTrace(); // TODO: remove
+            saveConfig();
         }
 
         return loadedCityRideDataset;
