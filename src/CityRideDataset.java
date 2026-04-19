@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class CityRideDataset {
-    private Formatter formatter = new Formatter();
     // TODO: add feature to have multiple peak time windows
     private int peakStart = 16;
     private int peakEnd = 20;
@@ -156,7 +155,7 @@ public class CityRideDataset {
     }
 
     // printing
-    public void printDiscountRates() {
+    public void printDiscountRates(Formatter formatter) {
         System.out.println("---------- Discount rates ----------");
         for (PassengerType passengerType : discountRateMap.keySet()) {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
@@ -167,7 +166,7 @@ public class CityRideDataset {
         System.out.println("------------------------------------");
     }
 
-    public void printDailyCaps() {
+    public void printDailyCaps(Formatter formatter) {
         System.out.println("---------- Daily caps ----------");
         for (PassengerType passengerType : dailyCapMap.keySet()) {
             String passengerTypeName = formatter.getNameOfPassengerType(passengerType);
@@ -215,7 +214,7 @@ public class CityRideDataset {
         return baseFareKeyList;
     }
 
-    public void printBaseFares(JourneyTracker journeyTracker) {
+    public void printBaseFares(JourneyTracker journeyTracker, Formatter formatter) {
         System.out.println("---------- Base Fares ----------");
         for (String baseFareKey : baseFareMap.keySet()) {
             List<String> baseFareKeyList = splitBaseFareKey(baseFareKey);
@@ -231,12 +230,12 @@ public class CityRideDataset {
         System.out.println("--------------------------------");
     }
 
-    public void printRules(JourneyTracker journeyTracker) {
+    public void printRules(JourneyTracker journeyTracker, Formatter formatter) {
         System.out.println("***********   CityRide Lite Rules   ***********");
         System.out.println("Peak hours: " + peakStart + "-" + peakEnd);
 
-        printDiscountRates();
-        printDailyCaps();
-        printBaseFares(journeyTracker);
+        printDiscountRates(formatter);
+        printDailyCaps(formatter);
+        printBaseFares(journeyTracker, formatter);
     }
 }

@@ -1,3 +1,10 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -8,7 +15,14 @@ public class AdminPanel {
     private MainMenu mainMenu = new MainMenu();
     private CityRideDataset cityRideDataset;
 
-    private String adminPassword = "1234";
+    private String adminPassword = "meow";
+    private String CONFIG_FILENAME = "config.json";
+    private Gson gson;
+
+    // constructor
+    public AdminPanel() {
+        gson = new GsonBuilder().setPrettyPrinting().create();
+    }
 
     public void setCityRideDataset(CityRideDataset cityRideDataset) {
         this.cityRideDataset = cityRideDataset;
@@ -47,10 +61,11 @@ public class AdminPanel {
             userInput = inputValidator.readPosIntInRange(1, exitNum, true, false);
 
             if (userInput == 1) {
-                cityRideDataset.printRules(journeyTracker);
+                cityRideDataset.printRules(journeyTracker, formatter);
             } else if (userInput == 2) {
                 editRules(journeyTracker);
             } else if (userInput == 3) {
+                // TODO: add reset button
                 System.out.println("Thank you. :)");
             }
         }
@@ -152,5 +167,34 @@ public class AdminPanel {
         else if (userChoice == 4) {
             editBaseFares(journeyTracker);
         }
+        System.out.println("lets try savibg config");
+        saveConfig();
     }
+
+    public void saveConfig() {
+        try {
+            FileWriter writer = new FileWriter(CONFIG_FILENAME);
+            gson.toJson(cityRideDataset, writer);
+            writer.close();
+            System.out.println("Configuration saved to file!");
+        } catch (Exception e) {
+            System.err.println("Error saving configuration.");
+            e.printStackTrace();
+        }
+    }
+
+//    public Rider loadConfig() {
+//        Rider loadedRider = new Rider();
+//        try {
+//            FileReader reader = new FileReader(RIDER_PROFILE_FILENAME);
+//            Type riderProfileType = new TypeToken<Rider>() {
+//            }.getType();
+//            loadedRider = gson.fromJson(reader, riderProfileType);
+//            System.out.println("Rider successfully loaded!");
+//        } catch (Exception e) {
+//            System.err.println("No existing file for rider profile found.");
+//        }
+//
+//        return loadedRider;
+//    }
 }
