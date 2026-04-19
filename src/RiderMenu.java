@@ -331,7 +331,7 @@ public class RiderMenu {
 
     // exporting report
     public void exportReport(JourneyTracker journeyTracker) {
-        // REFERENCE: https://www.w3schools.com/java/java_files_write.asp
+        // W3Schools (n.d.)
         try {
             FileWriter myWriter = new FileWriter(REPORT_FILENAME);
 

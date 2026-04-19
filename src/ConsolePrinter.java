@@ -19,7 +19,6 @@ public class ConsolePrinter {
     public void printMainMenu() {
         System.out.println("\n");
         System.out.println("Please choose from the following:");
-        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#asList-T...-
         // Oracle (n.d.)
         List<String> mainMenuOptions = Arrays.asList("New rider", "Load rider", "Admin panel", "Exit");
         printMenuWithNumbers(mainMenuOptions);

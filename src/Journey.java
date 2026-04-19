@@ -4,7 +4,6 @@ import java.time.LocalTime;
 public class Journey {
     private String journeyId;
     private String riderId;
-    // REFERENCE: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html
     // Oracle (n.d.)
     private String time;
     private CityRideDataset.TimeBand timeBand;

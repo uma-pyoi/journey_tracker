@@ -222,8 +222,7 @@ public class JourneysManager {
 
     public void saveJourneys() {
         try {
-            // REFERENCE: https://opencsv.sourceforge.net/#writing
-            //
+            // Opencsv (n.d.)
             Writer writer = new FileWriter(JOURNEYS_FILENAME);
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
             beanToCsv.write(journeysList);
@@ -238,7 +237,7 @@ public class JourneysManager {
     public void loadJourneys(Rider rider, JourneyTracker journeyTracker) {
         List<Journey> loadedJourneys;
         try {
-            // REFERENCE: https://opencsv.sourceforge.net/#quick_start
+            // Opencsv (n.d.)
             loadedJourneys = new CsvToBeanBuilder(new FileReader(JOURNEYS_FILENAME))
                     .withType(Journey.class).build().parse();
 

@@ -97,7 +97,6 @@ public class InputValidator {
     // returns -1 if invalid integer
     private int parseStringInteger(String str, String errorMessage) {
         int userInt = -1;
-        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
         // Oracle (n.d.)
         try {
             userInt = Integer.parseInt(str);
@@ -110,7 +109,6 @@ public class InputValidator {
     // returns -1 if invalid integer
     private float parseStringFloat(String str, String errorMessage) {
         float userFloat = -1;
-        // REFERENCE: https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html#parseInt-java.lang.String-
         // Oracle (n.d.)
         try {
             userFloat = Float.parseFloat(str);

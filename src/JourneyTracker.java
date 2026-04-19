@@ -32,8 +32,7 @@ public class JourneyTracker {
 
     // methods
     public String generateUUID() {
-        // REFERENCE: https://www.uuidgenerator.net/dev-corner/java
-        //
+        // TransparenTech LLC (n.d.)
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
