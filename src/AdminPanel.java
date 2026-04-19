@@ -178,23 +178,24 @@ public class AdminPanel {
             writer.close();
             System.out.println("Configuration saved to file!");
         } catch (Exception e) {
-            System.err.println("Error saving configuration.");
-            e.printStackTrace();
+            System.err.println("Error saving configuration file.");
+            e.printStackTrace(); // TODO: remove
         }
     }
 
-//    public Rider loadConfig() {
-//        Rider loadedRider = new Rider();
-//        try {
-//            FileReader reader = new FileReader(RIDER_PROFILE_FILENAME);
-//            Type riderProfileType = new TypeToken<Rider>() {
-//            }.getType();
-//            loadedRider = gson.fromJson(reader, riderProfileType);
-//            System.out.println("Rider successfully loaded!");
-//        } catch (Exception e) {
-//            System.err.println("No existing file for rider profile found.");
-//        }
-//
-//        return loadedRider;
-//    }
+    public CityRideDataset loadConfig() {
+        CityRideDataset loadedCityRideDataset = new CityRideDataset();
+        try {
+            FileReader reader = new FileReader(CONFIG_FILENAME);
+            Type cityRideDatasetType = new TypeToken<CityRideDataset>() {
+            }.getType();
+            loadedCityRideDataset = gson.fromJson(reader, cityRideDatasetType);
+            System.out.println("Configuration file successfully loaded!");
+        } catch (Exception e) {
+            System.err.println("No existing configuration file found.");
+            e.printStackTrace(); // TODO: remove
+        }
+
+        return loadedCityRideDataset;
+    }
 }
