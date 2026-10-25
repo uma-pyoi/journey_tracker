@@ -230,7 +230,7 @@ public class JourneysManager {
             System.out.println("Journeys saved to file!");
         }
         catch (Exception e) {
-            System.err.println("Error saving journeys.");
+            System.out.println("Error saving journeys.");
         }
     }
 
@@ -254,7 +254,7 @@ public class JourneysManager {
             System.out.println("Journeys for " + rider.getName() + " successfully loaded!");
         }
         catch (Exception e) {
-            System.err.println("No existing file for journeys found.");
+            System.out.println("No existing file for journeys found.");
         }
     }
 }

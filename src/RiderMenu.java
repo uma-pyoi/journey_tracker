@@ -224,7 +224,7 @@ public class RiderMenu {
         System.out.println(summary.buildSummaryString(formatter));
     }
 
-    private String buildZonesCountString (JourneyTracker journeyTracker) {
+    private String buildZonesCountString(JourneyTracker journeyTracker) {
         String zonesCount = "------ Zone counts ------\n";
 
         Map<Integer, Integer> zonesCountMap = journeyTracker.getZoneCounts();
@@ -232,7 +232,7 @@ public class RiderMenu {
         for (Map.Entry<Integer, Integer> zone : zonesCountMap.entrySet())
             zonesCount += "Zone " + zone.getKey() +
                     ": " + zone.getValue() + " counts.\n";
-        zonesCount +=  "-------------------------\n";
+        zonesCount += "-------------------------\n";
         return zonesCount;
     }
 
@@ -300,7 +300,7 @@ public class RiderMenu {
             writer.close();
             System.out.println("Rider profile saved to file!");
         } catch (Exception e) {
-            System.err.println("Error saving rider profile.");
+            System.out.println("Error saving rider profile.");
         }
     }
 
@@ -313,7 +313,7 @@ public class RiderMenu {
             loadedRider = gson.fromJson(reader, riderProfileType);
             System.out.println("Rider successfully loaded!");
         } catch (Exception e) {
-            System.err.println("No existing file for rider profile found.");
+            System.out.println("No existing file for rider profile found.");
         }
 
         return loadedRider;
@@ -353,7 +353,7 @@ public class RiderMenu {
             myWriter.close();
             System.out.println("Report (TXT file) exported!");
         } catch (IOException e) {
-            System.err.println("Error exporting report file.");
+            System.out.println("Error exporting report file.");
             e.printStackTrace();
         }
     }

@@ -177,7 +177,7 @@ public class AdminPanel {
             writer.close();
             System.out.println("Configuration saved to file!");
         } catch (Exception e) {
-            System.err.println("Error saving configuration file.");
+            System.out.println("Error saving configuration file.");
         }
     }
 
@@ -190,7 +190,7 @@ public class AdminPanel {
             loadedCityRideDataset = gson.fromJson(reader, cityRideDatasetType);
             System.out.println("Configuration file successfully loaded!\n");
         } catch (Exception e) {
-            System.err.println("No existing configuration file found. Starting with default values.");
+            System.out.println("No existing configuration file found. Starting with default values.");
             cityRideDataset = loadedCityRideDataset;
             loadedCityRideDataset.resetRules();
             saveConfig();

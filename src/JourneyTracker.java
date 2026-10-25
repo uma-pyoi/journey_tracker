@@ -1,5 +1,6 @@
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
 import java.io.FileWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
@@ -193,7 +194,7 @@ public class JourneyTracker {
             writer.close();
             System.out.println("Summary (CSV file) exported!");
         } catch (Exception e) {
-            System.err.println("Error exporting summary file.");
+            System.out.println("Error exporting summary file.");
         }
     }
 }
